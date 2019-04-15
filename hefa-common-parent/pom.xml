@@ -11,8 +11,8 @@
 	</parent>
 
 	<modules>
-		<module>azz-common-core</module>
-		<module>azz-common-util</module>
+		<module>hefa-common-core</module>
+		<module>hefa-common-util</module>
 	</modules>
 	
 </project>
