@@ -14,11 +14,11 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 @SpringBootApplication
 @EnableAutoConfiguration(exclude= {DataSourceAutoConfiguration.class,DataSourceTransactionManagerAutoConfiguration.class})
 @EnableFeignClients
-public class AzzClientWebApplication extends SpringBootServletInitializer {
+public class HefaClientWebApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
 	System.setProperty("spring.devtools.restart.enabled", "true");
-	SpringApplication.run(AzzClientWebApplication.class, args);
+	SpringApplication.run(HefaClientWebApplication.class, args);
     }
 
     @Override

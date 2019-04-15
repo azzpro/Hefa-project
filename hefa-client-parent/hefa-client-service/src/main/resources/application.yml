@@ -2,79 +2,45 @@ server:
   tomcat: 
     uri-encoding: UTF-8
   max-http-header-size: 4048576
-spring: 
-  zipkin:
-    enabled: true
-    base-url: http://localhost:7777/
-    service:
-      name: ${spring.application.name}
-  sleuth:
-    enabled: true
-    sampler:
-      percentage: 1
-  rabbitmq: 
-    host: 192.168.1.222
-    port: 5672
-    username: admin
-    password: 123456
-  redis:
-    database: 0
-    host: 192.168.1.222
-    port: 6379
-azz: 
- datasource:
-    dataSourceConfig: 
-      -
-        url : jdbc:mysql://192.168.1.222:3306/azz_dev?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
-        db: azz_dev
-        defaultDatasource: true
-        username: root
-        password: azz2025
-        type: com.alibaba.druid.pool.DruidDataSource
-        driverClassName: com.mysql.jdbc.Driver
-        maxActive: 20
-        initialSize: 1
-        maxWait: 60000
-        minIdle: 1
-        timeBetweenEvictionRunsMillis: 60000
-        minEvictableIdleTimeMillis: 300000
-        maxOpenPreparedStatements: 20
-        validationQuery: SELECT 1 FROM DUAL
-        testWhileIdle: true
-        testOnBorrow: false
-        testOnReturn: false
-        poolPreparedStatements: true
-        maxPoolPreparedStatementPerConnectionSize: 20
-        filters: stat,wall,log4j
-        connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-    monitorConfig:
-      available: true
-      allow: 127.0.0.1
-      deny: 127.0.0.2
-      loginUsername: admin
-      loginPassword: 123456
-      resetEnable: false  
-
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/databaseName?useSSL=false&characterEncoding=utf8
+    username: root
+    password: root
+    druid:
+      initial-size: 5
+      min-idle: 5
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      filters: stat,wall,log4j
+      connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+      web-stat-filter:
+        enabled: true
+        url-pattern: "/*"
+        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
+      stat-view-servlet:
+        url-pattern: "/druid/*"
+        allow: 
+        deny: 
+        reset-enable: false
+        login-username: admin
+        login-password: 123456
 feign:
   httpclient: 
     enabled: true #feign原生是调用java.url 去发起HTTP请求，此配置是将请求客户端更换成apahce http
   hystrix: 
     enabled: false
-    
-azz-sequence-service:  #序列服务
-  ribbon:
-    ConnectTimeout: 2000
-    ReadTimeout: 5000
-    OkToRetryOnAllOperations: false
-    MaxAutoRetriesNextServer: 0
-    MaxAutoRetries: 0
-azz-system-service:  #系统服务服务
-  ribbon:
-    ConnectTimeout: 2000
-    ReadTimeout: 5000
-    OkToRetryOnAllOperations: false
-    MaxAutoRetriesNextServer: 0
-    MaxAutoRetries: 0
+
 eureka:
   client:
     service-url:

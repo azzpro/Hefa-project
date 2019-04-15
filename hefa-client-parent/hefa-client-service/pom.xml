@@ -47,6 +47,10 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
+  			 <groupId>com.alibaba</groupId>
+   			<artifactId>druid-spring-boot-starter</artifactId>
+			</dependency>
+		<dependency>
 			<groupId>com.hefa</groupId>
 			<artifactId>hefa-client-api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
@@ -81,30 +85,6 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 			<scope>compile</scope>
 		</dependency>
-		 <dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-sleuth</artifactId>
-		</dependency>
-		<dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-sleuth-zipkin-stream</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
-        </dependency>
-		<dependency>
-    		<groupId>org.springframework.cloud</groupId>
-    		<artifactId>spring-cloud-starter-hystrix</artifactId>
-		</dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-hystrix-dashboard</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bus-amqp</artifactId>
-        </dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -141,7 +121,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>1.5.4.RELEASE</version>
 				<configuration>
-					<mainClass>com.hefa.AzzClientServiceApplication</mainClass>
+					<mainClass>com.hefa.HefaClientServiceApplication</mainClass>
 					<layout>JAR</layout>
 				</configuration>
 				<executions>

@@ -4,7 +4,7 @@
 		resource="org/springframework/boot/logging/logback/base.xml" />
 	<jmxConfigurator />
 	<!-- 定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
-	<property name="LOG_HOME" value="/home/log/azz-project/azz-client-service/log/" />
+	<property name="LOG_HOME" value="/home/log/hefa-project/hefa-client-service/log/" />
 	<!-- 控制台输出 -->
 	<appender name="STDOUT"
 		class="ch.qos.logback.core.ConsoleAppender">

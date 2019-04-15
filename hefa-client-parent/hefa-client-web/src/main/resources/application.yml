@@ -5,20 +5,6 @@ server:
 spring: 
   aop:
     proxy-target-class: true
-  zipkin:
-    enabled: true
-    base-url: http://localhost:7777/
-    service:
-      name: ${spring.application.name}
-  sleuth:
-    enabled: true
-    sampler:
-      percentage: 1
-  rabbitmq: 
-    host: 192.168.1.222
-    port: 5672
-    username: admin
-    password: 123456
   http:
     multipart:
       maxFileSize: 100Mb
@@ -36,28 +22,3 @@ feign:
     enabled: true #feign原生是调用java.url 去发起HTTP请求，此配置是将请求客户端更换成apahce http
   hystrix: 
     enabled: false
-    
-azz-client-service:  #客户端服务
-  ribbon:
-    ConnectTimeout: 2000
-    ReadTimeout: 6000
-    OkToRetryOnAllOperations: false
-    MaxAutoRetriesNextServer: 0
-    MaxAutoRetries: 0
-azz-system-service:  #系统服务
-  ribbon:
-    ConnectTimeout: 2000
-    ReadTimeout: 6000
-    OkToRetryOnAllOperations: false
-    MaxAutoRetriesNextServer: 0
-    MaxAutoRetries: 0
-# shiro登录失效时间      
-shiro:
-  session:
-    timeout: 1800000
-
-# 微信公众号相关配置
-wx:
-  appid: wx6657c21ece08b798
-  secret: a7bea96fb7fe6596d0c293ac36a6daaf
-
