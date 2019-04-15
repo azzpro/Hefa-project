@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.azz.client.mapper.ClientUserMapper">
+  <resultMap id="BaseResultMap" type="com.azz.client.pojo.ClientUser">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="client_user_code" jdbcType="VARCHAR" property="clientUserCode" />
+    <result column="client_user_name" jdbcType="VARCHAR" property="clientUserName" />
+    <result column="is_enterprise_authenticator" jdbcType="INTEGER" property="isEnterpriseAuthenticator" />
+    <result column="client_dept_id" jdbcType="BIGINT" property="clientDeptId" />
+    <result column="post_name" jdbcType="VARCHAR" property="postName" />
+    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="client_type" jdbcType="INTEGER" property="clientType" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="client_avatar_url" jdbcType="VARCHAR" property="clientAvatarUrl" />
+    <result column="login_errors_times" jdbcType="INTEGER" property="loginErrorsTimes" />
+    <result column="login_ip" jdbcType="VARCHAR" property="loginIp" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_modify_time" jdbcType="TIMESTAMP" property="lastModifyTime" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, client_user_code, is_enterprise_authenticator, client_user_name, client_dept_id, post_name, phone_number, 
+    password, salt, client_type, email, status, remark, client_avatar_url, login_errors_times, 
+    login_ip, creator, create_time, last_modify_time, modifier
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from client_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from client_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.azz.client.pojo.ClientUser">
+    insert into client_user (id, client_user_code, is_enterprise_authenticator, client_user_name, 
+      client_dept_id, post_name, phone_number, 
+      password, salt, client_type, 
+      email, status, remark, 
+      client_avatar_url, login_errors_times, login_ip, 
+      creator, create_time, last_modify_time, 
+      modifier)
+    values (#{id,jdbcType=BIGINT}, #{clientUserCode,jdbcType=VARCHAR}, #{isEnterpriseAuthenticator,jdbcType=INTEGER}, #{clientUserName,jdbcType=VARCHAR}, 
+      #{clientDeptId,jdbcType=BIGINT}, #{postName,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{clientType,jdbcType=INTEGER}, 
+      #{email,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{clientAvatarUrl,jdbcType=VARCHAR}, #{loginErrorsTimes,jdbcType=INTEGER}, #{loginIp,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{lastModifyTime,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.azz.client.pojo.ClientUser">
+    insert into client_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="clientUserCode != null">
+        client_user_code,
+      </if>
+      <if test="isEnterpriseAuthenticator != null">
+        is_enterprise_authenticator,
+      </if>
+      <if test="clientUserName != null">
+        client_user_name,
+      </if>
+      <if test="clientDeptId != null">
+        client_dept_id,
+      </if>
+      <if test="postName != null">
+        post_name,
+      </if>
+      <if test="phoneNumber != null">
+        phone_number,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="salt != null">
+        salt,
+      </if>
+      <if test="clientType != null">
+        client_type,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="clientAvatarUrl != null">
+        client_avatar_url,
+      </if>
+      <if test="loginErrorsTimes != null">
+        login_errors_times,
+      </if>
+      <if test="loginIp != null">
+        login_ip,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="clientUserCode != null">
+        #{clientUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isEnterpriseAuthenticator != null">
+        #{isEnterpriseAuthenticator,jdbcType=INTEGER},
+      </if>
+      <if test="clientUserName != null">
+        #{clientUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="clientDeptId != null">
+        #{clientDeptId,jdbcType=BIGINT},
+      </if>
+      <if test="postName != null">
+        #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="clientType != null">
+        #{clientType,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="clientAvatarUrl != null">
+        #{clientAvatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="loginErrorsTimes != null">
+        #{loginErrorsTimes,jdbcType=INTEGER},
+      </if>
+      <if test="loginIp != null">
+        #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyTime != null">
+        #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.azz.client.pojo.ClientUser">
+    update client_user
+    <set>
+      <if test="clientUserCode != null">
+        client_user_code = #{clientUserCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isEnterpriseAuthenticator != null">
+        is_enterprise_authenticator = #{isEnterpriseAuthenticator,jdbcType=INTEGER},
+      </if>
+      <if test="clientUserName != null">
+        client_user_name = #{clientUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="clientDeptId != null">
+        client_dept_id = #{clientDeptId,jdbcType=BIGINT},
+      </if>
+      <if test="postName != null">
+        post_name = #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="clientType != null">
+        client_type = #{clientType,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="clientAvatarUrl != null">
+        client_avatar_url = #{clientAvatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="loginErrorsTimes != null">
+        login_errors_times = #{loginErrorsTimes,jdbcType=INTEGER},
+      </if>
+      <if test="loginIp != null">
+        login_ip = #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByClientUserCode" parameterType="com.azz.client.pojo.ClientUser">
+    update client_user
+    <set>
+    	<if test="isEnterpriseAuthenticator != null">
+        is_enterprise_authenticator = #{isEnterpriseAuthenticator,jdbcType=INTEGER},
+      </if>
+      <if test="clientUserName != null">
+        client_user_name = #{clientUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="clientDeptId != null">
+        client_dept_id = #{clientDeptId,jdbcType=BIGINT},
+      </if>
+      <if test="postName != null">
+        post_name = #{postName,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="salt != null">
+        salt = #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="clientType != null">
+        client_type = #{clientType,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="clientAvatarUrl != null">
+        client_avatar_url = #{clientAvatarUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="loginErrorsTimes != null">
+        login_errors_times = #{loginErrorsTimes,jdbcType=INTEGER},
+      </if>
+      <if test="loginIp != null">
+        login_ip = #{loginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where client_user_code = #{clientUserCode}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.azz.client.pojo.ClientUser">
+    update client_user
+    set client_user_code = #{clientUserCode,jdbcType=VARCHAR},
+     is_enterprise_authenticator = #{isEnterpriseAuthenticator,jdbcType=INTEGER},
+      client_user_name = #{clientUserName,jdbcType=VARCHAR},
+      client_dept_id = #{clientDeptId,jdbcType=BIGINT},
+      post_name = #{postName,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      salt = #{salt,jdbcType=VARCHAR},
+      client_type = #{clientType,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      client_avatar_url = #{clientAvatarUrl,jdbcType=VARCHAR},
+      login_errors_times = #{loginErrorsTimes,jdbcType=INTEGER},
+      login_ip = #{loginIp,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getClientUserByPhoneNumber" parameterType="string" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from client_user
+    where status != 0
+    and phone_number = #{phoneNumber}
+  </select>
+  
+  <select id="getClientUserByOpenid" parameterType="string" resultMap="BaseResultMap">
+    SELECT
+		cu.*
+	FROM
+		client_wx_user cwu
+	JOIN client_user cu ON cu.client_user_code = cwu.user_code
+	WHERE
+		cu.`status` = 1
+	AND cwu.openid = #{openid}
+  </select>
+  
+  <select id="getClientUserByClientUserCode" parameterType="string" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from client_user
+    where status != 0
+    and client_user_code = #{clientUserCode}
+  </select>
+  
+  <select id="getClientUserByEmail" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List" />
+    from client_user
+    where status != 0
+    and email = #{email}
+    <if test="clientUserCode != null">
+        and client_user_code &lt;&gt; #{clientUserCode}
+    </if>
+  </select>
+  
+  <select id="getClientUserByPhoneNumberAndClientUserCode" parameterType="string" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from client_user
+    where phone_number = #{phoneNumber}
+    and status != 0
+    <if test="clientUserCode != null">
+	    and client_user_code &lt;&gt; #{clientUserCode}
+	</if>
+  </select>
+  
+  <select id="getClientUserInfoByPhoneNumber" parameterType="string" resultType="com.azz.client.pojo.vo.ClientUserInfo">
+	   SELECT
+			c.client_user_code AS clientUserCode,
+			uc.company_code AS companyCode,
+			uc.company_name AS companyName,
+			uc.id AS clientUserCompanyId,
+			c.phone_number AS phoneNumber,
+			c.client_user_name AS clientUserName,
+			c.create_time AS createTime,
+			c.client_type AS clientType,
+			c.post_name AS postName,
+			cd.dept_code AS deptCode,
+			cd.dept_name AS deptName,
+			cr.role_code AS roleCode,
+			cr.role_name AS roleName,
+			c.is_enterprise_authenticator AS isEnterpriseAuthenticator,
+			CASE c. STATUS
+		WHEN 0 THEN
+			'删除'
+		WHEN 1 THEN
+			'有效'
+		WHEN 2 THEN
+			'禁用'
+		END AS STATUS
+		FROM
+			client_user c
+		LEFT JOIN client_user_company uc ON uc.client_user_code = c.client_user_code
+		LEFT JOIN client_user_role cur ON cur.client_user_id = c.id
+		LEFT JOIN client_role cr ON cr.id = cur.role_id
+		LEFT JOIN client_dept cd ON cd.id = c.client_dept_id
+		WHERE
+			c. STATUS != 0
+		and c.phone_number = #{phoneNumber}
+  </select>
+  
+  <select id="getClientUserInfoBySearchParam" resultType="com.azz.client.pojo.vo.ClientUserInfo">
+		  SELECT
+				u.client_user_code AS clientUserCode,
+				u.client_user_name AS clientUserName,
+				u.phone_number AS phoneNumber,
+				u.email AS email,
+				u.post_name AS postName,
+				u.client_type AS clientType,
+				u.is_enterprise_authenticator as isEnterpriseAuthenticator,
+				 CASE u. STATUS
+				WHEN 0 THEN
+					'注销'
+				WHEN 1 THEN
+					'有效'
+				WHEN 2 THEN
+					'禁用'
+				END AS STATUS,
+				r.role_code as roleCode,
+				 r.role_name AS roleName,
+				 d.dept_name AS deptName,
+				 u.create_time AS createTime
+			FROM
+				client_user u
+			LEFT JOIN client_user_company uc on uc.client_user_code = u.client_user_code
+			LEFT JOIN client_dept d ON u.client_dept_id = d.id
+			LEFT JOIN client_user_role ur ON ur.client_user_id = u.id
+			LEFT JOIN client_role r ON ur.role_id = r.id
+			WHERE u. STATUS != 0
+			and uc.company_code = #{companyCode}
+			<if test="searchInput != null and searchInput != ''">
+				and (
+					u.client_user_name like CONCAT('%', #{searchInput}, '%')
+					or u.phone_number like CONCAT('%', #{searchInput}, '%')
+					or u.post_name like CONCAT('%', #{searchInput}, '%')
+				)
+			</if>
+			order by u.create_time desc
+  </select>
+  
+  <select id="getClientPersonalInfoByClientUserCode" parameterType="string" resultType="com.azz.client.pojo.vo.ClientPersonalInfo">
+	SELECT
+		u.client_user_code AS clientUserCode,
+		u.client_user_name AS clientUserName,
+		u.phone_number AS phoneNumber,
+		u.email AS email,
+		r.role_name AS roleName,
+		d.dept_name AS deptName,
+		uc.company_name as companyName,
+		u.client_avatar_url AS avatarUrl
+	FROM
+		client_user u
+	LEFT JOIN client_dept d ON u.client_dept_id = d.id
+	LEFT JOIN client_user_role ur ON ur.client_user_id = u.id
+	LEFT JOIN client_role r ON ur.role_id = r.id
+	LEFT JOIN client_user_company uc ON u.client_user_code = uc.client_user_code
+	WHERE
+		u. STATUS != 0
+	AND u.client_user_code = #{clientUserCode}
+  </select>
+  
+  <select id="getClientUserInfoByClientUserCode" parameterType="string" resultType="com.azz.client.pojo.vo.ClientUserInfo">
+		  SELECT
+			u.client_user_code AS clientUserCode,
+			u.client_user_name AS clientUserName,
+			u.phone_number AS phoneNumber,
+			u.email AS email,
+			u.post_name AS postName,
+			u.client_type AS clientType,
+			CASE u. STATUS
+		WHEN 0 THEN
+			'注销'
+		WHEN 1 THEN
+			'有效'
+		WHEN 2 THEN
+			'禁用'
+		END AS STATUS,
+		 d.dept_code AS deptCode,
+		 d.dept_name AS deptName,
+		 r.role_code AS roleCode,
+		 r.role_name AS roleName,
+		 u.create_time AS createTime
+		FROM
+			client_user u
+		LEFT JOIN client_dept d ON d.id = u.client_dept_id
+		LEFT JOIN client_user_role ur ON ur.client_user_id = u.id
+		LEFT JOIN client_role r ON ur.role_id = r.id
+		WHERE u. STATUS != 0
+		and u.client_user_code = #{clientUserCode}
+  </select>
+  
+  <select id="getClientCompanyInfoByClientUserCode" parameterType="string" resultType="com.azz.client.pojo.vo.ClientCompanyInfo">
+	SELECT
+		u.client_user_code AS clientUserCode,
+		uc.status AS companyStatus,
+		u.create_time AS createTime,
+		uc.company_name AS companyName,
+		uc.company_tel AS companyTel,
+		uc.credit_code as creditCode,
+		CONCAT(
+			uca.province_name,
+			uca.city_name,
+			uca.area_name,
+			uca.detail_address
+		) AS address,
+		uc.trading_certificate_first_file_name AS tradingCertificateFirstFileName,
+		uc.trading_certificate_first_file_url AS tradingCertificateFirstFileUrl,
+		uc.trading_certificate_second_file_name AS tradingCertificateSecondFileName,
+		uc.trading_certificate_second_file_url AS tradingCertificateSecondFileUrl,
+		uc.trading_certificate_third_file_name AS tradingCertificateThirdFileName,
+		uc.trading_certificate_third_file_url AS tradingCertificateThirdFileUrl
+	FROM
+		client_user u
+	JOIN client_user_company uc ON uc.client_user_code = u.client_user_code
+	JOIN client_user_company_address uca ON uca.company_code = uc.company_code
+	WHERE u.client_user_code = #{clientUserCode}
+  </select>
+  
+  
+</mapper>

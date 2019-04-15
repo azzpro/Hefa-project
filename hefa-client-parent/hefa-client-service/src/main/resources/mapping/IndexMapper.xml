@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.azz.client.mapper.IndexMapper">
+ 
+  <resultMap id="specialPerformanceOfIndex" type="com.azz.client.pojo.vo.SpecialPerformanceOfIndex">
+    <result column="specialPerformanceCode" jdbcType="VARCHAR" property="specialPerformanceCode" />
+    <result column="specialPerformanceName" jdbcType="VARCHAR" property="specialPerformanceName" />
+    <result column="specialPerformanceMainPicName" jdbcType="VARCHAR" property="specialPerformanceMainPicName" />
+    <result column="specialPerformanceMainPicUrl" jdbcType="VARCHAR" property="specialPerformanceMainPicUrl" />
+    <result column="specialPerformanceBgPicUrl" jdbcType="VARCHAR" property="specialPerformanceBgPicUrl" />
+    <collection property="recommends" ofType="com.azz.client.pojo.vo.RecommendInfo">
+	    <result column="recommend_code" jdbcType="VARCHAR" property="recommendCode" />
+    	<result column="recommend_name" jdbcType="VARCHAR" property="recommendName" />
+    </collection>
+  </resultMap>
+  
+  <select id="getSpecialPerformanceOfIndex" parameterType="string" resultMap="specialPerformanceOfIndex">
+  		SELECT
+			psp.special_performance_code as specialPerformanceCode,
+			psp.special_performance_name as specialPerformanceName,
+			psp.special_performance_main_pic_name as specialPerformanceMainPicName,
+			psp.special_performance_main_pic_url as specialPerformanceMainPicUrl,
+			psp.special_performance_bg_pic_url as specialPerformanceBgPicUrl,
+			pr.recommend_code,
+			pr.recommend_name
+		FROM
+			platform_special_performance psp
+		LEFT JOIN platform_recommend pr ON pr.special_performance_code = psp.special_performance_code
+		WHERE
+			psp.special_performance_code = #{specialPerformanceCode}
+		and pr.status = 1
+  </select>
+  
+  <select id="getSpecialPerformanceModulesOfIndex" parameterType="com.azz.client.pojo.bo.SearchSpecialPerformanceOfIndexParam" resultType="com.azz.client.pojo.vo.ModuleInfo">
+  		SELECT
+			mgm.module_code as moduleCode,
+			mgm.module_name as moduleName,
+			mgm.module_pic_name as modulePicName,
+			mgm.module_pic_url as modulePicUrl,
+			t.minPrice as moduleMinPrice
+		FROM
+			platform_special_performance psp
+		JOIN platform_recommend pr ON pr.special_performance_code = psp.special_performance_code
+		JOIN platform_recommend_module_rel prmr ON prmr.recommend_code = pr.recommend_code
+		JOIN merchant_goods_module mgm ON mgm.module_code = prmr.module_code
+		LEFT JOIN (
+			SELECT
+				mgm.module_code,
+				min(mgpp.price) AS minPrice
+			FROM
+				merchant_goods_product mgp
+			JOIN merchant_goods_module mgm ON mgm.id = mgp.module_id
+			JOIN merchant_goods_product_price mgpp ON mgpp.product_id = mgp.id
+			WHERE
+				mgp.product_status = 1
+			GROUP BY
+				mgm.module_code
+		) t ON t.module_code = mgm.module_code
+		<where>
+			psp.special_performance_code = #{specialPerformanceCode}
+			and mgm.module_status = 1
+			and pr.status = 1
+			<if test="recommendCode != null and recommendCode != ''">
+				and pr.recommend_code = #{recommendCode}
+			</if>
+		</where>
+  </select>
+  
+  
+   <select id="getSpecialInfo" parameterType="java.lang.String" resultType = "com.azz.client.pojo.vo.SpecialInfo">
+  		SELECT
+  			id as id,
+			special_performance_code as specialPerformanceCode,
+			special_performance_name as specialPerformanceName,
+			special_performance_main_pic_url as specialPerformanceMainPicUrl,
+			special_performance_main_pic_name as specialPerformanceMainPicName,
+			special_performance_bg_pic_url as specialPerformanceBgPicUrl,
+			special_performance_bg_pic_name as specialPerformanceBgPicName,
+			special_performance_link as specialPerformanceLink,
+			module_number as moduleNumber,
+			product_number as productNumber,
+			interview_number as interviewNumber,
+			status as status,
+			create_time as createTime
+		FROM
+			platform_special_performance
+		WHERE status != 0 and
+			special_performance_code = #{code}	
+  </select>
+  
+  <update id="updateByPrimaryKey" parameterType="com.azz.client.pojo.PlatformSpecialPerformance">
+    update platform_special_performance
+    set 
+      interview_number = #{interviewNumber,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

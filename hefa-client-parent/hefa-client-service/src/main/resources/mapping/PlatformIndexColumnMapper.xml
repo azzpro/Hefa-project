@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.azz.client.mapper.PlatformIndexColumnMapper">
+  <resultMap id="BaseResultMap" type="com.azz.client.pojo.PlatformIndexColumn">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="column_name" jdbcType="VARCHAR" property="columnName" />
+    <result column="column_pic_name" jdbcType="VARCHAR" property="columnPicName" />
+    <result column="column_pic_url" jdbcType="VARCHAR" property="columnPicUrl" />
+    <result column="column_code" jdbcType="VARCHAR" property="columnCode" />
+    <result column="column_type" jdbcType="INTEGER" property="columnType" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="last_modify_time" jdbcType="TIMESTAMP" property="lastModifyTime" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, column_name, column_pic_name, column_pic_url, column_code, column_type, create_time, 
+    creator, last_modify_time, modifier, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from platform_index_column
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="getHomeSlideList" parameterType="java.lang.String" resultType="com.azz.client.pojo.vo.HomeSlide">
+  	SELECT
+		pii.pic_url as homeSlidePicUrl,
+		pii.jump_link as jumpLink
+	FROM
+		platform_index_column pic
+	LEFT JOIN platform_index_image pii ON pic.id = pii.index_column_id
+	WHERE
+		pic.column_code = #{columnCode}
+	ORDER BY pii.create_time DESC
+  </select>
+  
+  <select id="getNavListByColumnCode" parameterType="java.lang.String" resultType="com.azz.client.pojo.vo.HomeNav">
+  	SELECT
+  		pia.id as articleId,
+  		pic.column_code as columnCode,
+		pia.article_title as articleTitle,
+		pia.create_time as createTime,
+	  	pia.article_pic_url as articlePicUrl,
+		pia.price as price,
+		pia.remark1 as remark1,
+		pia.remark2 as remark2
+	FROM
+		platform_index_column pic
+	LEFT JOIN platform_index_article pia ON pic.id = pia.index_column_id
+	WHERE
+		pic.column_code = #{columnCode}
+	ORDER BY pia.create_time DESC
+	LIMIT 4
+  </select>
+  
+  <resultMap id="BaseResultMapColumn" type="com.azz.client.pojo.vo.HomeNavDetail">
+  	<id column="id" jdbcType="BIGINT" property="id" />
+    <result column="columnPicUrl" jdbcType="VARCHAR" property="columnPicUrl" />
+    <result column="columnName" jdbcType="VARCHAR" property="columnName" />
+    <collection property="homeNavs" ofType="com.azz.client.pojo.vo.HomeNav">
+    	<id column="articleId" jdbcType="BIGINT" property="articleId" />
+	    <result column="articleTitle" jdbcType="VARCHAR" property="articleTitle" />
+	    <result column="articlePicUrl" jdbcType="VARCHAR" property="articlePicUrl" />
+	    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+	    <result column="price" jdbcType="DECIMAL" property="price" />
+	    <result column="remark1" jdbcType="VARCHAR" property="remark1" />
+    	<result column="remark2" jdbcType="VARCHAR" property="remark2" />
+    </collection>
+  </resultMap>
+  
+  <select id="getColumnList" parameterType="java.lang.String" resultMap="BaseResultMapColumn">
+  	SELECT
+  		pic.id as id,
+		pic.column_pic_url as columnPicUrl,
+		pia.article_title as articleTitle,
+		pia.create_time as createTime,
+		pia.article_pic_url as articlePicUrl,
+		pia.price as price,
+		pia.remark1 as remark1,
+		pia.remark2 as remark2,
+		pia.id as articleId,
+		pic.column_name as columnName
+	FROM
+		platform_index_column pic
+	LEFT JOIN platform_index_article pia ON pic.id = pia.index_column_id
+	WHERE
+		pic.column_code = #{columnCode}
+  </select>
+</mapper>

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.azz.client.mapper.ClientDeptMapper">
+  <resultMap id="BaseResultMap" type="com.azz.client.pojo.ClientDept">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="company_code" jdbcType="VARCHAR" property="companyCode" />
+    <result column="dept_code" jdbcType="VARCHAR" property="deptCode" />
+    <result column="parent_code" jdbcType="VARCHAR" property="parentCode" />
+    <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="last_modify_time" jdbcType="TIMESTAMP" property="lastModifyTime" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,company_code, dept_code, parent_code, dept_name, description, status, create_time, creator, 
+    last_modify_time, modifier
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from client_dept
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectByDeptCode" parameterType="string" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from client_dept
+    where dept_code = #{deptCode}
+    and status != 0
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from client_dept
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.azz.client.pojo.ClientDept">
+    insert into client_dept (id,company_code, dept_code, parent_code, 
+      dept_name, description, status, 
+      create_time, creator, last_modify_time, 
+      modifier)
+    values (#{id,jdbcType=BIGINT},#{companyCode,jdbcType=VARCHAR}, #{deptCode,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, 
+      #{deptName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{lastModifyTime,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.azz.client.pojo.ClientDept">
+    insert into client_dept
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="companyCode != null">
+      	company_code,
+      </if>
+      <if test="deptCode != null">
+        dept_code,
+      </if>
+      <if test="parentCode != null">
+        parent_code,
+      </if>
+      <if test="deptName != null">
+        dept_name,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="companyCode != null">
+        #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deptCode != null">
+        #{deptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null">
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null">
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyTime != null">
+        #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.azz.client.pojo.ClientDept">
+    update client_dept
+    <set>
+      <if test="companyCode != null">
+        company_code = #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deptCode != null">
+        dept_code = #{deptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null">
+        parent_code = #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null">
+        dept_name = #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.azz.client.pojo.ClientDept">
+    update client_dept
+    set 
+    	company_code = #{companyCode,jdbcType=VARCHAR},
+    	dept_code = #{deptCode,jdbcType=VARCHAR},
+      parent_code = #{parentCode,jdbcType=VARCHAR},
+      dept_name = #{deptName,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectFirstLevelList" parameterType="com.azz.client.pojo.bo.SearchClientDeptParam" resultType="com.azz.client.pojo.vo.ClientDeptList">
+  	SELECT
+			cd.dept_name AS deptName,
+			cd.dept_code AS deptCode,
+			cd.parent_code AS parentCode,			
+		 	cd.`status` AS status,
+			cu.client_user_name AS creator,
+			cd.create_time AS createTime
+	FROM client_dept cd 
+	LEFT JOIN client_user cu on cu.client_user_code = cd.creator
+	WHERE
+	 cd.company_code = #{companyCode,jdbcType=VARCHAR} AND cd.parent_code = '0' AND cd.status != 0 
+	  <if test="deptNameCode != null and deptNameCode!='' "> 
+			AND ( cd.dept_name LIKE CONCAT('%',#{deptNameCode},'%') OR cd.dept_code LIKE CONCAT('%',#{deptNameCode},'%') )
+	  </if>
+	ORDER BY cd.create_time DESC
+  </select>
+  
+  <select id="selectChildlList" parameterType="com.azz.client.pojo.bo.SearchClientChildDeptParam" resultType="com.azz.client.pojo.vo.ClientDeptList">
+  	SELECT
+			cd.dept_name AS deptName,
+			cd.dept_code AS deptCode,
+			cd.parent_code AS parentCode,			
+		 	cd.`status` AS status,
+			cu.client_user_name AS creator,
+			cd.create_time AS createTime
+	FROM client_dept cd 
+	LEFT JOIN client_user cu on cu.client_user_code = cd.creator
+	WHERE
+	 cd.company_code = #{companyCode,jdbcType=VARCHAR} AND cd.parent_code = #{parentCode} AND (cd.status = 1 OR cd.status = 2) 
+	ORDER BY cd.create_time DESC
+  </select>
+  
+  <select id="selectFirstLevelExist" parameterType="com.azz.client.pojo.bo.SearchClientDeptIsExistParam" resultType="int">
+  	select 
+    count(1)
+    from client_dept
+    where company_code = #{companyCode,jdbcType=VARCHAR} 
+    and dept_name = #{deptName,jdbcType=VARCHAR}
+    and parent_code = 0
+  </select>
+  
+  <select id="selectClientDeptInfoByName" parameterType="com.azz.client.pojo.bo.SearchClientDeptInfoParam" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from client_dept
+    where company_code = #{companyCode,jdbcType=VARCHAR} 
+    and dept_name = #{deptName,jdbcType=VARCHAR} 
+    and status != 0
+  </select>
+  
+  <select id="selectClientDeptInfoByCode" parameterType="com.azz.client.pojo.bo.SearchClientDeptInfoByCodeParam" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from client_dept
+    where company_code = #{companyCode} 
+    and dept_code = #{deptCode,jdbcType=VARCHAR} 
+    and status != 0
+  </select>
+  
+  <select id="selectClientUserIsExistDept" parameterType="java.lang.String" resultType="int">
+  	SELECT count(1) FROM client_user cu
+	JOIN client_dept cd ON cu.client_dept_id = cd.id
+	WHERE cd.dept_code = #{deptCode,jdbcType=VARCHAR} and cd.status != 0
+  </select>
+  
+  <select id="selectClientByCode" parameterType="com.azz.client.pojo.bo.SearchClientDeptInfoByCodeParam" resultType="com.azz.client.pojo.vo.ClientDeptInfo">
+  	SELECT 
+  		id as deptId,
+  		merchant_id as merchantId,
+  		dept_code as deptCode,
+  		parent_code as parentCode,
+  		dept_name as deptName,
+  		status as status
+  	FROM client_dept 
+  	WHERE company_code = #{companyCode} 
+  	AND dept_code = #{deptCode,jdbcType=VARCHAR}
+  	AND status != 0
+  </select>
+</mapper>
