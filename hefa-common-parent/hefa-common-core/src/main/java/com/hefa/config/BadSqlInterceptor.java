@@ -1,4 +1,4 @@
-package com.hefa.common.config;
+package com.hefa.config;
 
 import java.util.Enumeration;
 

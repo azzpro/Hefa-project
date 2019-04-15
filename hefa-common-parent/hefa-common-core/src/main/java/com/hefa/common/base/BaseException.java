@@ -20,7 +20,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class BaseException extends RuntimeException {
+public abstract class BaseException extends RuntimeException {
 
     private static final long serialVersionUID = 6778479146569083451L;
 

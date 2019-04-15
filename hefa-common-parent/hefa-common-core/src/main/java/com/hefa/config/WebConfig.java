@@ -5,7 +5,7 @@
  * 注意：本内容仅限于爱智造内部传阅，禁止外泄以及用于其他的商业目的
  ******************************************************************************/
  
-package com.hefa.common.config;
+package com.hefa.config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +38,11 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return new BadSqlInterceptor();
     }
 	
+	@Bean
+    public SignInterceptor getSignInterceptor() {
+        return new SignInterceptor();
+    }
+	
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
@@ -51,6 +56,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration interceptor = registry.addInterceptor(getBadSqlInterceptor());
         interceptor.addPathPatterns("/**");
+        InterceptorRegistration signInterceptor = registry.addInterceptor(getSignInterceptor());
+        signInterceptor.addPathPatterns("/api/**");
     }
     
     @Bean
