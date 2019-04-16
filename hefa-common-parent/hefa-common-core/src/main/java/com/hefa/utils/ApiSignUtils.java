@@ -33,7 +33,7 @@ public class ApiSignUtils {
      * @return
      * @author 黄智聪（13510946256）  2018年8月27日 下午2:22:32
      */
-    public static String getSign(TreeMap<String, Object> sortedParamMap, long timestamp, String key) {
+    public static String getSign(TreeMap<?, ?> sortedParamMap, long timestamp, String key) {
         return getSign(JSON.toJSONString(sortedParamMap), timestamp, key);
     }
     

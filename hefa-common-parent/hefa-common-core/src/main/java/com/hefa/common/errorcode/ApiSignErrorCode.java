@@ -35,12 +35,6 @@ public class ApiSignErrorCode extends BaseErrorCode {
 	 */
 	public static final ApiSignErrorCode API_SIGN_ERROR_MISSING_REQUEST_PARAM = new ApiSignErrorCode(40003, "缺少请求参数");
     
-	/**
-	 * 请求参数转换出错
-	 */
-	public static final ApiSignErrorCode API_SIGN_ERROR_REQUEST_PARAM_TRANSFORM_FAILED = new ApiSignErrorCode(40004, "请求参数转换出错");
-    
-	
 	public ApiSignErrorCode(int code, String message) {
         super(code, message);
     }

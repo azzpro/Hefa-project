@@ -8,18 +8,17 @@
 package com.hefa.config;
 
 import java.math.BigDecimal;
-import java.util.Random;
-import java.util.Set;
+import java.util.Map;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.hefa.common.constants.ApiRequestConstants;
+import com.hefa.common.constants.ApiRequestConstants.RequiredRequestParam;
 import com.hefa.common.errorcode.ApiSignErrorCode;
 import com.hefa.common.exception.ApiSignException;
 import com.hefa.utils.ApiSignUtils;
@@ -31,35 +30,47 @@ import com.hefa.utils.ApiSignUtils;
  */
 public class SignInterceptor extends HandlerInterceptorAdapter{
 	
-	// 请求超时时间  20秒
-	private static final Long REQUEST_ALLOWED_TIMEOUT = 20000L;
-	
-	private static final String KEY = "MKtbZiEa8ZO9KfgY";
-	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		String timestampStr = request.getParameter("timestamp");
+		Map<?, ?> paramsMap = request.getParameterMap();
+		// 1.校验请求参数合法性
+		this.validateRequestParams(paramsMap);
+		String timestampStr = request.getParameter(RequiredRequestParam.TIMESTAMP.getValue());
         long timestamp = this.getSignTime(timestampStr);
-        // 1.校验请求时间合法性
-        this.validateSignTime(timestamp);
-        String signature = request.getParameter("signature");
-        String param = request.getParameter("param");
-        // 2.校验签名合法性
-        this.validateSignature(signature, param, timestamp);
+        // 2.校验请求时间合法性
+        this.validateTimestamp(timestamp);
+        String signature = request.getParameter(RequiredRequestParam.SIGNATURE.getValue());
+        // 3.校验签名合法性
+        this.validateSignature(signature, timestamp, paramsMap);
 		return true;
+	}
+
+	/**
+	 * 
+	 * <p>校验接收的请求参数的合法性</p>
+	 * @param paramsMap
+	 * @author 黄智聪  2019年4月16日 上午11:12:36
+	 */
+	private void validateRequestParams(Map<?, ?> paramsMap) {
+		if(!RequiredRequestParam.containsRequiredRequestParam(paramsMap)) {
+			throw new ApiSignException(ApiSignErrorCode.API_SIGN_ERROR_MISSING_REQUEST_PARAM);
+		}
 	}
 	
 	/**
      * 
      * <p>获取签名时间</p>
-     * @param signTime 签名时间字符串
+     * @param timestampStr 签名时间字符串
      * @return
      * @author 黄智聪（13510946256）  2018年8月29日 下午2:02:36
      */
-    private long getSignTime(String signTime) {
+    private long getSignTime(String timestampStr) {
+    	if(StringUtils.isEmpty(timestampStr)) {
+    		 throw new ApiSignException(ApiSignErrorCode.API_SIGN_ERROR_INVALID_TIMESTAMP);
+    	}
         try {
-            return Long.parseLong(signTime);
+            return Long.parseLong(timestampStr);
         } catch (Exception e) {
             throw new ApiSignException(ApiSignErrorCode.API_SIGN_ERROR_INVALID_TIMESTAMP);
         }
@@ -71,7 +82,7 @@ public class SignInterceptor extends HandlerInterceptorAdapter{
      * @param timestamp
      * @author 黄智聪（13510946256）  2018年8月29日 下午2:00:33
      */
-    private void validateSignTime(long timestamp) {
+    private void validateTimestamp(long timestamp) {
 		// 超过设定时间视为请求超时
 		if (isRequestTimeout(timestamp)) {
 			throw new ApiSignException(ApiSignErrorCode.API_SIGN_ERROR_REQUEST_TIMEOUT);
@@ -88,46 +99,32 @@ public class SignInterceptor extends HandlerInterceptorAdapter{
 	private boolean isRequestTimeout(long timestamp) {
 		// 当前时间戳与请求时的时间戳比较，是否超过规定时间
 		return BigDecimal.valueOf(System.currentTimeMillis()).subtract(BigDecimal.valueOf(timestamp))
-				.compareTo(BigDecimal.valueOf(REQUEST_ALLOWED_TIMEOUT)) > 0;
+				.compareTo(BigDecimal.valueOf(ApiRequestConstants.API_REQUEST_ALLOWED_TIMEOUT)) > 0;
 	}
     
     /**
      * 
      * <p>校验签名合法性</p>
      * @param signature 签名
-     * @param param 请求参数
+     * @param paramsMap 请求参数
      * @param signTime 请求参数校验时间
      * @author 黄智聪（13510946256）  2018年8月28日 下午2:22:33
      * @param timestamp 
      */
-    private void validateSignature(String signature, String param, long timestamp) {
+    private void validateSignature(String signature, long timestamp, Map<?, ?> paramsMap) {
         if (signature == null) {
-            throw new ApiSignException(ApiSignErrorCode.API_SIGN_ERROR_INVALID_SIGNATURE);
-        }
-        if (param == null) {
             throw new ApiSignException(ApiSignErrorCode.API_SIGN_ERROR_MISSING_REQUEST_PARAM);
         }
-        TreeMap<String, Object> sortedParams = new TreeMap<>();
-        try {
-            JSONObject json = JSON.parseObject(param);// 此处若转换异常，则表示请求方未按照要求的json格式传入
-            Set<String> keys = json.keySet();
-            for (String key : keys) {
-                sortedParams.put(key, json.get(key));
-            }
-        } catch (Exception e) {
-            throw new ApiSignException(ApiSignErrorCode.API_SIGN_ERROR_REQUEST_PARAM_TRANSFORM_FAILED);
-        }
+        // 将paramsMap转换成TreeMap,使paramsMap的key有序排列
+        TreeMap<?, ?> sortedParams = new TreeMap<>(paramsMap);	
+        // 需要去除signature参数，去生成我方签名
+        sortedParams.remove(RequiredRequestParam.SIGNATURE.getValue());
         // 我方生成的签名
-        String selfSign = ApiSignUtils.getSign(sortedParams, timestamp, KEY);
+        String selfSign = ApiSignUtils.getSign(sortedParams, timestamp, ApiRequestConstants.API_KEY);
         if (!signature.equals(selfSign)) {
             throw new ApiSignException(ApiSignErrorCode.API_SIGN_ERROR_INVALID_SIGNATURE);
         }
     }
     
-    /*
-    public static void main(String[] args) {
-		System.out.println(RandomStringUtils.random(16,"qwertyuiopasdfghjklzxcvbnm123465789QWERTYUIOPASDFGHJKLZXCVBNM"));
-	}
-    */
 }
 
