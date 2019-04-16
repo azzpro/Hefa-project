@@ -31,9 +31,9 @@ public class ApiSignErrorCode extends BaseErrorCode {
 	public static final ApiSignErrorCode API_SIGN_ERROR_INVALID_TIMESTAMP = new ApiSignErrorCode(40002, "无效时间戳");
 	
 	/**
-	 * 缺少请求参数
+	 * 缺少验签参数
 	 */
-	public static final ApiSignErrorCode API_SIGN_ERROR_MISSING_REQUEST_PARAM = new ApiSignErrorCode(40003, "缺少请求参数");
+	public static final ApiSignErrorCode API_SIGN_ERROR_MISSING_SIGNATURE_PARAM = new ApiSignErrorCode(40003, "缺少验签参数");
     
 	public ApiSignErrorCode(int code, String message) {
         super(code, message);

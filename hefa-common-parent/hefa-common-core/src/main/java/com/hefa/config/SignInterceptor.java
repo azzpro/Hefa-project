@@ -37,7 +37,7 @@ public class SignInterceptor extends HandlerInterceptorAdapter{
 		// 1.校验请求参数合法性
 		this.validateRequestParams(paramsMap);
 		String timestampStr = request.getParameter(RequiredRequestParam.TIMESTAMP.getValue());
-        long timestamp = this.getSignTime(timestampStr);
+        long timestamp = this.getTimestamp(timestampStr);
         // 2.校验请求时间合法性
         this.validateTimestamp(timestamp);
         String signature = request.getParameter(RequiredRequestParam.SIGNATURE.getValue());
@@ -54,7 +54,7 @@ public class SignInterceptor extends HandlerInterceptorAdapter{
 	 */
 	private void validateRequestParams(Map<?, ?> paramsMap) {
 		if(!RequiredRequestParam.containsRequiredRequestParam(paramsMap)) {
-			throw new ApiSignException(ApiSignErrorCode.API_SIGN_ERROR_MISSING_REQUEST_PARAM);
+			throw new ApiSignException(ApiSignErrorCode.API_SIGN_ERROR_MISSING_SIGNATURE_PARAM);
 		}
 	}
 	
@@ -65,7 +65,7 @@ public class SignInterceptor extends HandlerInterceptorAdapter{
      * @return
      * @author 黄智聪（13510946256）  2018年8月29日 下午2:02:36
      */
-    private long getSignTime(String timestampStr) {
+    private long getTimestamp(String timestampStr) {
     	if(StringUtils.isEmpty(timestampStr)) {
     		 throw new ApiSignException(ApiSignErrorCode.API_SIGN_ERROR_INVALID_TIMESTAMP);
     	}
@@ -106,14 +106,14 @@ public class SignInterceptor extends HandlerInterceptorAdapter{
      * 
      * <p>校验签名合法性</p>
      * @param signature 签名
+     * @param timestamp 请求参数校验时间
      * @param paramsMap 请求参数
-     * @param signTime 请求参数校验时间
      * @author 黄智聪（13510946256）  2018年8月28日 下午2:22:33
      * @param timestamp 
      */
     private void validateSignature(String signature, long timestamp, Map<?, ?> paramsMap) {
         if (signature == null) {
-            throw new ApiSignException(ApiSignErrorCode.API_SIGN_ERROR_MISSING_REQUEST_PARAM);
+            throw new ApiSignException(ApiSignErrorCode.API_SIGN_ERROR_MISSING_SIGNATURE_PARAM);
         }
         // 将paramsMap转换成TreeMap,使paramsMap的key有序排列
         TreeMap<?, ?> sortedParams = new TreeMap<>(paramsMap);	
