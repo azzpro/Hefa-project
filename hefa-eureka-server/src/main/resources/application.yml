@@ -1,0 +1,20 @@
+server:
+  port: 8761
+spring:
+  application:
+    name: hefa-eureka-server
+erueka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://root:123456@localhost:8761/eureka
+
+security: 
+  basic: 
+    enabled: true
+  user: 
+    name: root
+    password: 123456
