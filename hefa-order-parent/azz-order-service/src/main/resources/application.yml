@@ -1,8 +1,7 @@
-server: 
-  tomcat: 
+server:
+  tomcat:
     uri-encoding: UTF-8
   max-http-header-size: 4048576
-  
 spring:
   messages:
     basename: i18n/Messages
@@ -38,12 +37,6 @@ spring:
         reset-enable: false
         login-username: admin
         login-password: 123456
-feign:
-  httpclient: 
-    enabled: true #feign原生是调用java.url 去发起HTTP请求，此配置是将请求客户端更换成apahce http
-  hystrix: 
-    enabled: false
-
 eureka:
   client:
     service-url:
@@ -51,9 +44,12 @@ eureka:
   instance:
     prefer-ip-address: true
     instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${spring.application.instance_id:${server.port}}
-      
-      
+feign:
+  httpclient: 
+    enabled: true #feign原生是调用java.url 去发起HTTP请求，此配置是将请求客户端更换成apahce http
+  hystrix: 
+    enabled: false
+    
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mapping/**/*.xml
-      

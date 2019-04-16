@@ -17,7 +17,7 @@ import lombok.Getter;
  * @version 1.0
  * @author 黄智聪（13510946256）  2018年8月31日 下午6:36:55
  */
-@Component
+//@Component
 public class ExtraConfig {
     
     @Getter

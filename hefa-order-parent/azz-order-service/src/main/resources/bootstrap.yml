@@ -1,0 +1,5 @@
+server:
+  port: 7203
+spring:
+  application:
+    name: hefa-order-service
