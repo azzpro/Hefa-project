@@ -2,4 +2,5 @@ server:
   port: 8081
 spring:
   application:
-    name: azz-client-web
+    name: hefa-client-web
+  
