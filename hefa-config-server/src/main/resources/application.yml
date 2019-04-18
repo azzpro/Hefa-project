@@ -1,0 +1,10 @@
+spring: 
+  cloud: 
+    config: 
+      label: master
+      server:
+        git:
+          uri: https://github.com/azzpro/Hefa-config.git
+          username: m18676389907@163.com
+          password: liuyun@123
+          search-paths: '{application}'

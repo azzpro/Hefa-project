@@ -1,8 +1,8 @@
 server:
-  port: 7203
+  port: 2222
 spring:
   application:
-    name: hefa-order-service
+    name: hefa-config-server
   cloud:
     consul:
       enabled: true
@@ -14,3 +14,4 @@ spring:
         health-check-path: /health
         health-check-interval: 10s
         instanceId: ${spring.application.name}
+  

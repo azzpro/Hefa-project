@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableDiscoveryClient
 @EnableFeignClients
 @RestController
-public class HefaSystemServiceApplication {
+public class HefaUserServiceApplication {
 
 	public static void main(String[] args) {
 		 System.setProperty("spring.devtools.restart.enabled", "true");
-		 SpringApplication.run(HefaSystemServiceApplication.class, args);
+		 SpringApplication.run(HefaUserServiceApplication.class, args);
 	}
 	
 	/**
@@ -26,6 +26,6 @@ public class HefaSystemServiceApplication {
 	 */
 	@GetMapping("/health")
 	public String health() {
-		return "HefaSystemService";
+		return "HefaUserService";
 	}
 }

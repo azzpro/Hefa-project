@@ -3,4 +3,10 @@ server:
 spring:
   application:
     name: hefa-client-web
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        enabled: false
   
