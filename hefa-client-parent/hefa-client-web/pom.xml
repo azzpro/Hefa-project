@@ -30,6 +30,10 @@
     		<artifactId>jersey-server</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-client</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.hefa</groupId>
 			<artifactId>hefa-client-api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
