@@ -18,6 +18,8 @@ public class SystemErrorCode extends BaseErrorCode {
     public static final SystemErrorCode SUCCESS = new SystemErrorCode(0, "SUCCESS");
     
     public static final SystemErrorCode SYS_ERROR_UNKNOWN = new SystemErrorCode(10000, "未知错误");
+    
+    public static final SystemErrorCode SYS_ERROR_SERVICE_NOT_USE = new SystemErrorCode(10001, "服务暂不可用");
        
     public SystemErrorCode(int code, String message) {
         super(code, message);

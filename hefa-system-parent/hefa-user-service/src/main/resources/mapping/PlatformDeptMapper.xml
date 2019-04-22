@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hefa.user.mapper.PlatformDeptMapper">
+  <resultMap id="BaseResultMap" type="com.hefa.user.pojo.PlatformDept">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="dept_code" jdbcType="VARCHAR" property="deptCode" />
+    <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+    <result column="parent_code" jdbcType="VARCHAR" property="parentCode" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="last_modify_time" jdbcType="TIMESTAMP" property="lastModifyTime" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, dept_code, dept_name, parent_code, description, status, create_time, creator, last_modify_time, 
+    modifier
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from platform_dept
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from platform_dept
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hefa.user.pojo.PlatformDept">
+    insert into platform_dept (id, dept_code, dept_name, parent_code 
+      description, status, create_time, 
+      creator, last_modify_time, modifier
+      )
+    values (#{id,jdbcType=BIGINT}, #{deptCode,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, #{parentCode,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=VARCHAR}, #{lastModifyTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hefa.user.pojo.PlatformDept">
+    insert into platform_dept
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="deptCode != null">
+        dept_code,
+      </if>
+      <if test="deptName != null">
+        dept_name,
+      </if>
+      <if test="parentCode != null">
+        parent_code,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="deptCode != null">
+        #{deptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null">
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+       <if test="parentCode != null">
+        #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyTime != null">
+        #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hefa.user.pojo.PlatformDept">
+    update platform_dept
+    <set>
+      <if test="deptCode != null">
+        dept_code = #{deptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null">
+        dept_name = #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCode != null">
+        parent_code = #{parentCode,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hefa.user.pojo.PlatformDept">
+    update platform_dept
+    set dept_code = #{deptCode,jdbcType=VARCHAR},
+      dept_name = #{deptName,jdbcType=VARCHAR},
+      parent_code = #{parentCode,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectByDeptName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from platform_dept
+    where dept_name = #{deptName,jdbcType=VARCHAR} and status != 0
+  </select>
+  
+  <select id="selectByParentDeptCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from platform_dept
+    where parent_code = #{deptCode,jdbcType=VARCHAR} and status != 0
+  </select>
+  
+  <select id="selectByDeptCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from platform_dept
+    where dept_code = #{deptCode,jdbcType=VARCHAR} and status != 0
+  </select>
+  
+  <select id="selectDeptList" parameterType="com.hefa.user.pojo.bo.SearchDeptParam" resultType="com.hefa.user.pojo.vo.Dept">
+		SELECT
+			dept.dept_name AS deptName,
+			dept.dept_code AS deptCode,
+			dept.parent_code AS parentCode,
+		    dept.`status` AS status,
+			u.user_name AS creator,
+			dept.create_time AS createTime 
+		FROM
+			platform_dept dept
+		LEFT JOIN platform_user u ON dept.creator = u.user_code
+		WHERE
+			dept.parent_code = '0' AND (dept.status != 0)
+		<if test="deptNameCode != null and deptNameCode!='' "> 
+			AND (dept.dept_name LIKE CONCAT('%',#{deptNameCode},'%') OR dept.dept_code LIKE CONCAT('%',#{deptNameCode},'%') )
+		</if>
+		GROUP BY dept.id
+		ORDER BY dept.create_time DESC
+  </select>
+  
+  <select id="selectDeptParentList" parameterType="java.lang.String" resultType="com.hefa.user.pojo.vo.Dept">
+  		SELECT
+			dept.dept_name AS deptName,
+			dept.dept_code AS deptCode,
+			dept.parent_code AS parentCode,
+			COUNT(u.dept_id) AS numberMembers,
+		 	dept.`status` AS status,
+			u.user_name  AS creator,
+			dept.create_time AS createTime 
+		FROM
+			platform_dept dept
+		LEFT JOIN platform_user u ON dept.creator = u.user_code
+		WHERE
+			dept.parent_code = #{deptParentCode}  AND dept.status != 0
+		GROUP BY dept.id
+		ORDER BY dept.create_time DESC
+  </select>
+  
+  <select id="selectDetailsByDeptCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from platform_dept
+    where dept_code = #{deptCode,jdbcType=VARCHAR} and status != 0
+  </select>
+  
+  <select id="selectCountByParam" parameterType="java.lang.String" resultType="int">
+  	SELECT count(1) FROM platform_dept dept 
+  	WHERE 
+  	dept.parent_code = #{deptParentCode,jdbcType=VARCHAR} 
+  	AND dept.dept_name = #{deptName,jdbcType=VARCHAR} AND dept.status != 0
+  </select>
+  
+  <select id="selectCountDeptUser" parameterType="java.lang.String" resultType="int">
+  	SELECT count(1) FROM platform_dept dept 
+	JOIN platform_user pu ON dept.id = pu.dept_id
+	WHERE dept.dept_code = #{deptCode,jdbcType=VARCHAR} AND dept.status != 0
+  </select>
+</mapper>
