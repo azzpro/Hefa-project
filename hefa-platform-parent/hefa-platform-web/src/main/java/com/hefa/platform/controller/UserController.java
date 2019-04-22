@@ -51,7 +51,7 @@ import com.hefa.utils.JSR303ValidateUtils;
  * @author 黄智聪 2018年10月17日 下午1:42:55
  */
 @RestController
-@RequestMapping("/azz/api/user")
+@RequestMapping("/hefa/api/user")
 public class UserController {
 
 	@Value("${shiro.session.timeout}")
