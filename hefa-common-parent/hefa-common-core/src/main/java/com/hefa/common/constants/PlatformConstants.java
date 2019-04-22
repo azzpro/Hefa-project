@@ -99,4 +99,22 @@ public abstract class PlatformConstants {
 			return false;
 		}
 	}
+	
+	/**
+	 * 
+	 * <P>个人资料修改类型 1姓名 2手机号 3邮箱 4密码</P>
+	 * @version 1.0
+	 * @author 黄智聪  2018年12月12日 下午3:01:54
+	 */
+	public interface PersonalEditType{
+		
+		public static final int NAME = 1;
+
+		public static final int PHONE_NUMBER = 2;
+
+		public static final int EMAIL = 3;
+
+		public static final int PASSWORD = 4;
+
+	}
 }
