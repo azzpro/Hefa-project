@@ -1,1 +1,2 @@
 com.hefa.sequence.sequence.service.impl.PlatEmployeeSequenceServiceImpl
+com.hefa.sequence.sequence.service.impl.PlatDeptSequenceServiceImpl

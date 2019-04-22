@@ -50,3 +50,7 @@ hefa:
      id: PlatEmployeeCodeSequence #
      type: PlatEmployeeCodeSequence
      args: {id: 'A2', maxSequenceValue: '99999', length: '5', step: '5'}
+    -
+     id: PlatDeptSequence #平台部门编码
+     type: PlatDeptCodeSequence
+     args: {id: 'A3', maxSequenceValue: '99999', length: '5', step: '5'}

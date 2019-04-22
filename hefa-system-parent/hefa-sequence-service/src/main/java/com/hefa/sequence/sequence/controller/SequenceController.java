@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hefa.sequence.sequence.service.PlatDeptSequenceService;
 import com.hefa.sequence.sequence.service.PlatEmployeeSequenceService;
 
 /**
@@ -27,8 +28,11 @@ public class SequenceController {
 	@Autowired
 	private PlatEmployeeSequenceService platEmployeeSequenceService;
 	
+	
+	@Autowired
+	private PlatDeptSequenceService platDeptSequenceService;
     /**
-     * <p>商户提现申请编码</p>
+     * <p></p>
      * @return
      * @author 2019年2月18日 下午3:55:08
      */
@@ -36,6 +40,16 @@ public class SequenceController {
     public String getPlatEmployeeNumber() {
         return platEmployeeSequenceService.getSequence();
     }
+    
+    /**
+	 * <p>平台端  部门编号</p>
+	 * @return
+	 * @author 刘建麟  2018年10月24日 下午4:37:16
+	 */
+	@RequestMapping(value="getPlatDepartmentNumber",method=RequestMethod.GET)
+	public String getPlatDepartmentNumber() {
+		return platDeptSequenceService.getSequence();
+	}
     
 }
 
