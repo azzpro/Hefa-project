@@ -25,10 +25,10 @@ import com.azz.system.bo.SmsCodeValidation;
 import com.azz.system.bo.SmsParams;
 import com.azz.system.vo.SmsInfo;
 import com.github.pagehelper.PageHelper;
-import com.hefa.common.base.BaseException;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.base.Password;
 import com.hefa.common.constants.PlatformConstants;
+import com.hefa.common.constants.PlatformConstants.PersonalEditType;
 import com.hefa.common.constants.PlatformConstants.UserStatus;
 import com.hefa.common.errorcode.ShiroAuthErrorCode;
 import com.hefa.common.exception.ReturnDataException;
@@ -391,15 +391,15 @@ public class UserService {
 	public JsonResult<String> editPassword(@RequestBody EditPasswordParam param) {
 		JSR303ValidateUtils.validateInputParam(param);
 
-		// 密码一致性校验
-		if (!param.getFirstPassword().equals(param.getSecondPassword())) {
-			throw new BaseException(PlatformUserErrorCode.PLATFORM_USER_ERROR_INCONSISTENT_PASSWORD);
-		}
-
 		// 根据用户编码获取用户信息
 		PlatformUser platformUser = platformUserMapper.getUserByUserCode(param.getUserCode());
 		if (platformUser == null) {// 无效用户
 			throw new ShiroAuthException(ShiroAuthErrorCode.SHIRO_AUTH_ERROR_LOGIN_ERROR, "无效用户");
+		}
+		
+		// 密码一致性校验
+		if (!param.getFirstPassword().equals(param.getSecondPassword())) {
+			throw new ValidationException("两次密码不一致");
 		}
 
 		// 用户设置的新密码信息
@@ -417,7 +417,6 @@ public class UserService {
 	public JsonResult<String> addUser(@RequestBody AddUserParam param) {
 		// 参数校验
 		JSR303ValidateUtils.validateInputParam(param);
-
 		PlatformDept dept = platformDeptMapper.selectByDeptCode(param.getDeptCode());
 		if (dept == null) {
 			throw new ValidationException("部门不存在");
