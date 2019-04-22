@@ -7,7 +7,6 @@
  
 package com.hefa.user.controller;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.management.relation.RoleInfo;
@@ -53,14 +52,9 @@ import com.hefa.user.service.UserService;
  * @author 刘建麟  2018年10月27日 上午11:02:10
  */
 @RestController
-@RequestMapping("/azz/api/user")
+@RequestMapping("/hefa/api/user")
 public class UserController {
 
-	// private final Logger LOG = LoggerFactory.getLogger(getClass());
-	
-	@Autowired
-	private AuditService auditService;
-	
 	@Autowired
 	private DeptService deptService;
 	
@@ -69,17 +63,6 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
-	
-	 /**
-     * <p>审核企业信息</p>
-     * @param param
-     * @return
-     * @author 彭斌  2018年10月20日 下午2:53:27
-     */
-	/*@RequestMapping(value="auditEnterprise",method=RequestMethod.POST)
-	JsonResult<String> auditEnterprise(@RequestBody AuditParam param){
-		return auditService.auditEnterprise(param);
-	}*/
 	
 	/**
      * <p>新增部门信息</p>
@@ -350,30 +333,6 @@ public class UserController {
     @RequestMapping(value="getUserInfo",method=RequestMethod.GET)
     JsonResult<UserInfo> getUserInfo(@RequestParam("userCode") String userCode){
     	return userService.getUserInfo(userCode);
-    }
-    
-    /**
-     * 
-     * <p>导入平台端成员</p>
-     * @param param
-     * @return
-     * @author 黄智聪  2018年10月20日 上午10:31:52
-     */
-    @RequestMapping(value="importPlatformUser",method=RequestMethod.POST)
-    JsonResult<String> importPlatformUser(@RequestBody ImportPlatformUserParam param) throws IOException{
-    	return userService.importPlatformUser(param);
-    }
-    
-    /**
-     * <p>导入平台端部门信息</p>
-     * @param param
-     * @return
-     * @throws IOException
-     * @author 彭斌  2018年12月12日 下午2:01:45
-     */
-    @RequestMapping(value="importPlatformDept",method=RequestMethod.POST)
-    JsonResult<String> importPlatformDept(@RequestBody ImportPlatformDeptParam param) throws IOException{
-        return deptService.importPlatformDept(param);
     }
     
     /**

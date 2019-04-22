@@ -31,78 +31,73 @@ import org.springframework.web.filter.CorsFilter;
  */
 @Configuration
 public class ShiroConfig {
-    @Bean
-    public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
-	ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-	// 必须设置 SecurityManager
-	shiroFilterFactoryBean.setSecurityManager(securityManager);
-	// setLoginUrl 如果不设置值，默认会自动寻找Web工程根目录下的"/login.jsp"页面 或 "/login" 映射
-	shiroFilterFactoryBean.setLoginUrl("/azz/api/user/noLogin");
-	// 设置无权限时跳转的 url;
-	shiroFilterFactoryBean.setUnauthorizedUrl("/azz/api/user/noPermission");
-	// 设置拦截器
-	Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-	// 开放登陆接口
-	filterChainDefinitionMap.put("/azz/api/user/login", "anon");
-	filterChainDefinitionMap.put("/azz/api/platform/course/getClassificationParent", "anon");
-	filterChainDefinitionMap.put("/azz/api/platform/course/getClassificationChild", "anon");
-	//易宝回调 放开
-	filterChainDefinitionMap.put("/azz/api/cashWithdrawal/cashWithdrawalCallback", "anon");
-	filterChainDefinitionMap.put("/azz/api/merchant/regEnterpriseNotify", "anon");
-	// 其余接口一律拦截
-	// 主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截
-	filterChainDefinitionMap.put("/**", "authc");
-	shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-	return shiroFilterFactoryBean;
-    }
+	@Bean
+	public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
+		ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+		// 必须设置 SecurityManager
+		shiroFilterFactoryBean.setSecurityManager(securityManager);
+		// setLoginUrl 如果不设置值，默认会自动寻找Web工程根目录下的"/login.jsp"页面 或 "/login" 映射
+		shiroFilterFactoryBean.setLoginUrl("/azz/api/user/noLogin");
+		// 设置无权限时跳转的 url;
+		shiroFilterFactoryBean.setUnauthorizedUrl("/azz/api/user/noPermission");
+		// 设置拦截器
+		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
+		// 开放登陆接口
+		filterChainDefinitionMap.put("/azz/api/user/login", "anon");
+		// 其余接口一律拦截
+		// 主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截
+		filterChainDefinitionMap.put("/**", "authc");
+		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
+		return shiroFilterFactoryBean;
+	}
 
-    @Bean
-    public FilterRegistrationBean filterRegistrationBean() {
-	// 对响应头进行CORS授权
-	ShiroCorsRegistration corsRegistration = new ShiroCorsRegistration("*");
-	corsRegistration
-		// 允许向该服务器提交请求的URI，*表示全部允许
-		.allowedOrigins("*")
-		// 允许提交请求的方法，*表示全部允许
-		.allowedMethods("*")
-		// 允许的头信息,*标识全部允许
-		.allowedHeaders("*")
-		// 暴露的头信息
-		.exposedHeaders(HttpHeaders.SET_COOKIE)
-		// 允许Cookie跨域，在做登录校验的时候有用
-		.allowCredentials(true);
-	// 注册CORS过滤器
-	UrlBasedCorsConfigurationSource configurationSource = new UrlBasedCorsConfigurationSource();
-	// 第一个参数表示过滤的url,*表示过滤所有
-	configurationSource.registerCorsConfiguration("/**", corsRegistration.getCorsConfiguration());
-	CorsFilter corsFilter = new CorsFilter(configurationSource);
-	return new FilterRegistrationBean(corsFilter);
-    }
+	@Bean
+	public FilterRegistrationBean<CorsFilter> filterRegistrationBean() {
+		// 对响应头进行CORS授权
+		ShiroCorsRegistration corsRegistration = new ShiroCorsRegistration("*");
+		corsRegistration
+				// 允许向该服务器提交请求的URI，*表示全部允许
+				.allowedOrigins("*")
+				// 允许提交请求的方法，*表示全部允许
+				.allowedMethods("*")
+				// 允许的头信息,*标识全部允许
+				.allowedHeaders("*")
+				// 暴露的头信息
+				.exposedHeaders(HttpHeaders.SET_COOKIE)
+				// 允许Cookie跨域，在做登录校验的时候有用
+				.allowCredentials(true);
+		// 注册CORS过滤器
+		UrlBasedCorsConfigurationSource configurationSource = new UrlBasedCorsConfigurationSource();
+		// 第一个参数表示过滤的url,*表示过滤所有
+		configurationSource.registerCorsConfiguration("/**", corsRegistration.getCorsConfiguration());
+		CorsFilter corsFilter = new CorsFilter(configurationSource);
+		return new FilterRegistrationBean<CorsFilter>(corsFilter);
+	}
 
-    /**
-     * 注入 securityManager
-     */
-    @Bean
-    public SecurityManager securityManager() {
-	DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-	// 设置realm.
-	securityManager.setRealm(customRealm());
-	securityManager.setSessionManager(sessionManager());
-	return securityManager;
-    }
-    
-    @Bean
-    public SessionManager sessionManager() {
-	return new ShiroSessionManager();
-    }
-    
-    /**
-     * 自定义身份认证 realm;
-     * <p>
-     * 必须写这个类，并加上 @Bean 注解，目的是注入 CustomRealm， 否则会影响 CustomRealm类 中其他类的依赖注入
-     */
-    @Bean
-    public CustomRealm customRealm() {
-	return new CustomRealm();
-    }
+	/**
+	 * 注入 securityManager
+	 */
+	@Bean
+	public SecurityManager securityManager() {
+		DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+		// 设置realm.
+		securityManager.setRealm(customRealm());
+		securityManager.setSessionManager(sessionManager());
+		return securityManager;
+	}
+
+	@Bean
+	public SessionManager sessionManager() {
+		return new ShiroSessionManager();
+	}
+
+	/**
+	 * 自定义身份认证 realm;
+	 * <p>
+	 * 必须写这个类，并加上 @Bean 注解，目的是注入 CustomRealm， 否则会影响 CustomRealm类 中其他类的依赖注入
+	 */
+	@Bean
+	public CustomRealm customRealm() {
+		return new CustomRealm();
+	}
 }

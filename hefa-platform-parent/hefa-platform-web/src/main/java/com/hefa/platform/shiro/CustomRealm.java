@@ -18,11 +18,11 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.azz.core.exception.SuppressedException;
-import com.azz.platform.user.api.UserService;
-import com.azz.platform.user.pojo.bo.LoginParam;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.errorcode.SystemErrorCode;
+import com.hefa.common.exception.SuppressedException;
+import com.hefa.user.api.UserService;
+import com.hefa.user.pojo.bo.LoginParam;
 
 /**
  * <P>

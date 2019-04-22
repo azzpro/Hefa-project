@@ -10,7 +10,8 @@ package com.hefa.platform.utils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 
-import com.hefa.pojo.vo.LoginUserInfo;
+import com.hefa.common.constants.PlatformConstants;
+import com.hefa.user.pojo.vo.LoginUserInfo;
 
 /**
  * <P>
@@ -27,7 +28,7 @@ public class WebUtils {
 	}
 
 	public static LoginUserInfo getLoginUser() {
-		return (LoginUserInfo) getShiroSession().getAttribute("loginUser");
+		return (LoginUserInfo) getShiroSession().getAttribute(PlatformConstants.LOGIN_USER);
 	}
 
 	public static Session getShiroSession() {
