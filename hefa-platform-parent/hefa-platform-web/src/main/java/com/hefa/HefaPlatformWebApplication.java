@@ -7,23 +7,19 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
-@EnableFeignClients
-@EnableDiscoveryClient
 @EnableAutoConfiguration(exclude= {DataSourceAutoConfiguration.class,DataSourceTransactionManagerAutoConfiguration.class})
-public class HefaClientWebApplication extends SpringBootServletInitializer {
+public class HefaPlatformWebApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
 	System.setProperty("spring.devtools.restart.enabled", "true");
-	SpringApplication.run(HefaClientWebApplication.class, args);
+	SpringApplication.run(HefaPlatformWebApplication.class, args);
     }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 	return builder.sources(this.getClass());
     }
-
+    
 }

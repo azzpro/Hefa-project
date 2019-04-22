@@ -1,0 +1,11 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: azz-platform-web
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        enabled: false
