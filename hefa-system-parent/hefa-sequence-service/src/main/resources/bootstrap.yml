@@ -1,0 +1,16 @@
+server:
+  port: 7202
+spring:
+  application:
+    name: hefa-sequence-service
+  cloud:
+    consul:
+      enabled: true
+      host: localhost
+      port: 8500
+      discovery:
+        serviceName: ${spring.application.name}
+        enabled: true
+        health-check-path: /health
+        health-check-interval: 10s
+        instanceId: ${spring.application.name}

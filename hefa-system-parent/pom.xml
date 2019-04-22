@@ -14,6 +14,8 @@
 		<module>hefa-user-pojo</module>
 		<module>hefa-user-service</module>
 		<module>hefa-user-api</module>
+		<module>hefa-sequence-service</module>
+		<module>hefa-sequence-api</module>
 	</modules>
 	
 </project>
