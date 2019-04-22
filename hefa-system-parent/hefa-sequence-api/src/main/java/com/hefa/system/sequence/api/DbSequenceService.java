@@ -21,12 +21,12 @@ public interface DbSequenceService {
 	
 	
 	/**
-	 * <p>微信品牌</p>
+	 * <p>平台端  员工编号</p>
 	 * @return
-	 * @author 刘建麟  2018年10月24日 下午4:36:33
+	 * @author 刘建麟  2018年10月24日 下午4:37:16
 	 */
-	@RequestMapping(value="/hefa/api/sequence/getNumber",method=RequestMethod.GET)
-	public String getNumber() ;
+	@RequestMapping(value="/hefa/api/sequence/getPlatEmployeeNumber",method=RequestMethod.GET)
+	public String getPlatEmployeeNumber() ;
 	
 }
 

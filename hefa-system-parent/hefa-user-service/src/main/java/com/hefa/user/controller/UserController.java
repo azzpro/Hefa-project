@@ -10,6 +10,8 @@ package com.hefa.user.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.management.relation.RoleInfo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,36 +19,33 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.azz.core.common.JsonResult;
-import com.azz.core.common.page.Pagination;
-import com.azz.platform.user.pojo.bo.AddDeptParam;
-import com.azz.platform.user.pojo.bo.AddRoleParam;
-import com.azz.platform.user.pojo.bo.AddUserParam;
-import com.azz.platform.user.pojo.bo.CheckVerificationCodeParam;
-import com.azz.platform.user.pojo.bo.DelRoleParam;
-import com.azz.platform.user.pojo.bo.EditDeptParam;
-import com.azz.platform.user.pojo.bo.EditPasswordParam;
-import com.azz.platform.user.pojo.bo.EditPersonalInfoParam;
-import com.azz.platform.user.pojo.bo.EditRoleParam;
-import com.azz.platform.user.pojo.bo.EditUserParam;
-import com.azz.platform.user.pojo.bo.EnableOrDisableOrDelUserParam;
-import com.azz.platform.user.pojo.bo.ImportPlatformDeptParam;
-import com.azz.platform.user.pojo.bo.ImportPlatformUserParam;
-import com.azz.platform.user.pojo.bo.LoginParam;
-import com.azz.platform.user.pojo.bo.SearchDeptParam;
-import com.azz.platform.user.pojo.bo.SearchRoleParam;
-import com.azz.platform.user.pojo.bo.SearchUserParam;
-import com.azz.platform.user.pojo.bo.SetRolePermissionParam;
-import com.azz.platform.user.pojo.vo.Dept;
-import com.azz.platform.user.pojo.vo.LoginUserInfo;
-import com.azz.platform.user.pojo.vo.Permission;
-import com.azz.platform.user.pojo.vo.RoleInfo;
-import com.azz.platform.user.pojo.vo.TreePermission;
-import com.azz.platform.user.pojo.vo.UserInfo;
-import com.azz.platform.user.service.AuditService;
-import com.azz.platform.user.service.DeptService;
-import com.azz.platform.user.service.PermissionService;
-import com.azz.platform.user.service.UserService;
+import com.hefa.common.base.JsonResult;
+import com.hefa.common.page.Pagination;
+import com.hefa.user.pojo.bo.AddDeptParam;
+import com.hefa.user.pojo.bo.AddRoleParam;
+import com.hefa.user.pojo.bo.AddUserParam;
+import com.hefa.user.pojo.bo.CheckVerificationCodeParam;
+import com.hefa.user.pojo.bo.DelRoleParam;
+import com.hefa.user.pojo.bo.EditDeptParam;
+import com.hefa.user.pojo.bo.EditPasswordParam;
+import com.hefa.user.pojo.bo.EditPersonalInfoParam;
+import com.hefa.user.pojo.bo.EditRoleParam;
+import com.hefa.user.pojo.bo.EditUserParam;
+import com.hefa.user.pojo.bo.EnableOrDisableOrDelUserParam;
+import com.hefa.user.pojo.bo.LoginParam;
+import com.hefa.user.pojo.bo.SearchDeptParam;
+import com.hefa.user.pojo.bo.SearchRoleParam;
+import com.hefa.user.pojo.bo.SearchUserParam;
+import com.hefa.user.pojo.bo.SetRolePermissionParam;
+import com.hefa.user.pojo.vo.Dept;
+import com.hefa.user.pojo.vo.LoginUserInfo;
+import com.hefa.user.pojo.vo.Permission;
+import com.hefa.user.pojo.vo.TreePermission;
+import com.hefa.user.pojo.vo.UserInfo;
+import com.hefa.user.service.DeptService;
+import com.hefa.user.service.PermissionService;
+import com.hefa.user.service.UserService;
+
 
 /**
  * <P>TODO</P>

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hefa.sequence.sequence.service.OrderCompanySequence;
+import com.hefa.sequence.sequence.service.PlatEmployeeSequenceService;
 
 /**
  * <P>TODO</P>
@@ -25,16 +25,16 @@ public class SequenceController {
 
 	
 	@Autowired
-	private OrderCompanySequence orderCompanySequence;
+	private PlatEmployeeSequenceService platEmployeeSequenceService;
 	
     /**
      * <p>商户提现申请编码</p>
      * @return
      * @author 2019年2月18日 下午3:55:08
      */
-    @RequestMapping(value="orderCompanySequence",method=RequestMethod.GET)
-    public String getWithdrawDepositApplySequence() {
-        return orderCompanySequence.getSequence();
+    @RequestMapping(value="getPlatEmployeeNumber",method=RequestMethod.GET)
+    public String getPlatEmployeeNumber() {
+        return platEmployeeSequenceService.getSequence();
     }
     
 }

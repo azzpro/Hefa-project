@@ -20,25 +20,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.azz.core.common.JsonResult;
-import com.azz.core.common.errorcode.JSR303ErrorCode;
-import com.azz.core.common.errorcode.PlatformUserErrorCode;
-import com.azz.core.exception.BaseException;
-import com.azz.exception.JSR303ValidationException;
-import com.azz.platform.user.mapper.PlatformDeptMapper;
-import com.azz.platform.user.pojo.PlatformDept;
-import com.azz.platform.user.pojo.bo.AddDeptParam;
-import com.azz.platform.user.pojo.bo.EditDeptParam;
-import com.azz.platform.user.pojo.bo.ImportPlatformDeptParam;
-import com.azz.platform.user.pojo.bo.SearchDeptParam;
-import com.azz.platform.user.pojo.vo.Dept;
-import com.azz.system.sequence.api.DbSequenceService;
-import com.azz.util.ExcelUtils;
-import com.azz.util.JSR303ValidateUtils;
-import com.azz.util.ObjectUtils;
-import com.azz.util.StringUtils;
-import com.azz.util.SystemSeqUtils;
 import com.google.common.collect.Lists;
+import com.hefa.common.base.BaseException;
+import com.hefa.common.base.JsonResult;
+import com.hefa.common.errorcode.PlatformUserErrorCode;
+import com.hefa.system.sequence.api.DbSequenceService;
+import com.hefa.user.mapper.PlatformDeptMapper;
+import com.hefa.user.pojo.PlatformDept;
+import com.hefa.user.pojo.bo.AddDeptParam;
+import com.hefa.utils.JSR303ValidateUtils;
+import com.hefa.utils.ObjectUtils;
 
 import lombok.Cleanup;
 import sun.misc.BASE64Decoder;
@@ -63,7 +54,7 @@ public class DeptService{
     
     public JsonResult<String> addDeptInfo(@RequestBody AddDeptParam param) {
         // 部门信息非空校验
-        JSR303ValidateUtils.validate(param);
+        JSR303ValidateUtils.validateInputParam(param);
         String deptParentCode = param.getParentCode();
         
         PlatformDept dept = new PlatformDept();

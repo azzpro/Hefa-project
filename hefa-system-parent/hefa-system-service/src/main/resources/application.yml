@@ -42,11 +42,21 @@ feign:
     enabled: true #feign原生是调用java.url 去发起HTTP请求，此配置是将请求客户端更换成apahce http
   hystrix: 
     enabled: false
-hefa: 
-  sequence:
-    available: true
-    sequenceConfigs:
-    -
-     id: PlatEmployeeCodeSequence #
-     type: PlatEmployeeCodeSequence
-     args: {id: 'A2', maxSequenceValue: '99999', length: '5', step: '5'}
+    
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mapping/**/*.xml
+aliyun:
+  product: Dysmsapi
+  domain: dysmsapi.aliyuncs.com
+  accessKeyId: LTAIjkAmKGFaL98Y
+  accessKeySecret: XmhLjEphQ8IZrhRDptI9WvhxFuaxn0
+  endpoint: http://oss-cn-shenzhen.aliyuncs.com
+  signName: 爱智造
+
+email:
+  account: mail@izz2025.com
+  pass: CWrd5JeH5FXEqHR5
+  host: smtp.exmail.qq.com
+  port: 465
+  protocol: smtp
