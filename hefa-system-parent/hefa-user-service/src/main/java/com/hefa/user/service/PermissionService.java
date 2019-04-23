@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.management.relation.RoleInfo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +34,7 @@ import com.hefa.user.pojo.bo.EditRoleParam;
 import com.hefa.user.pojo.bo.SearchRoleParam;
 import com.hefa.user.pojo.bo.SetRolePermissionParam;
 import com.hefa.user.pojo.vo.Permission;
+import com.hefa.user.pojo.vo.RoleInfo;
 import com.hefa.user.pojo.vo.TreePermission;
 import com.hefa.utils.JSR303ValidateUtils;
 import com.hefa.utils.StringUtils;

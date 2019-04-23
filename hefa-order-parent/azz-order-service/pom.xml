@@ -43,7 +43,12 @@
 		</dependency>
 		<dependency>
 			<groupId>com.hefa</groupId>
-			<artifactId>hefa-order-api</artifactId>
+			<artifactId>hefa-common-util</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.hefa</groupId>
+			<artifactId>hefa-order-pojo</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
@@ -113,6 +118,10 @@
 			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib</artifactId>
 			<classifier>jdk15</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 	</dependencies>
 	<build>

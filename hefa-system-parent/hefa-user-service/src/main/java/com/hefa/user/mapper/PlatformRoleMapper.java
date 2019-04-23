@@ -2,13 +2,13 @@ package com.hefa.user.mapper;
 
 import java.util.List;
 
-import javax.management.relation.RoleInfo;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.hefa.user.pojo.PlatformRole;
 import com.hefa.user.pojo.bo.SearchRoleParam;
+import com.hefa.user.pojo.vo.RoleInfo;
 
 @Mapper
 public interface PlatformRoleMapper {

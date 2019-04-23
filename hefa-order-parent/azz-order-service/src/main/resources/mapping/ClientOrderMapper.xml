@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hefa.order.mapper.ClientOrderMapper">
+  <resultMap id="BaseResultMap" type="com.hefa.order.pojo.ClientOrder">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
+    <result column="user_code" jdbcType="BIGINT" property="userCode" />
+    <result column="salesman_code" jdbcType="VARCHAR" property="salesmanCode" />
+    <result column="order_shipping_code" jdbcType="VARCHAR" property="orderShippingCode" />
+    <result column="order_creator" jdbcType="VARCHAR" property="orderCreator" />
+    <result column="delivery_days" jdbcType="INTEGER" property="deliveryDays" />
+    <result column="grand_total" jdbcType="DECIMAL" property="grandTotal" />
+    <result column="product_count" jdbcType="INTEGER" property="productCount" />
+    <result column="order_status" jdbcType="TINYINT" property="orderStatus" />
+    <result column="payment_method" jdbcType="TINYINT" property="paymentMethod" />
+    <result column="payment_status" jdbcType="TINYINT" property="paymentStatus" />
+    <result column="payment_type" jdbcType="TINYINT" property="paymentType" />
+    <result column="invoice_status" jdbcType="TINYINT" property="invoiceStatus" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_code, user_code, salesman_code, order_shipping_code, order_creator, delivery_days, 
+    grand_total, product_count, order_status, payment_method, payment_status, payment_type, 
+    invoice_status, remark, status, creator, create_time, modifier, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from client_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from client_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hefa.order.pojo.ClientOrder">
+    insert into client_order (id, order_code, user_code, 
+      salesman_code, order_shipping_code, order_creator, 
+      delivery_days, grand_total, product_count, 
+      order_status, payment_method, payment_status, 
+      payment_type, invoice_status, remark, 
+      status, creator, create_time, 
+      modifier, modify_time)
+    values (#{id,jdbcType=BIGINT}, #{orderCode,jdbcType=VARCHAR}, #{userCode,jdbcType=BIGINT}, 
+      #{salesmanCode,jdbcType=VARCHAR}, #{orderShippingCode,jdbcType=VARCHAR}, #{orderCreator,jdbcType=VARCHAR}, 
+      #{deliveryDays,jdbcType=INTEGER}, #{grandTotal,jdbcType=DECIMAL}, #{productCount,jdbcType=INTEGER}, 
+      #{orderStatus,jdbcType=TINYINT}, #{paymentMethod,jdbcType=TINYINT}, #{paymentStatus,jdbcType=TINYINT}, 
+      #{paymentType,jdbcType=TINYINT}, #{invoiceStatus,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hefa.order.pojo.ClientOrder">
+    insert into client_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderCode != null">
+        order_code,
+      </if>
+      <if test="userCode != null">
+        user_code,
+      </if>
+      <if test="salesmanCode != null">
+        salesman_code,
+      </if>
+      <if test="orderShippingCode != null">
+        order_shipping_code,
+      </if>
+      <if test="orderCreator != null">
+        order_creator,
+      </if>
+      <if test="deliveryDays != null">
+        delivery_days,
+      </if>
+      <if test="grandTotal != null">
+        grand_total,
+      </if>
+      <if test="productCount != null">
+        product_count,
+      </if>
+      <if test="orderStatus != null">
+        order_status,
+      </if>
+      <if test="paymentMethod != null">
+        payment_method,
+      </if>
+      <if test="paymentStatus != null">
+        payment_status,
+      </if>
+      <if test="paymentType != null">
+        payment_type,
+      </if>
+      <if test="invoiceStatus != null">
+        invoice_status,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderCode != null">
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null">
+        #{userCode,jdbcType=BIGINT},
+      </if>
+      <if test="salesmanCode != null">
+        #{salesmanCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderShippingCode != null">
+        #{orderShippingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCreator != null">
+        #{orderCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryDays != null">
+        #{deliveryDays,jdbcType=INTEGER},
+      </if>
+      <if test="grandTotal != null">
+        #{grandTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="productCount != null">
+        #{productCount,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=TINYINT},
+      </if>
+      <if test="paymentMethod != null">
+        #{paymentMethod,jdbcType=TINYINT},
+      </if>
+      <if test="paymentStatus != null">
+        #{paymentStatus,jdbcType=TINYINT},
+      </if>
+      <if test="paymentType != null">
+        #{paymentType,jdbcType=TINYINT},
+      </if>
+      <if test="invoiceStatus != null">
+        #{invoiceStatus,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hefa.order.pojo.ClientOrder">
+    update client_order
+    <set>
+      <if test="orderCode != null">
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null">
+        user_code = #{userCode,jdbcType=BIGINT},
+      </if>
+      <if test="salesmanCode != null">
+        salesman_code = #{salesmanCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderShippingCode != null">
+        order_shipping_code = #{orderShippingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCreator != null">
+        order_creator = #{orderCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryDays != null">
+        delivery_days = #{deliveryDays,jdbcType=INTEGER},
+      </if>
+      <if test="grandTotal != null">
+        grand_total = #{grandTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="productCount != null">
+        product_count = #{productCount,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatus != null">
+        order_status = #{orderStatus,jdbcType=TINYINT},
+      </if>
+      <if test="paymentMethod != null">
+        payment_method = #{paymentMethod,jdbcType=TINYINT},
+      </if>
+      <if test="paymentStatus != null">
+        payment_status = #{paymentStatus,jdbcType=TINYINT},
+      </if>
+      <if test="paymentType != null">
+        payment_type = #{paymentType,jdbcType=TINYINT},
+      </if>
+      <if test="invoiceStatus != null">
+        invoice_status = #{invoiceStatus,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hefa.order.pojo.ClientOrder">
+    update client_order
+    set order_code = #{orderCode,jdbcType=VARCHAR},
+      user_code = #{userCode,jdbcType=BIGINT},
+      salesman_code = #{salesmanCode,jdbcType=VARCHAR},
+      order_shipping_code = #{orderShippingCode,jdbcType=VARCHAR},
+      order_creator = #{orderCreator,jdbcType=VARCHAR},
+      delivery_days = #{deliveryDays,jdbcType=INTEGER},
+      grand_total = #{grandTotal,jdbcType=DECIMAL},
+      product_count = #{productCount,jdbcType=INTEGER},
+      order_status = #{orderStatus,jdbcType=TINYINT},
+      payment_method = #{paymentMethod,jdbcType=TINYINT},
+      payment_status = #{paymentStatus,jdbcType=TINYINT},
+      payment_type = #{paymentType,jdbcType=TINYINT},
+      invoice_status = #{invoiceStatus,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      creator = #{creator,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT} 
+  </update>
+  
+  <select id="getOrderInfos" parameterType="com.hefa.order.pojo.bo.SearchOrderInfoParam" resultType="com.hefa.order.pojo.vo.OrderInfo">
+    SELECT
+		co.order_code AS orderCode,
+		co.grand_total AS grandTotal,
+		co.create_time AS orderTime,
+		co.product_count AS productCount,
+		co.order_status AS orderStatus
+	FROM
+		client_order co
+	<where>
+		co.`status` != 0
+		<if test="orderStartTime != null and orderStartTime != ''">
+			and co.create_time >= #{orderStartTime}
+		</if>
+		<if test="orderEndTime != null and orderEndTime != ''">
+			and co.create_time &lt;= #{orderEndTime}
+		</if>
+		<if test="searchInput != null and searchInput != ''">
+			and co.user_code LIKE CONCAT('%', #{searchInput}, '%')
+		</if>
+	</where>
+  </select>
+  
+  <select id="getOrderInfoByOrderCode" parameterType="string" resultType="com.hefa.order.pojo.vo.OrderInfo">
+    SELECT
+		co.order_code AS orderCode,
+		co.grand_total AS grandTotal,
+		co.create_time AS orderTime,
+		co.product_count AS productCount,
+		co.order_status AS orderStatus,
+		co.delivery_days AS deliveryDays,
+		co.salesman_code AS salesmanCode,
+		co.remark AS remark,
+		cosa.province_name AS provinceName,
+		cosa.city_name AS cityName,
+		cosa.area_name AS areaName,
+		cosa.detail_address AS detailAddress,
+		cosa.receiver_name AS receiverName,
+		cosa.receiver_phone_number AS receiverPhoneNumber
+	FROM
+		client_order co
+	JOIN client_order_shipping_address cosa ON co.order_shipping_code = cosa.order_shipping_code
+	where co.`status` != 0
+	and co.order_code = #{orderCode}
+  </select>
+  
+</mapper>

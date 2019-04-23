@@ -16,6 +16,14 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.hefa</groupId>
 			<artifactId>hefa-common-core</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
