@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.hefa.order.pojo.ClientOrder">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
-    <result column="user_code" jdbcType="BIGINT" property="userCode" />
+    <result column="user_code" jdbcType="VARCHAR" property="userCode" />
     <result column="salesman_code" jdbcType="VARCHAR" property="salesmanCode" />
     <result column="order_shipping_code" jdbcType="VARCHAR" property="orderShippingCode" />
     <result column="order_creator" jdbcType="VARCHAR" property="orderCreator" />
@@ -46,7 +46,7 @@
       payment_type, invoice_status, remark, 
       status, creator, create_time, 
       modifier, modify_time)
-    values (#{id,jdbcType=BIGINT}, #{orderCode,jdbcType=VARCHAR}, #{userCode,jdbcType=BIGINT}, 
+    values (#{id,jdbcType=BIGINT}, #{orderCode,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}, 
       #{salesmanCode,jdbcType=VARCHAR}, #{orderShippingCode,jdbcType=VARCHAR}, #{orderCreator,jdbcType=VARCHAR}, 
       #{deliveryDays,jdbcType=INTEGER}, #{grandTotal,jdbcType=DECIMAL}, #{productCount,jdbcType=INTEGER}, 
       #{orderStatus,jdbcType=TINYINT}, #{paymentMethod,jdbcType=TINYINT}, #{paymentStatus,jdbcType=TINYINT}, 
@@ -126,7 +126,7 @@
         #{orderCode,jdbcType=VARCHAR},
       </if>
       <if test="userCode != null">
-        #{userCode,jdbcType=BIGINT},
+        #{userCode,jdbcType=VARCHAR},
       </if>
       <if test="salesmanCode != null">
         #{salesmanCode,jdbcType=VARCHAR},
@@ -188,7 +188,7 @@
         order_code = #{orderCode,jdbcType=VARCHAR},
       </if>
       <if test="userCode != null">
-        user_code = #{userCode,jdbcType=BIGINT},
+        user_code = #{userCode,jdbcType=VARCHAR},
       </if>
       <if test="salesmanCode != null">
         salesman_code = #{salesmanCode,jdbcType=VARCHAR},
@@ -247,7 +247,7 @@
   <update id="updateByPrimaryKey" parameterType="com.hefa.order.pojo.ClientOrder">
     update client_order
     set order_code = #{orderCode,jdbcType=VARCHAR},
-      user_code = #{userCode,jdbcType=BIGINT},
+      user_code = #{userCode,jdbcType=VARCHAR},
       salesman_code = #{salesmanCode,jdbcType=VARCHAR},
       order_shipping_code = #{orderShippingCode,jdbcType=VARCHAR},
       order_creator = #{orderCreator,jdbcType=VARCHAR},

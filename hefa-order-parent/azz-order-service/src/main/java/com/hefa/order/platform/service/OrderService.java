@@ -24,7 +24,6 @@ import com.hefa.common.page.Pagination;
 import com.hefa.order.mapper.ClientOrderItemMapper;
 import com.hefa.order.mapper.ClientOrderMapper;
 import com.hefa.order.pojo.bo.SearchOrderInfoParam;
-import com.hefa.order.pojo.vo.DeliveryInfo;
 import com.hefa.order.pojo.vo.OrderDetail;
 import com.hefa.order.pojo.vo.OrderInfo;
 import com.hefa.order.pojo.vo.OrderItemInfo;
@@ -74,10 +73,7 @@ public class OrderService {
 			throw new ReturnDataException("订单不存在");
 		}
 		List<OrderItemInfo> orderItems = clientOrderItemMapper.getOrderItemInfosByOrderCode(orderCode);
-		
-		DeliveryInfo deliveryInfo = null;// TODO
-		
-		return JsonResult.successJsonResult(new OrderDetail(orderInfo, deliveryInfo, orderItems));
+		return JsonResult.successJsonResult(new OrderDetail(orderInfo, orderItems));
 	}
 
 }

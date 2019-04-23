@@ -1,29 +1,28 @@
 /*******************************************************************************
  * Project Key : CPPII
- * Create on 2019年4月22日 下午8:18:15
+ * Create on 2019年4月23日 下午2:16:45
  * Copyright (c) 2018. 爱智造.
  * 注意：本内容仅限于爱智造内部传阅，禁止外泄以及用于其他的商业目的
  ******************************************************************************/
  
-package com.hefa.order.pojo.vo;
-
-import java.util.List;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
+package com.hefa.user.pojo.bo;
 /**
  * <P>TODO</P>
  * @version 1.0
- * @author 黄智聪  2019年4月22日 下午8:18:15
+ * @author 黄智聪  2019年4月23日 下午2:16:45
  */
+
+import org.hibernate.validator.constraints.NotBlank;
+
+import lombok.Data;
+
 @Data
-@AllArgsConstructor
-public class OrderDetail {
+public class AddPlatformUserSalesmanParam {
 	
-	private OrderInfo orderInfo;
+	@NotBlank(message = "成员编码不允许为空")
+	private String userCode;
 	
-	private List<OrderItemInfo> orderItems;
+	private String creator;
 
 }
 
