@@ -18,6 +18,7 @@
   <result column="goods_name" property="goodsName"/>
   <result column="pay_instruation" property="payInstruation"/>
   <result column="pay_success_date" property="paySuccessDate"/>
+  <result column="is_invoice" property="isInvoice"/>
 </resultMap>
   
   <select id="selectOrderStatus" parameterType="map" resultType="int">
@@ -47,19 +48,17 @@
   </update>
   
   <select id="selectPayInfoByPayNumber" resultMap="BaseResultMap" parameterType="String">
-  	select id,pay_number,three_party_number,order_number,order_status,order_type,order_money,
+  	select id,user_code,pay_number,three_party_number,order_number,order_status,order_type,order_money,
   	order_channel_money,order_customer_phone,order_time,pay_instruation
   	from client_pay where pay_number = #{number}
   </select>
-  <select id="selectPayList" resultMap="BaseResultMap" parameterType="com.hefa.order.platform.bo.PayOrderListParam">
-  	select id,pay_number,three_party_number,order_number,order_status,order_type,order_money,
-  	order_channel_money,order_customer_phone,order_time,pay_instruation
+  <select id="selectPayList" resultType="com.hefa.order.platform.vo.PayListInfo" parameterType="com.hefa.order.platform.bo.PayOrderListParam">
+  	select pay_number payNumber,order_number orderNumber,order_money orderMoney,
+  	order_channel_money orderChannelMoney,(order_money-order_channel_money) orderRealMoney,order_time orderTime,is_invoice isInvoice
   	from client_pay
   	<where>
   		<if test="param != null and param != ''">
   			pay_number like CONCAT('%', #{param}, '%')
-  			or
-  			three_party_number like CONCAT('%', #{param}, '%')
   			or
   			order_number like CONCAT('%', #{param}, '%')
   		</if>
@@ -165,4 +164,22 @@
       </if>
     </trim>
   </insert>
+  
+  <!-- 支付列表详情 -->
+  <select id="selectPlatPayOrderInfo" parameterType="string" resultType="com.hefa.order.platform.vo.PayOrderInfo">
+  	select 
+  		pay_number payNumber,
+  		order_money orderMoney,
+  		order_time orderTime,
+  		order_number orderNumber,
+  		grand_total grandTotal,
+  		create_time createTime,
+  		three_party_number threePartyNumber,
+  		order_channel_money orderChannelMoney,
+  		(order_money-order_channel_money) orderRealMoney
+  		from client_pay a left join client_order b
+  		on a.order_number = b.order_code
+  		where a.order_number = #{orderNumber}
+  </select>
+  
 </mapper>

@@ -14,6 +14,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.hefa.order.platform.bo.PayOrderListParam;
 import com.hefa.order.platform.pojo.ClientPay;
+import com.hefa.order.platform.vo.PayListInfo;
+import com.hefa.order.platform.vo.PayOrderInfo;
 
 /**
  * <P>TODO</P>
@@ -36,7 +38,15 @@ public interface ClientPayMapper {
 	 * @return
 	 * @author 刘建麟  2018年12月3日 下午2:58:46
 	 */
-	List<ClientPay> selectPayList(PayOrderListParam pl);
+	List<PayListInfo> selectPayList(PayOrderListParam pl);
+	
+	/**
+	 * 支付订单详情
+	 * @param orderNumber
+	 * @return
+	 */
+	PayOrderInfo selectPlatPayOrderInfo(String orderNumber);
+	
 	
 	/**
 	 * 查询订单是否已支付

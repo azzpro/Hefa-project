@@ -9,9 +9,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.github.pagehelper.PageHelper;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
+import com.hefa.order.mapper.ClientOrderItemMapper;
 import com.hefa.order.platform.bo.PayOrderListParam;
 import com.hefa.order.platform.mapper.ClientPayMapper;
-import com.hefa.order.platform.pojo.ClientPay;
+import com.hefa.order.platform.vo.PayListInfo;
+import com.hefa.order.platform.vo.PayOrderInfo;
+import com.hefa.order.pojo.vo.OrderItemInfo;
 
 /**
  * @author THINK
@@ -23,15 +26,30 @@ public class PayOrderManagementService {
 	@Autowired
 	private ClientPayMapper clientPayMapper;
 	
+	@Autowired
+	private ClientOrderItemMapper clientOrderItemMapper;
+	
 	/**
 	 * 获取支付列表数据
 	 * @param param
 	 * @return
 	 */
-	public JsonResult<Pagination<ClientPay>> getPlatPayOrderList(@RequestBody PayOrderListParam param){
+	public JsonResult<Pagination<PayListInfo>> getPlatPayOrderList(@RequestBody PayOrderListParam param){
 		PageHelper.startPage(param.getPageNum(), param.getPageSize());
-		List<ClientPay> infos = clientPayMapper.selectPayList(param);
+		List<PayListInfo> infos = clientPayMapper.selectPayList(param);
 		return JsonResult.successJsonResult(new Pagination<>(infos));
+	}
+	
+	/**
+	 * 获取支付列表数据
+	 * @param param
+	 * @return
+	 */
+	public JsonResult<PayOrderInfo> getPlatPayOrderInfo(String orderNumber){
+		PayOrderInfo selectPlatPayOrderInfo = clientPayMapper.selectPlatPayOrderInfo(orderNumber);
+		List<OrderItemInfo> orderItemInfosByOrderCode = clientOrderItemMapper.getOrderItemInfosByOrderCode(orderNumber);
+		selectPlatPayOrderInfo.setOii(orderItemInfosByOrderCode);
+		return JsonResult.successJsonResult(selectPlatPayOrderInfo);
 	}
 	
 }
