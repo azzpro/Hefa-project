@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hefa.order.platform.mapper.ClientPayMapper">
+  <resultMap id="BaseResultMap" type="com.hefa.order.platform.pojo.ClientPay">
+    <id column="id" property="id" jdbcType="BIGINT" />
+  <result column="user_code" property="userCode"/>  
+  <result column="pay_number" property="payNumber"/> 
+  <result column="three_party_number" property="threePartyNumber"/> 
+  <result column="order_number" property="orderNumber"/> 
+  <result column="order_status" property="orderStatus"/> 
+  <result column="order_type" property="orderType"/> 
+  <result column="order_money" property="orderMoney"/> 
+  <result column="order_channel_money" property="orderChannelMoney"/> 
+  <result column="order_customer_phone" property="orderCustomerPhone"/> 
+  <result column="order_time" property="orderTime" /> 
+  <result column="order_info" property="orderInfo"/>
+  <result column="userreq_ip" property="userreqIp"/>
+  <result column="goods_name" property="goodsName"/>
+  <result column="pay_instruation" property="payInstruation"/>
+  <result column="pay_success_date" property="paySuccessDate"/>
+</resultMap>
+  
+  <select id="selectOrderStatus" parameterType="map" resultType="int">
+  	select count(*) from client_pay
+  	where  order_status != 1
+  	and pay_number = #{no_order}  and order_money = #{money_order}
+  </select>
+  
+  <select id="selectOrderCode" resultType="string">
+  	select order_number from client_pay
+  	where pay_number = #{no_order}
+  </select>
+  
+  <select id="selectOrder" resultMap="BaseResultMap">
+  	select order_status from client_pay
+  	where order_number = #{order_number}
+  </select>
+  
+  <update id="updateOrderByNumber" parameterType="map">
+    update client_pay
+      set order_status = #{order_status},
+      order_info = #{order_info},
+      order_type = #{order_type},
+      pay_success_date = #{pay_success_date},
+      three_party_number = #{three_party_number}
+    where pay_number = #{pay_number}
+  </update>
+  
+  <select id="selectPayInfoByPayNumber" resultMap="BaseResultMap" parameterType="String">
+  	select id,pay_number,three_party_number,order_number,order_status,order_type,order_money,
+  	order_channel_money,order_customer_phone,order_time,pay_instruation
+  	from client_pay where pay_number = #{number}
+  </select>
+  <select id="selectPayList" resultMap="BaseResultMap" parameterType="com.hefa.order.platform.bo.PayOrderListParam">
+  	select id,pay_number,three_party_number,order_number,order_status,order_type,order_money,
+  	order_channel_money,order_customer_phone,order_time,pay_instruation
+  	from client_pay
+  	<where>
+  		<if test="param != null and param != ''">
+  			pay_number like CONCAT('%', #{param}, '%')
+  			or
+  			three_party_number like CONCAT('%', #{param}, '%')
+  			or
+  			order_number like CONCAT('%', #{param}, '%')
+  		</if>
+  	</where>
+  	order by order_time desc
+  </select>
+  
+  <insert id="insertPay" parameterType="com.hefa.order.platform.pojo.ClientPay">
+    insert into client_pay
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userCode != null">
+        user_code,
+      </if>
+      <if test="payNumber != null">
+        pay_number,
+      </if>
+      <if test="threePartyNumber != null">
+        three_party_number,
+      </if>
+      <if test="orderNumber != null">
+        order_number,
+      </if>
+      <if test="orderStatus != null">
+        order_status,
+      </if>
+      <if test="orderType != null">
+        order_type,
+      </if>
+      <if test="orderMoney != null">
+        order_money,
+      </if>
+      <if test="orderChannelMoney != null">
+        order_channel_money,
+      </if>
+      <if test="orderCustomerPhone != null">
+        order_customer_phone,
+      </if>
+      <if test="orderTime != null">
+        order_time,
+      </if>
+      <if test="orderInfo != null">
+        order_info,
+      </if>
+      <if test="userreqIp != null">
+        userreq_ip,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="payInstruation != null">
+        pay_instruation,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+       <if test="userCode != null">
+        #{userCode},
+      </if>
+      <if test="payNumber != null">
+        #{payNumber},
+      </if>
+      <if test="threePartyNumber != null">
+        #{threePartyNumber},
+      </if>
+      <if test="orderNumber != null">
+        #{orderNumber},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus},
+      </if>
+      <if test="orderType != null">
+        #{orderType},
+      </if>
+      <if test="orderMoney != null">
+        #{orderMoney},
+      </if>
+      <if test="orderChannelMoney != null">
+        #{orderChannelMoney},
+      </if>
+      <if test="orderCustomerPhone != null">
+        #{orderCustomerPhone},
+      </if>
+      <if test="orderTime != null">
+        #{orderTime},
+      </if>
+      <if test="orderInfo != null">
+        #{orderInfo},
+      </if>
+      <if test="userreqIp != null">
+        #{userreqIp},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName},
+      </if>
+      <if test="payInstruation != null">
+        #{payInstruation},
+      </if>
+    </trim>
+  </insert>
+</mapper>

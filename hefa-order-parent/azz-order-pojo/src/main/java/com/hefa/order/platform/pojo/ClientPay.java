@@ -1,0 +1,138 @@
+/*******************************************************************************
+ * Project Key : CPPII
+ * Create on 2018年11月26日 下午2:11:16
+ * Copyright (c) 2018. 爱智造.
+ * 注意：本内容仅限于爱智造内部传阅，禁止外泄以及用于其他的商业目的
+ ******************************************************************************/
+ 
+package com.hefa.order.platform.pojo;
+/**
+ * <P>TODO</P>
+ * @version 1.0
+ * @author 刘建麟  2018年11月26日 下午2:11:16
+ */
+
+import java.io.Serializable;
+
+
+public class ClientPay implements Serializable{
+	/**
+	 * TODO
+	 */
+	private static final long serialVersionUID = 8646390552957634890L;
+	private Long id;
+	private String userCode; //用户ID(支付发起人)
+	private String payNumber;//支付流水号
+	private String threePartyNumber;//三方流水号
+	private String orderNumber;//订单编号
+	private Byte orderStatus;//支付状态 1待支付 2支付成功 3关闭支付
+	private String orderType;//支付类型 
+	private String orderMoney;//支付金额
+	private String orderChannelMoney;//渠道费用
+	private Long orderCustomerPhone;//客户联系方式
+	private Long orderTime; //支付时间
+	private String orderInfo; //订单描述
+	private String userreqIp;// 订单发起IP
+	private String goodsName;//商品名称
+	private String payInstruation;
+	private String paySuccessDate;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getUserCode() {
+		return userCode;
+	}
+	public void setUserCode(String userCode) {
+		this.userCode = userCode;
+	}
+	public String getPayNumber() {
+		return payNumber;
+	}
+	public void setPayNumber(String payNumber) {
+		this.payNumber = payNumber;
+	}
+	public String getThreePartyNumber() {
+		return threePartyNumber;
+	}
+	public void setThreePartyNumber(String threePartyNumber) {
+		this.threePartyNumber = threePartyNumber;
+	}
+	public String getOrderNumber() {
+		return orderNumber;
+	}
+	public void setOrderNumber(String orderNumber) {
+		this.orderNumber = orderNumber;
+	}
+	public Byte getOrderStatus() {
+		return orderStatus;
+	}
+	public void setOrderStatus(Byte orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+	public String getOrderType() {
+		return orderType;
+	}
+	public void setOrderType(String orderType) {
+		this.orderType = orderType;
+	}
+	public String getOrderMoney() {
+		return orderMoney;
+	}
+	public void setOrderMoney(String orderMoney) {
+		this.orderMoney = orderMoney;
+	}
+	public String getOrderChannelMoney() {
+		return orderChannelMoney;
+	}
+	public void setOrderChannelMoney(String orderChannelMoney) {
+		this.orderChannelMoney = orderChannelMoney;
+	}
+	public Long getOrderCustomerPhone() {
+		return orderCustomerPhone;
+	}
+	public void setOrderCustomerPhone(Long orderCustomerPhone) {
+		this.orderCustomerPhone = orderCustomerPhone;
+	}
+	public Long getOrderTime() {
+		return orderTime;
+	}
+	public void setOrderTime(Long orderTime) {
+		this.orderTime = orderTime;
+	}
+	public String getOrderInfo() {
+		return orderInfo;
+	}
+	public void setOrderInfo(String orderInfo) {
+		this.orderInfo = orderInfo;
+	}
+	public String getUserreqIp() {
+		return userreqIp;
+	}
+	public void setUserreqIp(String userreqIp) {
+		this.userreqIp = userreqIp;
+	}
+	public String getGoodsName() {
+		return goodsName;
+	}
+	public void setGoodsName(String goodsName) {
+		this.goodsName = goodsName;
+	}
+	public String getPayInstruation() {
+		return payInstruation;
+	}
+	public void setPayInstruation(String payInstruation) {
+		this.payInstruation = payInstruation;
+	}
+	public String getPaySuccessDate() {
+		return paySuccessDate;
+	}
+	public void setPaySuccessDate(String paySuccessDate) {
+		this.paySuccessDate = paySuccessDate;
+	}
+	
+	
+}
+

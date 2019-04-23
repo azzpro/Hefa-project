@@ -1,4 +1,4 @@
-package com.hefa.order.platform.controller;
+package com.hefa.platform.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,17 +9,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
+import com.hefa.order.platform.api.PayOrderManagementService;
 import com.hefa.order.platform.bo.PayOrderListParam;
 import com.hefa.order.platform.pojo.ClientPay;
-import com.hefa.order.platform.service.PayOrderManagementService;
 
-/**
- * @author THINK
- * 订单支付管理
- */
+
 @RestController
 @RequestMapping("/hefa/api/pay/order")
 public class PayOrderManagementController {
+
 	
 	//logger
 	private static final Logger logger = LoggerFactory.getLogger(PayOrderManagementController.class);
@@ -36,6 +34,6 @@ public class PayOrderManagementController {
 	 */
 	@RequestMapping("/getPlatPayOrderList")
 	public JsonResult<Pagination<ClientPay>> getClientOrderInfoList(@RequestBody PayOrderListParam param){
-		return payOrderManagementService.getPlatPayOrderList(param);
+		return payOrderManagementService.getClientOrderInfoList(param);
 	}
 }
