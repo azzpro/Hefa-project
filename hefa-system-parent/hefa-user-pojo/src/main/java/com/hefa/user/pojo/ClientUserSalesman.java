@@ -26,6 +26,13 @@ public class ClientUserSalesman implements Serializable {
     private String salesmanCode;
 
     /**
+     * 状态  0无效  1有效
+     *
+     * @mbg.generated
+     */
+    private Byte status;
+
+    /**
      * 创建人
      *
      * @mbg.generated
@@ -125,6 +132,30 @@ public class ClientUserSalesman implements Serializable {
      */
     public void setSalesmanCode(String salesmanCode) {
         this.salesmanCode = salesmanCode == null ? null : salesmanCode.trim();
+    }
+
+    /**
+     * 状态  0无效  1有效<br/>
+     * 返回值对应的表列名 client_user_salesman.status
+     *
+     * @return 返回值对应 client_user_salesman.status
+     *
+     * @mbg.generated
+     */
+    public Byte getStatus() {
+        return status;
+    }
+
+    /**
+     * 状态  0无效  1有效<br/>
+     * client_user_salesman.status
+     *
+     * @param status 值对应 client_user_salesman.status
+     *
+     * @mbg.generated
+     */
+    public void setStatus(Byte status) {
+        this.status = status;
     }
 
     /**
@@ -238,6 +269,7 @@ public class ClientUserSalesman implements Serializable {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getUserCode() == null ? other.getUserCode() == null : this.getUserCode().equals(other.getUserCode()))
             && (this.getSalesmanCode() == null ? other.getSalesmanCode() == null : this.getSalesmanCode().equals(other.getSalesmanCode()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getCreator() == null ? other.getCreator() == null : this.getCreator().equals(other.getCreator()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getModifier() == null ? other.getModifier() == null : this.getModifier().equals(other.getModifier()))
@@ -251,6 +283,7 @@ public class ClientUserSalesman implements Serializable {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getUserCode() == null) ? 0 : getUserCode().hashCode());
         result = prime * result + ((getSalesmanCode() == null) ? 0 : getSalesmanCode().hashCode());
+        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getCreator() == null) ? 0 : getCreator().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getModifier() == null) ? 0 : getModifier().hashCode());
@@ -267,6 +300,7 @@ public class ClientUserSalesman implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", userCode=").append(userCode);
         sb.append(", salesmanCode=").append(salesmanCode);
+        sb.append(", status=").append(status);
         sb.append(", creator=").append(creator);
         sb.append(", createTime=").append(createTime);
         sb.append(", modifier=").append(modifier);

@@ -117,4 +117,29 @@ public abstract class PlatformConstants {
 		public static final int PASSWORD = 4;
 
 	}
+	
+	/**
+	 * 
+	 * <P>平台成员与业务员记录的状态</P>
+	 * @version 1.0
+	 * @author 黄智聪  2019年4月22日 下午1:39:38
+	 */
+	public enum PlatformUserSalesmanRecordStatus {
+
+		INVALID(0, "无效"),
+
+		VALID(1, "有效");
+
+		@Getter
+		private int value;
+
+		@Getter
+		private String desc;
+
+		PlatformUserSalesmanRecordStatus(int value, String desc) {
+			this.value = value;
+			this.desc = desc;
+		}
+
+	}
 }
