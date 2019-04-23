@@ -38,12 +38,15 @@ public class ShiroConfig {
 		shiroFilterFactoryBean.setSecurityManager(securityManager);
 		// setLoginUrl 如果不设置值，默认会自动寻找Web工程根目录下的"/login.jsp"页面 或 "/login" 映射
 		shiroFilterFactoryBean.setLoginUrl("/hefa/api/user/noLogin");
+		
+		
 		// 设置无权限时跳转的 url;
 		shiroFilterFactoryBean.setUnauthorizedUrl("/hefa/api/user/noPermission");
 		// 设置拦截器
 		Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
 		// 开放登陆接口
 		filterChainDefinitionMap.put("/hefa/api/user/login", "anon");
+		filterChainDefinitionMap.put("/actuator/health","anon");//开放健康检查接口
 		// 其余接口一律拦截
 		// 主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截
 		filterChainDefinitionMap.put("/**", "authc");

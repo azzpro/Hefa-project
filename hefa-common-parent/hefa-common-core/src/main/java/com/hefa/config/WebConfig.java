@@ -57,7 +57,8 @@ public class WebConfig extends WebMvcConfigurationSupport {
         InterceptorRegistration interceptor = registry.addInterceptor(getBadSqlInterceptor());
         interceptor.addPathPatterns("/**");
         InterceptorRegistration signInterceptor = registry.addInterceptor(getSignInterceptor());
-        signInterceptor.addPathPatterns("/api/**");
+        signInterceptor.addPathPatterns("/hefa/**");
+        signInterceptor.excludePathPatterns("/actuator/health");
     }
     
     @Bean
