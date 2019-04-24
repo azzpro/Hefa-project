@@ -1,33 +1,33 @@
 /*******************************************************************************
  * Project Key : CPPII
- * Create on 2019年4月23日 下午2:16:45
+ * Create on 2019年4月23日 下午8:44:40
  * Copyright (c) 2018. 爱智造.
  * 注意：本内容仅限于爱智造内部传阅，禁止外泄以及用于其他的商业目的
  ******************************************************************************/
  
 package com.hefa.user.pojo.bo;
 
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotBlank;
+import com.hefa.common.page.QueryPage;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * <P>TODO</P>
  * @version 1.0
- * @author 黄智聪  2019年4月23日 下午2:16:45
+ * @author 黄智聪  2019年4月23日 下午8:44:40
  */
 @Data
-public class AddClientUserSalesmanParam {
+@EqualsAndHashCode(callSuper=false)
+public class SearchInvitedUserInfoParam extends QueryPage{
+
+	private static final long serialVersionUID = 1L;
 	
-	@NotNull(message = "会员编码不允许为空")
-	private Integer userCode;
+	private String startTime;
 	
-	@NotBlank(message = "会员编码不允许为空")
-	private String salesmanCode;
+	private String endTime;
 	
-	private String creator;
+	private String searchInput;
 
 }
 

@@ -5,7 +5,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.hefa.order.pojo.ClientOrder;
+import com.hefa.order.pojo.bo.SearchCommissionOrderInfoParam;
 import com.hefa.order.pojo.bo.SearchOrderInfoParam;
+import com.hefa.order.pojo.vo.CommissionOrderInfo;
 import com.hefa.order.pojo.vo.OrderInfo;
 
 @Mapper
@@ -39,4 +41,13 @@ public interface ClientOrderMapper {
      * @author 黄智聪  2019年4月22日 下午8:35:17
      */
     OrderInfo getOrderInfoByOrderCode(String orderCode);
+    
+    /**
+     * 
+     * <p>查询分佣订单列表</p>
+     * @param param
+     * @return
+     * @author 黄智聪  2019年4月24日 下午4:40:30
+     */
+    List<CommissionOrderInfo> getCommissionOrderInfos(SearchCommissionOrderInfoParam param);
 }

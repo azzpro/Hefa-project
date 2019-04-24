@@ -19,16 +19,13 @@ import org.hibernate.validator.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class EditOrDelPlatformUserSalesmanParam {
-	
-	@NotNull(message = "缺少请求参数")
-	private int optType;
+public class EditClientUserSalesmanParam {
 	
 	@NotNull(message = "请选择记录")
-	private Long recordId;
+	private Long id;
 	
-	@NotBlank(message = "成员编码不允许为空")
-	private String userCode;
+	@NotBlank(message = "业务员编码不允许为空")
+	private String salesmanCode;
 	
 	private String modifier;
 

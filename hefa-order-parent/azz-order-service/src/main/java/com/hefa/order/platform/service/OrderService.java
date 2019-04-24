@@ -23,7 +23,9 @@ import com.hefa.common.exception.ValidationException;
 import com.hefa.common.page.Pagination;
 import com.hefa.order.mapper.ClientOrderItemMapper;
 import com.hefa.order.mapper.ClientOrderMapper;
+import com.hefa.order.pojo.bo.SearchCommissionOrderInfoParam;
 import com.hefa.order.pojo.bo.SearchOrderInfoParam;
+import com.hefa.order.pojo.vo.CommissionOrderInfo;
 import com.hefa.order.pojo.vo.OrderDetail;
 import com.hefa.order.pojo.vo.OrderInfo;
 import com.hefa.order.pojo.vo.OrderItemInfo;
@@ -74,6 +76,29 @@ public class OrderService {
 		}
 		List<OrderItemInfo> orderItems = clientOrderItemMapper.getOrderItemInfosByOrderCode(orderCode);
 		return JsonResult.successJsonResult(new OrderDetail(orderInfo, orderItems));
+	}
+	
+	/**
+	 * 
+	 * <p>查询分佣订单列表</p>
+	 * @param param
+	 * @return
+	 * @author 黄智聪  2019年4月24日 下午4:43:33
+	 */
+	public JsonResult<Pagination<CommissionOrderInfo>> getCommissionOrderInfos(@RequestBody SearchCommissionOrderInfoParam param){
+		PageHelper.startPage(param.getPageNum(), param.getPageSize());
+		List<CommissionOrderInfo> orderInfos = clientOrderMapper.getCommissionOrderInfos(param);
+		return JsonResult.successJsonResult(new Pagination<>(orderInfos));
+	}
+	
+	/**
+	 * 
+	 * <p>导出分佣订单</p>
+	 * @return
+	 * @author 黄智聪  2019年4月24日 下午4:46:23
+	 */
+	public JsonResult<String> exportCommissionOrder(){
+		return JsonResult.successJsonResult();
 	}
 
 }

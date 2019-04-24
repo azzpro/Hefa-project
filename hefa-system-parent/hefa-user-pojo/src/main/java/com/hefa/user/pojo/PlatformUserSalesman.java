@@ -31,6 +31,8 @@ public class PlatformUserSalesman implements Serializable {
      * @mbg.generated
      */
     private String salesmanCode;
+    
+    private Integer invitedClientUserCount;
 
     /**
      * 状态 0无效   1有效
@@ -316,4 +318,12 @@ public class PlatformUserSalesman implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
+	public int getInvitedClientUserCount() {
+		return invitedClientUserCount;
+	}
+
+	public void setInvitedClientUserCount(int invitedClientUserCount) {
+		this.invitedClientUserCount = invitedClientUserCount;
+	}
 }

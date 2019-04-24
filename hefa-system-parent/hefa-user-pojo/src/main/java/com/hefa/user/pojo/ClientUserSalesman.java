@@ -3,6 +3,13 @@ package com.hefa.user.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ClientUserSalesman implements Serializable {
     /**
      * 主键id

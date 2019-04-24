@@ -38,7 +38,7 @@ public class ClientOrder implements Serializable {
      *
      * @mbg.generated
      */
-    private String orderShippingCode;
+    private String shippingAddressCode;
 
     /**
      * 下单人名称
@@ -251,8 +251,8 @@ public class ClientOrder implements Serializable {
      *
      * @mbg.generated
      */
-    public String getOrderShippingCode() {
-        return orderShippingCode;
+    public String getShippingAddressCode() {
+        return shippingAddressCode;
     }
 
     /**
@@ -263,8 +263,8 @@ public class ClientOrder implements Serializable {
      *
      * @mbg.generated
      */
-    public void setOrderShippingCode(String orderShippingCode) {
-        this.orderShippingCode = orderShippingCode == null ? null : orderShippingCode.trim();
+    public void setShippingAddressCode(String shippingAddressCode) {
+        this.shippingAddressCode = shippingAddressCode == null ? null : shippingAddressCode.trim();
     }
 
     /**
@@ -643,7 +643,7 @@ public class ClientOrder implements Serializable {
             && (this.getOrderCode() == null ? other.getOrderCode() == null : this.getOrderCode().equals(other.getOrderCode()))
             && (this.getUserCode() == null ? other.getUserCode() == null : this.getUserCode().equals(other.getUserCode()))
             && (this.getSalesmanCode() == null ? other.getSalesmanCode() == null : this.getSalesmanCode().equals(other.getSalesmanCode()))
-            && (this.getOrderShippingCode() == null ? other.getOrderShippingCode() == null : this.getOrderShippingCode().equals(other.getOrderShippingCode()))
+            && (this.getShippingAddressCode() == null ? other.getShippingAddressCode() == null : this.getShippingAddressCode().equals(other.getShippingAddressCode()))
             && (this.getOrderCreator() == null ? other.getOrderCreator() == null : this.getOrderCreator().equals(other.getOrderCreator()))
             && (this.getDeliveryDays() == null ? other.getDeliveryDays() == null : this.getDeliveryDays().equals(other.getDeliveryDays()))
             && (this.getGrandTotal() == null ? other.getGrandTotal() == null : this.getGrandTotal().equals(other.getGrandTotal()))
@@ -669,7 +669,7 @@ public class ClientOrder implements Serializable {
         result = prime * result + ((getOrderCode() == null) ? 0 : getOrderCode().hashCode());
         result = prime * result + ((getUserCode() == null) ? 0 : getUserCode().hashCode());
         result = prime * result + ((getSalesmanCode() == null) ? 0 : getSalesmanCode().hashCode());
-        result = prime * result + ((getOrderShippingCode() == null) ? 0 : getOrderShippingCode().hashCode());
+        result = prime * result + ((getShippingAddressCode() == null) ? 0 : getShippingAddressCode().hashCode());
         result = prime * result + ((getOrderCreator() == null) ? 0 : getOrderCreator().hashCode());
         result = prime * result + ((getDeliveryDays() == null) ? 0 : getDeliveryDays().hashCode());
         result = prime * result + ((getGrandTotal() == null) ? 0 : getGrandTotal().hashCode());
@@ -698,7 +698,7 @@ public class ClientOrder implements Serializable {
         sb.append(", orderCode=").append(orderCode);
         sb.append(", userCode=").append(userCode);
         sb.append(", salesmanCode=").append(salesmanCode);
-        sb.append(", orderShippingCode=").append(orderShippingCode);
+        sb.append(", shippingAddressCode=").append(shippingAddressCode);
         sb.append(", orderCreator=").append(orderCreator);
         sb.append(", deliveryDays=").append(deliveryDays);
         sb.append(", grandTotal=").append(grandTotal);

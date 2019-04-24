@@ -1,33 +1,33 @@
 /*******************************************************************************
  * Project Key : CPPII
- * Create on 2019年4月23日 下午2:16:45
+ * Create on 2019年4月24日 下午1:53:27
  * Copyright (c) 2018. 爱智造.
  * 注意：本内容仅限于爱智造内部传阅，禁止外泄以及用于其他的商业目的
  ******************************************************************************/
  
-package com.hefa.user.pojo.bo;
+package com.hefa.user.pojo.vo;
 
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotBlank;
+import java.util.Date;
 
 import lombok.Data;
 
 /**
  * <P>TODO</P>
  * @version 1.0
- * @author 黄智聪  2019年4月23日 下午2:16:45
+ * @author 黄智聪  2019年4月24日 下午1:53:27
  */
 @Data
-public class AddClientUserSalesmanParam {
+public class SalesmanInfo {
 	
-	@NotNull(message = "会员编码不允许为空")
-	private Integer userCode;
-	
-	@NotBlank(message = "会员编码不允许为空")
 	private String salesmanCode;
 	
-	private String creator;
+	private String deptName;
+	
+	private String userName;
+	
+	private Date createTime;
+	
+	private Integer invitedUserCount;
 
 }
 
