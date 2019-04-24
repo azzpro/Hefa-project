@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hefa.order.mapper.ClientInvoiceMapper">
+  <resultMap id="BaseResultMap" type="com.hefa.order.pojo.ClientInvoice">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="invoice_code" jdbcType="VARCHAR" property="invoiceCode" />
+    <result column="user_code" jdbcType="VARCHAR" property="userCode" />
+    <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
+    <result column="invoice_template_code" jdbcType="VARCHAR" property="invoiceTemplateCode" />
+    <result column="shipping_address_code" jdbcType="VARCHAR" property="shippingAddressCode" />
+    <result column="amount" jdbcType="DECIMAL" property="amount" />
+    <result column="quantity" jdbcType="INTEGER" property="quantity" />
+    <result column="invoice_status" jdbcType="TINYINT" property="invoiceStatus" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, invoice_code, user_code, order_code, invoice_template_code, shipping_address_code, 
+    amount, quantity, invoice_status, creator, create_time, modifier, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from client_invoice
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from client_invoice
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hefa.order.pojo.ClientInvoice">
+    insert into client_invoice (id, invoice_code, user_code, 
+      order_code, invoice_template_code, shipping_address_code, 
+      amount, quantity, invoice_status, 
+      creator, create_time, modifier, 
+      modify_time)
+    values (#{id,jdbcType=BIGINT}, #{invoiceCode,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}, 
+      #{orderCode,jdbcType=VARCHAR}, #{invoiceTemplateCode,jdbcType=VARCHAR}, #{shippingAddressCode,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=DECIMAL}, #{quantity,jdbcType=INTEGER}, #{invoiceStatus,jdbcType=TINYINT}, 
+      #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hefa.order.pojo.ClientInvoice">
+    insert into client_invoice
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="invoiceCode != null">
+        invoice_code,
+      </if>
+      <if test="userCode != null">
+        user_code,
+      </if>
+      <if test="orderCode != null">
+        order_code,
+      </if>
+      <if test="invoiceTemplateCode != null">
+        invoice_template_code,
+      </if>
+      <if test="shippingAddressCode != null">
+        shipping_address_code,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="quantity != null">
+        quantity,
+      </if>
+      <if test="invoiceStatus != null">
+        invoice_status,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="invoiceCode != null">
+        #{invoiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null">
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCode != null">
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTemplateCode != null">
+        #{invoiceTemplateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingAddressCode != null">
+        #{shippingAddressCode,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="quantity != null">
+        #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceStatus != null">
+        #{invoiceStatus,jdbcType=TINYINT},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hefa.order.pojo.ClientInvoice">
+    update client_invoice
+    <set>
+      <if test="invoiceCode != null">
+        invoice_code = #{invoiceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null">
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCode != null">
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="invoiceTemplateCode != null">
+        invoice_template_code = #{invoiceTemplateCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingAddressCode != null">
+        shipping_address_code = #{shippingAddressCode,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="quantity != null">
+        quantity = #{quantity,jdbcType=INTEGER},
+      </if>
+      <if test="invoiceStatus != null">
+        invoice_status = #{invoiceStatus,jdbcType=TINYINT},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hefa.order.pojo.ClientInvoice">
+    update client_invoice
+    set invoice_code = #{invoiceCode,jdbcType=VARCHAR},
+      user_code = #{userCode,jdbcType=VARCHAR},
+      order_code = #{orderCode,jdbcType=VARCHAR},
+      invoice_template_code = #{invoiceTemplateCode,jdbcType=VARCHAR},
+      shipping_address_code = #{shippingAddressCode,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DECIMAL},
+      quantity = #{quantity,jdbcType=INTEGER},
+      invoice_status = #{invoiceStatus,jdbcType=TINYINT},
+      creator = #{creator,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
