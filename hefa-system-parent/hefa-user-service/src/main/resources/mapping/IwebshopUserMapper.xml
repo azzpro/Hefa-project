@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hefa.user.mapper.MemberUserMapper">
+  <resultMap id="BaseResultMap" type="com.hefa.user.pojo.IwebshopUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="headIco" jdbcType="VARCHAR" property="headIco" />
+  </resultMap>
+  
+  <resultMap id="BaseResultMap2" type="com.hefa.user.pojo.IwebshopMember">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="true_name" jdbcType="VARCHAR" property="trueName" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="contact_addr" jdbcType="VARCHAR" property="contactAddr" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="sex" jdbcType="TINYINT" property="sex" />
+    <result column="birthday"  property="birthday" />
+    <result column="group_id" jdbcType="INTEGER" property="groupId" />
+    <result column="exp" jdbcType="INTEGER" property="exp" />
+    <result column="point" jdbcType="INTEGER" property="point" />
+    <result column="message_ids" jdbcType="VARCHAR" property="messageIds" />
+    <result column="time"  property="time" />
+    <result column="zip" jdbcType="VARCHAR" property="zip" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="prop" jdbcType="VARCHAR" property="prop" />
+    <result column="balance" property="balance" />
+    <result column="last_login"  property="lastLogin" />
+    <result column="custom" property="custom" />
+    <result column="email"  property="email" />
+  </resultMap>
+  
+  <select id="getMemberUserList" resultType="com.hefa.user.pojo.vo.MemberInfo" parameterType="com.hefa.user.pojo.bo.MemberParam">
+  	select b.mobile phone,pu.user_name RecommendUser,b.email regMail,DATE_FORMAT(b.time,'%Y-%m-%d') regTime,a.id userCode
+  	from iwebshop_user a
+  	left join iwebshop_member b on a.id = b.user_id
+  	left join client_user_salesman c on c.user_code = a.id
+  	left join platform_user_salesman p on p.salesman_code = c.salesman_code
+  	left join platform_user pu on p.platform_user_code = pu.user_code
+  	<where>
+  		<if test="startTime != null and startTime != ''">
+			b.time >= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and b.time &lt;= #{endTime}
+		</if>
+  		<if test="meberNumber != null and meberNumber != ''">
+  			b.mobile like CONCAT('%', #{param.meberNumber}, '%')
+  			or
+  			a.id like CONCAT('%', #{param.meberNumber}, '%')
+  		</if>
+  	</where>
+  	order by b.time desc
+  </select>
+</mapper>
