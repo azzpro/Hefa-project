@@ -20,11 +20,11 @@ public class ClientOrder implements Serializable {
     private String orderCode;
 
     /**
-     * 客户id
+     * 客户编码
      *
      * @mbg.generated
      */
-    private Long userCode;
+    private String userCode;
 
     /**
      * 业务员编码（推荐人）
@@ -203,7 +203,7 @@ public class ClientOrder implements Serializable {
      *
      * @mbg.generated
      */
-    public Long getUserCode() {
+    public String getUserCode() {
         return userCode;
     }
 
@@ -215,7 +215,7 @@ public class ClientOrder implements Serializable {
      *
      * @mbg.generated
      */
-    public void setUserCode(Long userCode) {
+    public void setUserCode(String userCode) {
         this.userCode = userCode;
     }
 
