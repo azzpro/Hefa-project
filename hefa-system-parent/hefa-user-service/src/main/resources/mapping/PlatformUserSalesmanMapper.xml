@@ -5,6 +5,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="platform_user_code" jdbcType="VARCHAR" property="platformUserCode" />
     <result column="salesman_code" jdbcType="VARCHAR" property="salesmanCode" />
+    <result column="invited_client_user_count" jdbcType="INTEGER" property="invitedClientUserCount" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="creator" jdbcType="VARCHAR" property="creator" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -12,7 +13,7 @@
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, platform_user_code, salesman_code, status, creator, create_time, modifier, modify_time
+    id, platform_user_code, salesman_code, status, invited_client_user_count, creator, create_time, modifier, modify_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -26,10 +27,10 @@
   </delete>
   <insert id="insert" parameterType="com.hefa.user.pojo.PlatformUserSalesman">
     insert into platform_user_salesman (id, platform_user_code, salesman_code, 
-      status, creator, create_time, 
+      status, invited_client_user_count, creator, create_time, 
       modifier, modify_time)
     values (#{id,jdbcType=BIGINT}, #{platformUserCode,jdbcType=VARCHAR}, #{salesmanCode,jdbcType=VARCHAR}, 
-      #{status,jdbcType=TINYINT}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT},#{invitedClientUserCount,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{modifier,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.hefa.user.pojo.PlatformUserSalesman">
@@ -46,6 +47,9 @@
       </if>
       <if test="status != null">
         status,
+      </if>
+      <if test="invitedClientUserCount != null">
+        invited_client_user_count,
       </if>
       <if test="creator != null">
         creator,
@@ -73,6 +77,9 @@
       <if test="status != null">
         #{status,jdbcType=TINYINT},
       </if>
+      <if test="invitedClientUserCount != null">
+        #{invitedClientUserCount,jdbcType=INTEGER},
+      </if>
       <if test="creator != null">
         #{creator,jdbcType=VARCHAR},
       </if>
@@ -99,6 +106,9 @@
       <if test="status != null">
         status = #{status,jdbcType=TINYINT},
       </if>
+      <if test="invitedClientUserCount != null">
+        invited_client_user_count = #{invitedClientUserCount,jdbcType=INTEGER},
+      </if>
       <if test="creator != null">
         creator = #{creator,jdbcType=VARCHAR},
       </if>
@@ -119,13 +129,15 @@
     set platform_user_code = #{platformUserCode,jdbcType=VARCHAR},
       salesman_code = #{salesmanCode,jdbcType=VARCHAR},
       status = #{status,jdbcType=TINYINT},
+      invited_client_user_count = #{invitedClientUserCount,jdbcType=INTEGER},
       creator = #{creator,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       modifier = #{modifier,jdbcType=VARCHAR},
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="countByPlatformUserCode" parameterType="String" resultType="int">
+  
+  <select id="countByPlatformUserCode" resultType="int">
     select  count(1)
     from platform_user_salesman
     where status != 0 
@@ -134,4 +146,41 @@
         and id != #{id}
     </if>
   </select>
+  
+  <select id="countBySalesmanCode" parameterType="string" resultType="int">
+    select  count(1)
+    from platform_user_salesman
+    where status != 0 
+    and salesman_code = #{salesmanCode}
+  </select>
+  
+  <select id="getSalesmanInfos" parameterType="com.hefa.user.pojo.bo.SearchSalesmanInfoParam" resultType="com.hefa.user.pojo.vo.SalesmanInfo">
+    SELECT
+		pus.salesman_code AS salesmanCode,
+		pd.dept_name AS deptName,
+		pu.user_name AS userName,
+		pus.create_time AS createTime,
+		pus.invited_client_user_count invitedUserCount
+	FROM
+		platform_user_salesman pus
+	JOIN platform_user pu ON pu.user_code = pus.platform_user_code
+	JOIN platform_dept pd ON pd.id = pu.dept_id
+	<where> 
+		pus.status != 0
+		<if test="startTime != null and startTime != ''">
+			and pus.create_time >= #{orderStartTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and pus.create_time &lt;= #{orderEndTime}
+		</if>
+		<if test="searchInput != null and searchInput != ''">
+			and (
+					pus.salesman_code LIKE CONCAT('%', #{searchInput}, '%')
+				or	pu.user_name LIKE CONCAT('%', #{searchInput}, '%')
+			)
+		</if>
+	</where>	
+	ORDER BY pus.create_time DESC
+  </select>
+  
 </mapper>

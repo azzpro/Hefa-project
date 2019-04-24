@@ -6,7 +6,7 @@
     <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
     <result column="user_code" jdbcType="VARCHAR" property="userCode" />
     <result column="salesman_code" jdbcType="VARCHAR" property="salesmanCode" />
-    <result column="order_shipping_code" jdbcType="VARCHAR" property="orderShippingCode" />
+    <result column="shipping_address_code" jdbcType="VARCHAR" property="shippingAddressCode" />
     <result column="order_creator" jdbcType="VARCHAR" property="orderCreator" />
     <result column="delivery_days" jdbcType="INTEGER" property="deliveryDays" />
     <result column="grand_total" jdbcType="DECIMAL" property="grandTotal" />
@@ -24,7 +24,7 @@
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_code, user_code, salesman_code, order_shipping_code, order_creator, delivery_days, 
+    id, order_code, user_code, salesman_code, shipping_address_code, order_creator, delivery_days, 
     grand_total, product_count, order_status, payment_method, payment_status, payment_type, 
     invoice_status, remark, status, creator, create_time, modifier, modify_time
   </sql>
@@ -40,14 +40,14 @@
   </delete>
   <insert id="insert" parameterType="com.hefa.order.pojo.ClientOrder">
     insert into client_order (id, order_code, user_code, 
-      salesman_code, order_shipping_code, order_creator, 
+      salesman_code, shipping_address_code, order_creator, 
       delivery_days, grand_total, product_count, 
       order_status, payment_method, payment_status, 
       payment_type, invoice_status, remark, 
       status, creator, create_time, 
       modifier, modify_time)
     values (#{id,jdbcType=BIGINT}, #{orderCode,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}, 
-      #{salesmanCode,jdbcType=VARCHAR}, #{orderShippingCode,jdbcType=VARCHAR}, #{orderCreator,jdbcType=VARCHAR}, 
+      #{salesmanCode,jdbcType=VARCHAR}, #{shippingAddressCode,jdbcType=VARCHAR}, #{orderCreator,jdbcType=VARCHAR}, 
       #{deliveryDays,jdbcType=INTEGER}, #{grandTotal,jdbcType=DECIMAL}, #{productCount,jdbcType=INTEGER}, 
       #{orderStatus,jdbcType=TINYINT}, #{paymentMethod,jdbcType=TINYINT}, #{paymentStatus,jdbcType=TINYINT}, 
       #{paymentType,jdbcType=TINYINT}, #{invoiceStatus,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, 
@@ -69,8 +69,8 @@
       <if test="salesmanCode != null">
         salesman_code,
       </if>
-      <if test="orderShippingCode != null">
-        order_shipping_code,
+      <if test="shippingAddressCode != null">
+        shipping_address_code,
       </if>
       <if test="orderCreator != null">
         order_creator,
@@ -131,8 +131,8 @@
       <if test="salesmanCode != null">
         #{salesmanCode,jdbcType=VARCHAR},
       </if>
-      <if test="orderShippingCode != null">
-        #{orderShippingCode,jdbcType=VARCHAR},
+      <if test="shippingAddressCode != null">
+        #{shippingAddressCode,jdbcType=VARCHAR},
       </if>
       <if test="orderCreator != null">
         #{orderCreator,jdbcType=VARCHAR},
@@ -193,8 +193,8 @@
       <if test="salesmanCode != null">
         salesman_code = #{salesmanCode,jdbcType=VARCHAR},
       </if>
-      <if test="orderShippingCode != null">
-        order_shipping_code = #{orderShippingCode,jdbcType=VARCHAR},
+      <if test="shippingAddressCode != null">
+        shipping_address_code = #{shippingAddressCode,jdbcType=VARCHAR},
       </if>
       <if test="orderCreator != null">
         order_creator = #{orderCreator,jdbcType=VARCHAR},
@@ -249,7 +249,7 @@
     set order_code = #{orderCode,jdbcType=VARCHAR},
       user_code = #{userCode,jdbcType=VARCHAR},
       salesman_code = #{salesmanCode,jdbcType=VARCHAR},
-      order_shipping_code = #{orderShippingCode,jdbcType=VARCHAR},
+      shipping_address_code = #{shippingAddressCode,jdbcType=VARCHAR},
       order_creator = #{orderCreator,jdbcType=VARCHAR},
       delivery_days = #{deliveryDays,jdbcType=INTEGER},
       grand_total = #{grandTotal,jdbcType=DECIMAL},
@@ -286,7 +286,7 @@
 			and co.create_time &lt;= #{orderEndTime}
 		</if>
 		<if test="searchInput != null and searchInput != ''">
-			and co.user_code LIKE CONCAT('%', #{searchInput}, '%')
+			and co.order_code = #{searchInput}
 		</if>
 	</where>
   </select>
@@ -299,8 +299,8 @@
 		co.product_count AS productCount,
 		co.order_status AS orderStatus,
 		co.delivery_days AS deliveryDays,
-		co.salesman_code AS salesmanCode,
 		co.remark AS remark,
+		pu.user_name AS salesman,
 		cosa.province_name AS provinceName,
 		cosa.city_name AS cityName,
 		cosa.area_name AS areaName,
@@ -309,9 +309,41 @@
 		cosa.receiver_phone_number AS receiverPhoneNumber
 	FROM
 		client_order co
-	JOIN client_order_shipping_address cosa ON co.order_shipping_code = cosa.order_shipping_code
+	JOIN client_shipping_address cosa ON co.shipping_address_code = cosa.shipping_address_code
+	LEFT JOIN platform_user_salesman pus ON co.salesman_code = pus.salesman_code
+	LEFT JOIN platform_user pu ON pu.user_code = pus.platform_user_code
 	where co.`status` != 0
 	and co.order_code = #{orderCode}
+  </select>
+  
+  <select id="getCommissionOrderInfos" parameterType="com.hefa.order.pojo.bo.SearchCommissionOrderInfoParam" resultType="com.hefa.order.pojo.vo.CommissionOrderInfo">
+  	SELECT
+		co.order_code AS orderCode,
+		co.create_time AS orderTime,
+		co.grand_total AS grandTotal,
+		co.order_status AS orderStatus,
+		pu.user_name AS salesman
+	FROM
+		client_order co
+	JOIN platform_user_salesman pus ON co.salesman_code = pus.salesman_code
+	JOIN platform_user pu ON pu.user_code = pus.platform_user_code
+  	<where>
+		co.`status` != 0
+		<if test="orderStartTime != null and orderStartTime != ''">
+			and co.create_time >= #{orderStartTime}
+		</if>
+		<if test="orderEndTime != null and orderEndTime != ''">
+			and co.create_time &lt;= #{orderEndTime}
+		</if>
+		<if test="searchInput != null and searchInput != ''">
+			and (
+					pu.user_name LIKE CONCAT('%', #{searchInput}, '%')
+				or	co.order_code = #{searchInput}
+			)
+		</if>
+	</where>
+	ORDER BY
+		co.create_time DESC
   </select>
   
 </mapper>

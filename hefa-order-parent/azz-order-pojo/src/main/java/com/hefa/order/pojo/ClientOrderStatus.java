@@ -1,16 +1,9 @@
-package com.hefa.user.pojo;
+package com.hefa.order.pojo;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class ClientUserSalesman implements Serializable {
+public class ClientOrderStatus implements Serializable {
     /**
      * 主键id
      *
@@ -19,25 +12,25 @@ public class ClientUserSalesman implements Serializable {
     private Long id;
 
     /**
-     * 客户端用户编码
+     * 订单编码
      *
      * @mbg.generated
      */
-    private String userCode;
+    private String orderCode;
 
     /**
-     * 业务员编码（推荐人）
+     * 订单状态 1 2 3 4 5 6
      *
      * @mbg.generated
      */
-    private String salesmanCode;
+    private Integer orderStatus;
 
     /**
-     * 状态  0无效  1有效
+     * 备注
      *
      * @mbg.generated
      */
-    private Byte status;
+    private String remark;
 
     /**
      * 创建人
@@ -71,9 +64,9 @@ public class ClientUserSalesman implements Serializable {
 
     /**
      * 主键id<br/>
-     * 返回值对应的表列名 client_user_salesman.id
+     * 返回值对应的表列名 client_order_status.id
      *
-     * @return 返回值对应 client_user_salesman.id
+     * @return 返回值对应 client_order_status.id
      *
      * @mbg.generated
      */
@@ -83,9 +76,9 @@ public class ClientUserSalesman implements Serializable {
 
     /**
      * 主键id<br/>
-     * client_user_salesman.id
+     * client_order_status.id
      *
-     * @param id 值对应 client_user_salesman.id
+     * @param id 值对应 client_order_status.id
      *
      * @mbg.generated
      */
@@ -94,82 +87,82 @@ public class ClientUserSalesman implements Serializable {
     }
 
     /**
-     * 客户端用户编码<br/>
-     * 返回值对应的表列名 client_user_salesman.user_code
+     * 订单编码<br/>
+     * 返回值对应的表列名 client_order_status.order_code
      *
-     * @return 返回值对应 client_user_salesman.user_code
+     * @return 返回值对应 client_order_status.order_code
      *
      * @mbg.generated
      */
-    public String getUserCode() {
-        return userCode;
+    public String getOrderCode() {
+        return orderCode;
     }
 
     /**
-     * 客户端用户编码<br/>
-     * client_user_salesman.user_code
+     * 订单编码<br/>
+     * client_order_status.order_code
      *
-     * @param userCode 值对应 client_user_salesman.user_code
+     * @param orderCode 值对应 client_order_status.order_code
      *
      * @mbg.generated
      */
-    public void setUserCode(String userCode) {
-        this.userCode = userCode == null ? null : userCode.trim();
+    public void setOrderCode(String orderCode) {
+        this.orderCode = orderCode == null ? null : orderCode.trim();
     }
 
     /**
-     * 业务员编码（推荐人）<br/>
-     * 返回值对应的表列名 client_user_salesman.salesman_code
+     * 订单状态 1 2 3 4 5 6<br/>
+     * 返回值对应的表列名 client_order_status.order_status
      *
-     * @return 返回值对应 client_user_salesman.salesman_code
+     * @return 返回值对应 client_order_status.order_status
      *
      * @mbg.generated
      */
-    public String getSalesmanCode() {
-        return salesmanCode;
+    public Integer getOrderStatus() {
+        return orderStatus;
     }
 
     /**
-     * 业务员编码（推荐人）<br/>
-     * client_user_salesman.salesman_code
+     * 订单状态 1 2 3 4 5 6<br/>
+     * client_order_status.order_status
      *
-     * @param salesmanCode 值对应 client_user_salesman.salesman_code
+     * @param orderStatus 值对应 client_order_status.order_status
      *
      * @mbg.generated
      */
-    public void setSalesmanCode(String salesmanCode) {
-        this.salesmanCode = salesmanCode == null ? null : salesmanCode.trim();
+    public void setOrderStatus(Integer orderStatus) {
+        this.orderStatus = orderStatus;
     }
 
     /**
-     * 状态  0无效  1有效<br/>
-     * 返回值对应的表列名 client_user_salesman.status
+     * 备注<br/>
+     * 返回值对应的表列名 client_order_status.remark
      *
-     * @return 返回值对应 client_user_salesman.status
+     * @return 返回值对应 client_order_status.remark
      *
      * @mbg.generated
      */
-    public Byte getStatus() {
-        return status;
+    public String getRemark() {
+        return remark;
     }
 
     /**
-     * 状态  0无效  1有效<br/>
-     * client_user_salesman.status
+     * 备注<br/>
+     * client_order_status.remark
      *
-     * @param status 值对应 client_user_salesman.status
+     * @param remark 值对应 client_order_status.remark
      *
      * @mbg.generated
      */
-    public void setStatus(Byte status) {
-        this.status = status;
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
     }
 
     /**
      * 创建人<br/>
-     * 返回值对应的表列名 client_user_salesman.creator
+     * 返回值对应的表列名 client_order_status.creator
      *
-     * @return 返回值对应 client_user_salesman.creator
+     * @return 返回值对应 client_order_status.creator
      *
      * @mbg.generated
      */
@@ -179,9 +172,9 @@ public class ClientUserSalesman implements Serializable {
 
     /**
      * 创建人<br/>
-     * client_user_salesman.creator
+     * client_order_status.creator
      *
-     * @param creator 值对应 client_user_salesman.creator
+     * @param creator 值对应 client_order_status.creator
      *
      * @mbg.generated
      */
@@ -191,9 +184,9 @@ public class ClientUserSalesman implements Serializable {
 
     /**
      * 创建时间<br/>
-     * 返回值对应的表列名 client_user_salesman.create_time
+     * 返回值对应的表列名 client_order_status.create_time
      *
-     * @return 返回值对应 client_user_salesman.create_time
+     * @return 返回值对应 client_order_status.create_time
      *
      * @mbg.generated
      */
@@ -203,9 +196,9 @@ public class ClientUserSalesman implements Serializable {
 
     /**
      * 创建时间<br/>
-     * client_user_salesman.create_time
+     * client_order_status.create_time
      *
-     * @param createTime 值对应 client_user_salesman.create_time
+     * @param createTime 值对应 client_order_status.create_time
      *
      * @mbg.generated
      */
@@ -215,9 +208,9 @@ public class ClientUserSalesman implements Serializable {
 
     /**
      * 修改人<br/>
-     * 返回值对应的表列名 client_user_salesman.modifier
+     * 返回值对应的表列名 client_order_status.modifier
      *
-     * @return 返回值对应 client_user_salesman.modifier
+     * @return 返回值对应 client_order_status.modifier
      *
      * @mbg.generated
      */
@@ -227,9 +220,9 @@ public class ClientUserSalesman implements Serializable {
 
     /**
      * 修改人<br/>
-     * client_user_salesman.modifier
+     * client_order_status.modifier
      *
-     * @param modifier 值对应 client_user_salesman.modifier
+     * @param modifier 值对应 client_order_status.modifier
      *
      * @mbg.generated
      */
@@ -239,9 +232,9 @@ public class ClientUserSalesman implements Serializable {
 
     /**
      * 最后修改时间<br/>
-     * 返回值对应的表列名 client_user_salesman.modify_time
+     * 返回值对应的表列名 client_order_status.modify_time
      *
-     * @return 返回值对应 client_user_salesman.modify_time
+     * @return 返回值对应 client_order_status.modify_time
      *
      * @mbg.generated
      */
@@ -251,9 +244,9 @@ public class ClientUserSalesman implements Serializable {
 
     /**
      * 最后修改时间<br/>
-     * client_user_salesman.modify_time
+     * client_order_status.modify_time
      *
-     * @param modifyTime 值对应 client_user_salesman.modify_time
+     * @param modifyTime 值对应 client_order_status.modify_time
      *
      * @mbg.generated
      */
@@ -272,11 +265,11 @@ public class ClientUserSalesman implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        ClientUserSalesman other = (ClientUserSalesman) that;
+        ClientOrderStatus other = (ClientOrderStatus) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getUserCode() == null ? other.getUserCode() == null : this.getUserCode().equals(other.getUserCode()))
-            && (this.getSalesmanCode() == null ? other.getSalesmanCode() == null : this.getSalesmanCode().equals(other.getSalesmanCode()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getOrderCode() == null ? other.getOrderCode() == null : this.getOrderCode().equals(other.getOrderCode()))
+            && (this.getOrderStatus() == null ? other.getOrderStatus() == null : this.getOrderStatus().equals(other.getOrderStatus()))
+            && (this.getRemark() == null ? other.getRemark() == null : this.getRemark().equals(other.getRemark()))
             && (this.getCreator() == null ? other.getCreator() == null : this.getCreator().equals(other.getCreator()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getModifier() == null ? other.getModifier() == null : this.getModifier().equals(other.getModifier()))
@@ -288,9 +281,9 @@ public class ClientUserSalesman implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getUserCode() == null) ? 0 : getUserCode().hashCode());
-        result = prime * result + ((getSalesmanCode() == null) ? 0 : getSalesmanCode().hashCode());
-        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getOrderCode() == null) ? 0 : getOrderCode().hashCode());
+        result = prime * result + ((getOrderStatus() == null) ? 0 : getOrderStatus().hashCode());
+        result = prime * result + ((getRemark() == null) ? 0 : getRemark().hashCode());
         result = prime * result + ((getCreator() == null) ? 0 : getCreator().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getModifier() == null) ? 0 : getModifier().hashCode());
@@ -305,9 +298,9 @@ public class ClientUserSalesman implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", userCode=").append(userCode);
-        sb.append(", salesmanCode=").append(salesmanCode);
-        sb.append(", status=").append(status);
+        sb.append(", orderCode=").append(orderCode);
+        sb.append(", orderStatus=").append(orderStatus);
+        sb.append(", remark=").append(remark);
         sb.append(", creator=").append(creator);
         sb.append(", createTime=").append(createTime);
         sb.append(", modifier=").append(modifier);

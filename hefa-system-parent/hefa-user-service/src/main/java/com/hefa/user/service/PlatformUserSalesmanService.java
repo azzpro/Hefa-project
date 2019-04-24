@@ -8,16 +8,19 @@
 package com.hefa.user.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.github.pagehelper.PageHelper;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.constants.PlatformConstants.PlatformUserSalesmanRecordStatus;
 import com.hefa.common.exception.BusinessException;
 import com.hefa.common.exception.ReturnDataException;
+import com.hefa.common.page.Pagination;
 import com.hefa.user.mapper.ClientUserSalesmanMapper;
 import com.hefa.user.mapper.PlatformUserMapper;
 import com.hefa.user.mapper.PlatformUserSalesmanMapper;
@@ -26,6 +29,7 @@ import com.hefa.user.pojo.PlatformUserSalesman;
 import com.hefa.user.pojo.bo.AddPlatformUserSalesmanParam;
 import com.hefa.user.pojo.bo.EditOrDelPlatformUserSalesmanParam;
 import com.hefa.user.pojo.bo.SearchSalesmanInfoParam;
+import com.hefa.user.pojo.vo.SalesmanInfo;
 import com.hefa.utils.JSR303ValidateUtils;
 
 /**
@@ -62,6 +66,7 @@ public class PlatformUserSalesmanService {
 				.createTime(new Date())
 				.creator(param.getCreator())
 				.platformUserCode(param.getUserCode())
+				.invitedClientUserCount(0)
 				.salesmanCode(salesmanCode)
 				.build();
 		platformUserSalesmanMapper.insertSelective(record);
@@ -80,7 +85,7 @@ public class PlatformUserSalesmanService {
 	 */
 	public JsonResult<String> editOrDelSalesman(@RequestBody EditOrDelPlatformUserSalesmanParam param) {
 		JSR303ValidateUtils.validateInputParam(param);
-		PlatformUserSalesman record = platformUserSalesmanMapper.selectByPrimaryKey(param.getId());
+		PlatformUserSalesman record = platformUserSalesmanMapper.selectByPrimaryKey(param.getRecordId());
 		if (record == null) {
 			throw new ReturnDataException("业务员记录不存在");
 		}
@@ -109,8 +114,17 @@ public class PlatformUserSalesmanService {
 		return JsonResult.successJsonResult();
 	}
 	
-	public JsonResult<String> getSalesmanInfos(@RequestBody SearchSalesmanInfoParam param){
-		return null;
+	/**
+	 * 
+	 * <p>查询业务员信息</p>
+	 * @param param
+	 * @return
+	 * @author 黄智聪  2019年4月24日 下午2:18:34
+	 */
+	public JsonResult<Pagination<SalesmanInfo>> getSalesmanInfos(@RequestBody SearchSalesmanInfoParam param){
+		PageHelper.startPage(param.getPageNum(), param.getPageSize());
+		List<SalesmanInfo> infos = platformUserSalesmanMapper.getSalesmanInfos(param);
+		return JsonResult.successJsonResult(new Pagination<>(infos));
 	}
 
 	/**

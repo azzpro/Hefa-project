@@ -3,7 +3,7 @@ package com.hefa.order.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
-public class ClientOrderShippingAddress implements Serializable {
+public class ClientShippingAddress implements Serializable {
     /**
      * 主键id
      *
@@ -16,7 +16,7 @@ public class ClientOrderShippingAddress implements Serializable {
      *
      * @mbg.generated
      */
-    private String orderShippingCode;
+    private String shippingAddressCode;
 
     /**
      * 客户编码
@@ -141,9 +141,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 主键id<br/>
-     * 返回值对应的表列名 client_order_shipping_address.id
+     * 返回值对应的表列名 client_shipping_address.id
      *
-     * @return 返回值对应 client_order_shipping_address.id
+     * @return 返回值对应 client_shipping_address.id
      *
      * @mbg.generated
      */
@@ -153,9 +153,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 主键id<br/>
-     * client_order_shipping_address.id
+     * client_shipping_address.id
      *
-     * @param id 值对应 client_order_shipping_address.id
+     * @param id 值对应 client_shipping_address.id
      *
      * @mbg.generated
      */
@@ -165,33 +165,33 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 订单发货地址编码<br/>
-     * 返回值对应的表列名 client_order_shipping_address.order_shipping_code
+     * 返回值对应的表列名 client_shipping_address.shipping_address_code
      *
-     * @return 返回值对应 client_order_shipping_address.order_shipping_code
+     * @return 返回值对应 client_shipping_address.shipping_address_code
      *
      * @mbg.generated
      */
-    public String getOrderShippingCode() {
-        return orderShippingCode;
+    public String getShippingAddressCode() {
+        return shippingAddressCode;
     }
 
     /**
      * 订单发货地址编码<br/>
-     * client_order_shipping_address.order_shipping_code
+     * client_shipping_address.shipping_address_code
      *
-     * @param orderShippingCode 值对应 client_order_shipping_address.order_shipping_code
+     * @param shippingAddressCode 值对应 client_shipping_address.shipping_address_code
      *
      * @mbg.generated
      */
-    public void setOrderShippingCode(String orderShippingCode) {
-        this.orderShippingCode = orderShippingCode == null ? null : orderShippingCode.trim();
+    public void setShippingAddressCode(String shippingAddressCode) {
+        this.shippingAddressCode = shippingAddressCode == null ? null : shippingAddressCode.trim();
     }
 
     /**
      * 客户编码<br/>
-     * 返回值对应的表列名 client_order_shipping_address.user_code
+     * 返回值对应的表列名 client_shipping_address.user_code
      *
-     * @return 返回值对应 client_order_shipping_address.user_code
+     * @return 返回值对应 client_shipping_address.user_code
      *
      * @mbg.generated
      */
@@ -201,9 +201,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 客户编码<br/>
-     * client_order_shipping_address.user_code
+     * client_shipping_address.user_code
      *
-     * @param userCode 值对应 client_order_shipping_address.user_code
+     * @param userCode 值对应 client_shipping_address.user_code
      *
      * @mbg.generated
      */
@@ -213,9 +213,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 收货人<br/>
-     * 返回值对应的表列名 client_order_shipping_address.receiver_name
+     * 返回值对应的表列名 client_shipping_address.receiver_name
      *
-     * @return 返回值对应 client_order_shipping_address.receiver_name
+     * @return 返回值对应 client_shipping_address.receiver_name
      *
      * @mbg.generated
      */
@@ -225,9 +225,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 收货人<br/>
-     * client_order_shipping_address.receiver_name
+     * client_shipping_address.receiver_name
      *
-     * @param receiverName 值对应 client_order_shipping_address.receiver_name
+     * @param receiverName 值对应 client_shipping_address.receiver_name
      *
      * @mbg.generated
      */
@@ -237,9 +237,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 收货人手机号<br/>
-     * 返回值对应的表列名 client_order_shipping_address.receiver_phone_number
+     * 返回值对应的表列名 client_shipping_address.receiver_phone_number
      *
-     * @return 返回值对应 client_order_shipping_address.receiver_phone_number
+     * @return 返回值对应 client_shipping_address.receiver_phone_number
      *
      * @mbg.generated
      */
@@ -249,9 +249,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 收货人手机号<br/>
-     * client_order_shipping_address.receiver_phone_number
+     * client_shipping_address.receiver_phone_number
      *
-     * @param receiverPhoneNumber 值对应 client_order_shipping_address.receiver_phone_number
+     * @param receiverPhoneNumber 值对应 client_shipping_address.receiver_phone_number
      *
      * @mbg.generated
      */
@@ -261,9 +261,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 地址别名<br/>
-     * 返回值对应的表列名 client_order_shipping_address.address_alias
+     * 返回值对应的表列名 client_shipping_address.address_alias
      *
-     * @return 返回值对应 client_order_shipping_address.address_alias
+     * @return 返回值对应 client_shipping_address.address_alias
      *
      * @mbg.generated
      */
@@ -273,9 +273,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 地址别名<br/>
-     * client_order_shipping_address.address_alias
+     * client_shipping_address.address_alias
      *
-     * @param addressAlias 值对应 client_order_shipping_address.address_alias
+     * @param addressAlias 值对应 client_shipping_address.address_alias
      *
      * @mbg.generated
      */
@@ -285,9 +285,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 是否为默认地址 0否  1是<br/>
-     * 返回值对应的表列名 client_order_shipping_address.is_default
+     * 返回值对应的表列名 client_shipping_address.is_default
      *
-     * @return 返回值对应 client_order_shipping_address.is_default
+     * @return 返回值对应 client_shipping_address.is_default
      *
      * @mbg.generated
      */
@@ -297,9 +297,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 是否为默认地址 0否  1是<br/>
-     * client_order_shipping_address.is_default
+     * client_shipping_address.is_default
      *
-     * @param isDefault 值对应 client_order_shipping_address.is_default
+     * @param isDefault 值对应 client_shipping_address.is_default
      *
      * @mbg.generated
      */
@@ -309,9 +309,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 省编码<br/>
-     * 返回值对应的表列名 client_order_shipping_address.province_code
+     * 返回值对应的表列名 client_shipping_address.province_code
      *
-     * @return 返回值对应 client_order_shipping_address.province_code
+     * @return 返回值对应 client_shipping_address.province_code
      *
      * @mbg.generated
      */
@@ -321,9 +321,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 省编码<br/>
-     * client_order_shipping_address.province_code
+     * client_shipping_address.province_code
      *
-     * @param provinceCode 值对应 client_order_shipping_address.province_code
+     * @param provinceCode 值对应 client_shipping_address.province_code
      *
      * @mbg.generated
      */
@@ -333,9 +333,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 省名称<br/>
-     * 返回值对应的表列名 client_order_shipping_address.province_name
+     * 返回值对应的表列名 client_shipping_address.province_name
      *
-     * @return 返回值对应 client_order_shipping_address.province_name
+     * @return 返回值对应 client_shipping_address.province_name
      *
      * @mbg.generated
      */
@@ -345,9 +345,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 省名称<br/>
-     * client_order_shipping_address.province_name
+     * client_shipping_address.province_name
      *
-     * @param provinceName 值对应 client_order_shipping_address.province_name
+     * @param provinceName 值对应 client_shipping_address.province_name
      *
      * @mbg.generated
      */
@@ -357,9 +357,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 市编码<br/>
-     * 返回值对应的表列名 client_order_shipping_address.city_code
+     * 返回值对应的表列名 client_shipping_address.city_code
      *
-     * @return 返回值对应 client_order_shipping_address.city_code
+     * @return 返回值对应 client_shipping_address.city_code
      *
      * @mbg.generated
      */
@@ -369,9 +369,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 市编码<br/>
-     * client_order_shipping_address.city_code
+     * client_shipping_address.city_code
      *
-     * @param cityCode 值对应 client_order_shipping_address.city_code
+     * @param cityCode 值对应 client_shipping_address.city_code
      *
      * @mbg.generated
      */
@@ -381,9 +381,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 市名称<br/>
-     * 返回值对应的表列名 client_order_shipping_address.city_name
+     * 返回值对应的表列名 client_shipping_address.city_name
      *
-     * @return 返回值对应 client_order_shipping_address.city_name
+     * @return 返回值对应 client_shipping_address.city_name
      *
      * @mbg.generated
      */
@@ -393,9 +393,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 市名称<br/>
-     * client_order_shipping_address.city_name
+     * client_shipping_address.city_name
      *
-     * @param cityName 值对应 client_order_shipping_address.city_name
+     * @param cityName 值对应 client_shipping_address.city_name
      *
      * @mbg.generated
      */
@@ -405,9 +405,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 区编码<br/>
-     * 返回值对应的表列名 client_order_shipping_address.area_code
+     * 返回值对应的表列名 client_shipping_address.area_code
      *
-     * @return 返回值对应 client_order_shipping_address.area_code
+     * @return 返回值对应 client_shipping_address.area_code
      *
      * @mbg.generated
      */
@@ -417,9 +417,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 区编码<br/>
-     * client_order_shipping_address.area_code
+     * client_shipping_address.area_code
      *
-     * @param areaCode 值对应 client_order_shipping_address.area_code
+     * @param areaCode 值对应 client_shipping_address.area_code
      *
      * @mbg.generated
      */
@@ -429,9 +429,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 区名称<br/>
-     * 返回值对应的表列名 client_order_shipping_address.area_name
+     * 返回值对应的表列名 client_shipping_address.area_name
      *
-     * @return 返回值对应 client_order_shipping_address.area_name
+     * @return 返回值对应 client_shipping_address.area_name
      *
      * @mbg.generated
      */
@@ -441,9 +441,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 区名称<br/>
-     * client_order_shipping_address.area_name
+     * client_shipping_address.area_name
      *
-     * @param areaName 值对应 client_order_shipping_address.area_name
+     * @param areaName 值对应 client_shipping_address.area_name
      *
      * @mbg.generated
      */
@@ -453,9 +453,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 详细地址<br/>
-     * 返回值对应的表列名 client_order_shipping_address.detail_address
+     * 返回值对应的表列名 client_shipping_address.detail_address
      *
-     * @return 返回值对应 client_order_shipping_address.detail_address
+     * @return 返回值对应 client_shipping_address.detail_address
      *
      * @mbg.generated
      */
@@ -465,9 +465,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 详细地址<br/>
-     * client_order_shipping_address.detail_address
+     * client_shipping_address.detail_address
      *
-     * @param detailAddress 值对应 client_order_shipping_address.detail_address
+     * @param detailAddress 值对应 client_shipping_address.detail_address
      *
      * @mbg.generated
      */
@@ -477,9 +477,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 状态  0无效  1有效<br/>
-     * 返回值对应的表列名 client_order_shipping_address.status
+     * 返回值对应的表列名 client_shipping_address.status
      *
-     * @return 返回值对应 client_order_shipping_address.status
+     * @return 返回值对应 client_shipping_address.status
      *
      * @mbg.generated
      */
@@ -489,9 +489,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 状态  0无效  1有效<br/>
-     * client_order_shipping_address.status
+     * client_shipping_address.status
      *
-     * @param status 值对应 client_order_shipping_address.status
+     * @param status 值对应 client_shipping_address.status
      *
      * @mbg.generated
      */
@@ -501,9 +501,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 创建人<br/>
-     * 返回值对应的表列名 client_order_shipping_address.creator
+     * 返回值对应的表列名 client_shipping_address.creator
      *
-     * @return 返回值对应 client_order_shipping_address.creator
+     * @return 返回值对应 client_shipping_address.creator
      *
      * @mbg.generated
      */
@@ -513,9 +513,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 创建人<br/>
-     * client_order_shipping_address.creator
+     * client_shipping_address.creator
      *
-     * @param creator 值对应 client_order_shipping_address.creator
+     * @param creator 值对应 client_shipping_address.creator
      *
      * @mbg.generated
      */
@@ -525,9 +525,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 创建时间<br/>
-     * 返回值对应的表列名 client_order_shipping_address.create_time
+     * 返回值对应的表列名 client_shipping_address.create_time
      *
-     * @return 返回值对应 client_order_shipping_address.create_time
+     * @return 返回值对应 client_shipping_address.create_time
      *
      * @mbg.generated
      */
@@ -537,9 +537,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 创建时间<br/>
-     * client_order_shipping_address.create_time
+     * client_shipping_address.create_time
      *
-     * @param createTime 值对应 client_order_shipping_address.create_time
+     * @param createTime 值对应 client_shipping_address.create_time
      *
      * @mbg.generated
      */
@@ -549,9 +549,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 修改人<br/>
-     * 返回值对应的表列名 client_order_shipping_address.modifier
+     * 返回值对应的表列名 client_shipping_address.modifier
      *
-     * @return 返回值对应 client_order_shipping_address.modifier
+     * @return 返回值对应 client_shipping_address.modifier
      *
      * @mbg.generated
      */
@@ -561,9 +561,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 修改人<br/>
-     * client_order_shipping_address.modifier
+     * client_shipping_address.modifier
      *
-     * @param modifier 值对应 client_order_shipping_address.modifier
+     * @param modifier 值对应 client_shipping_address.modifier
      *
      * @mbg.generated
      */
@@ -573,9 +573,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 最后修改时间<br/>
-     * 返回值对应的表列名 client_order_shipping_address.modify_time
+     * 返回值对应的表列名 client_shipping_address.modify_time
      *
-     * @return 返回值对应 client_order_shipping_address.modify_time
+     * @return 返回值对应 client_shipping_address.modify_time
      *
      * @mbg.generated
      */
@@ -585,9 +585,9 @@ public class ClientOrderShippingAddress implements Serializable {
 
     /**
      * 最后修改时间<br/>
-     * client_order_shipping_address.modify_time
+     * client_shipping_address.modify_time
      *
-     * @param modifyTime 值对应 client_order_shipping_address.modify_time
+     * @param modifyTime 值对应 client_shipping_address.modify_time
      *
      * @mbg.generated
      */
@@ -606,9 +606,9 @@ public class ClientOrderShippingAddress implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        ClientOrderShippingAddress other = (ClientOrderShippingAddress) that;
+        ClientShippingAddress other = (ClientShippingAddress) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getOrderShippingCode() == null ? other.getOrderShippingCode() == null : this.getOrderShippingCode().equals(other.getOrderShippingCode()))
+            && (this.getShippingAddressCode() == null ? other.getShippingAddressCode() == null : this.getShippingAddressCode().equals(other.getShippingAddressCode()))
             && (this.getUserCode() == null ? other.getUserCode() == null : this.getUserCode().equals(other.getUserCode()))
             && (this.getReceiverName() == null ? other.getReceiverName() == null : this.getReceiverName().equals(other.getReceiverName()))
             && (this.getReceiverPhoneNumber() == null ? other.getReceiverPhoneNumber() == null : this.getReceiverPhoneNumber().equals(other.getReceiverPhoneNumber()))
@@ -633,7 +633,7 @@ public class ClientOrderShippingAddress implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getOrderShippingCode() == null) ? 0 : getOrderShippingCode().hashCode());
+        result = prime * result + ((getShippingAddressCode() == null) ? 0 : getShippingAddressCode().hashCode());
         result = prime * result + ((getUserCode() == null) ? 0 : getUserCode().hashCode());
         result = prime * result + ((getReceiverName() == null) ? 0 : getReceiverName().hashCode());
         result = prime * result + ((getReceiverPhoneNumber() == null) ? 0 : getReceiverPhoneNumber().hashCode());
@@ -661,7 +661,7 @@ public class ClientOrderShippingAddress implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", orderShippingCode=").append(orderShippingCode);
+        sb.append(", shippingAddressCode=").append(shippingAddressCode);
         sb.append(", userCode=").append(userCode);
         sb.append(", receiverName=").append(receiverName);
         sb.append(", receiverPhoneNumber=").append(receiverPhoneNumber);

@@ -125,10 +125,58 @@
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="countBySalesmanCode" parameterType="String" resultType="int">
+  <select id="countBySalesmanCode" parameterType="string" resultType="int">
     select  count(1)
     from client_user_salesman
     where status != 0 
     and salesman_code = #{salesmanCode}
   </select>
+  <select id="countByUserCode" parameterType="string" resultType="int">
+    select  count(1)
+    from client_user_salesman
+    where status != 0 
+    and user_code = #{userCode}
+  </select>
+  
+  <select id="getInvitedUserInfos" parameterType="com.hefa.user.pojo.bo.SearchInvitedUserInfoParam" resultType="com.hefa.user.pojo.vo.InvitedUserInfo">
+	SELECT
+		cus.id AS recordId,
+		im.telephone,
+		cus.create_time AS createTime,
+		pu.user_name as platformUserName,
+		IFNULL(t.orderCount, 0) AS orderCount
+	FROM
+		iwebshop_user iu
+	JOIN iwebshop_member im ON iu.id = im.user_id
+	JOIN client_user_salesman cus ON cus.user_code = iu.id
+	JOIN platform_user_salesman pus ON pus.salesman_code = cus.salesman_code
+	JOIN platform_user pu ON pu.user_code = pus.platform_user_code
+	LEFT JOIN (
+		SELECT
+			co.user_code,
+			count(1) AS orderCount
+		FROM
+			client_order co
+		GROUP BY
+			co.user_code
+	) t ON t.user_code = iu.id
+	<where> 
+		pus.status != 0
+		<if test="startTime != null and startTime != ''">
+			and cus.create_time >= #{orderStartTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and cus.create_time &lt;= #{orderEndTime}
+		</if>
+		<if test="searchInput != null and searchInput != ''">
+			and (
+					im.telephone LIKE CONCAT('%', #{searchInput}, '%')
+				or	pu.user_name LIKE CONCAT('%', #{searchInput}, '%')
+			)
+		</if>
+	</where>	
+	ORDER BY
+		cus.create_time DESC
+  </select>
+  
 </mapper>

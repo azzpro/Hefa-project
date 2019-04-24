@@ -32,6 +32,10 @@
     <result column="email"  property="email" />
   </resultMap>
   
+  <select id="countUserById" parameterType="java.lang.Integer" resultMap="java.lang.Integer">
+  	select count(1) from iwebshop_user where id = #{id}
+  </select>
+  
   <select id="getMemberUserList" resultType="com.hefa.user.pojo.vo.MemberInfo" parameterType="com.hefa.user.pojo.bo.MemberParam">
   	select b.mobile phone,pu.user_name RecommendUser,b.email regMail,DATE_FORMAT(b.time,'%Y-%m-%d') regTime,a.id userCode
   	from iwebshop_user a
