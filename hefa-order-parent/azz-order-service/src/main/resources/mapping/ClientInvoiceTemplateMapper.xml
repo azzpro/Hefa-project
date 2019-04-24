@@ -3,6 +3,7 @@
 <mapper namespace="com.hefa.order.mapper.ClientInvoiceTemplateMapper">
   <resultMap id="BaseResultMap" type="com.hefa.order.pojo.ClientInvoiceTemplate">
     <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="invoice_template_code" jdbcType="VARCHAR" property="invoiceTemplateCode" />
     <result column="user_code" jdbcType="VARCHAR" property="userCode" />
     <result column="invoice_type" jdbcType="TINYINT" property="invoiceType" />
     <result column="invoice_title" jdbcType="VARCHAR" property="invoiceTitle" />
@@ -21,9 +22,9 @@
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_code, invoice_type, invoice_title, tax_identification_number, credit_code, 
-    company_name, bank, bank_account, reg_address, reg_telephone, remark, status, creator, 
-    create_time, modifier, modify_time
+    id, invoice_template_code, user_code, invoice_type, invoice_title, tax_identification_number, 
+    credit_code, company_name, bank, bank_account, reg_address, reg_telephone, remark, 
+    status, creator, create_time, modifier, modify_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -36,15 +37,15 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.hefa.order.pojo.ClientInvoiceTemplate">
-    insert into client_invoice_template (id, user_code, invoice_type, 
-      invoice_title, tax_identification_number, 
+    insert into client_invoice_template (id, invoice_template_code, user_code, 
+      invoice_type, invoice_title, tax_identification_number, 
       credit_code, company_name, bank, 
       bank_account, reg_address, reg_telephone, 
       remark, status, creator, 
       create_time, modifier, modify_time
       )
-    values (#{id,jdbcType=BIGINT}, #{userCode,jdbcType=VARCHAR}, #{invoiceType,jdbcType=TINYINT}, 
-      #{invoiceTitle,jdbcType=VARCHAR}, #{taxIdentificationNumber,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{invoiceTemplateCode,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}, 
+      #{invoiceType,jdbcType=TINYINT}, #{invoiceTitle,jdbcType=VARCHAR}, #{taxIdentificationNumber,jdbcType=VARCHAR}, 
       #{creditCode,jdbcType=VARCHAR}, #{companyName,jdbcType=VARCHAR}, #{bank,jdbcType=VARCHAR}, 
       #{bankAccount,jdbcType=VARCHAR}, #{regAddress,jdbcType=VARCHAR}, #{regTelephone,jdbcType=VARCHAR}, 
       #{remark,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{creator,jdbcType=VARCHAR}, 
@@ -56,6 +57,9 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
+      </if>
+      <if test="invoiceTemplateCode != null">
+        invoice_template_code,
       </if>
       <if test="userCode != null">
         user_code,
@@ -110,6 +114,9 @@
       <if test="id != null">
         #{id,jdbcType=BIGINT},
       </if>
+      <if test="invoiceTemplateCode != null">
+        #{invoiceTemplateCode,jdbcType=VARCHAR},
+      </if>
       <if test="userCode != null">
         #{userCode,jdbcType=VARCHAR},
       </if>
@@ -163,6 +170,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.hefa.order.pojo.ClientInvoiceTemplate">
     update client_invoice_template
     <set>
+      <if test="invoiceTemplateCode != null">
+        invoice_template_code = #{invoiceTemplateCode,jdbcType=VARCHAR},
+      </if>
       <if test="userCode != null">
         user_code = #{userCode,jdbcType=VARCHAR},
       </if>
@@ -216,7 +226,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.hefa.order.pojo.ClientInvoiceTemplate">
     update client_invoice_template
-    set user_code = #{userCode,jdbcType=VARCHAR},
+    set invoice_template_code = #{invoiceTemplateCode,jdbcType=VARCHAR},
+      user_code = #{userCode,jdbcType=VARCHAR},
       invoice_type = #{invoiceType,jdbcType=TINYINT},
       invoice_title = #{invoiceTitle,jdbcType=VARCHAR},
       tax_identification_number = #{taxIdentificationNumber,jdbcType=VARCHAR},

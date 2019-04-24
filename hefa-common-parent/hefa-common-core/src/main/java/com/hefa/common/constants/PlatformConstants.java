@@ -167,4 +167,31 @@ public abstract class PlatformConstants {
 		}
 
 	}
+	
+	/**
+	 * 
+	 * <P>配送方式  0 快递 1 自送</P>
+	 * @version 1.0
+	 * @author 黄智聪  2019年4月22日 下午1:39:38
+	 */
+	public enum DeliveryType {
+
+		EXPRESS(0, "无效"),
+
+		SELF(1, "有效");
+
+		@Getter
+		private int value;
+
+		@Getter
+		private String desc;
+
+		DeliveryType(int value, String desc) {
+			this.value = value;
+			this.desc = desc;
+		}
+
+	}
+	
+	
 }
