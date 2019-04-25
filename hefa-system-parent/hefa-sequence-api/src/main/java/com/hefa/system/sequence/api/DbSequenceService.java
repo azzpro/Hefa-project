@@ -36,5 +36,13 @@ public interface DbSequenceService {
 	@RequestMapping(value="/hefa/api/sequence/getPlatDepartmentNumber",method=RequestMethod.GET)
 	public String getPlatDepartmentNumber() ;
 	
+	/**
+	 * <p>平台端  部门编号</p>
+	 * @return
+	 * @author 刘建麟  2018年10月24日 下午4:37:16
+	 */
+	@RequestMapping(value="/hefa/api/sequence/getPlatRegionNumber",method=RequestMethod.GET)
+	public String getPlatRegionNumber() ;
+	
 }
 

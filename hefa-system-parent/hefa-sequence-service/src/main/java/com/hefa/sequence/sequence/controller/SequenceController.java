@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hefa.sequence.sequence.service.PlatDeptSequenceService;
 import com.hefa.sequence.sequence.service.PlatEmployeeSequenceService;
+import com.hefa.sequence.sequence.service.PlatRegionSequenceService;
 
 /**
  * <P>TODO</P>
@@ -31,6 +32,9 @@ public class SequenceController {
 	
 	@Autowired
 	private PlatDeptSequenceService platDeptSequenceService;
+	
+	@Autowired
+	private PlatRegionSequenceService platRegionSequenceService;
     /**
      * <p></p>
      * @return
@@ -49,6 +53,16 @@ public class SequenceController {
 	@RequestMapping(value="getPlatDepartmentNumber",method=RequestMethod.GET)
 	public String getPlatDepartmentNumber() {
 		return platDeptSequenceService.getSequence();
+	}
+	
+	 /**
+	 * <p>平台端  区域编号</p>
+	 * @return
+	 * @author 刘建麟  2018年10月24日 下午4:37:16
+	 */
+	@RequestMapping(value="getPlatRegionNumber",method=RequestMethod.GET)
+	public String getPlatRegionNumber() {
+		return platRegionSequenceService.getSequence();
 	}
     
 }

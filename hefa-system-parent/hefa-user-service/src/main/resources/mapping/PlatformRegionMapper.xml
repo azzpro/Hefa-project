@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hefa.user.mapper.PlatformRegionMapper">
+  <resultMap id="BaseResultMap" type="com.hefa.user.pojo.PlatformRegion">
+    <id column="id"  property="id" />
+    <result column="platfrom_user_code"  property="platfromUserCode" />
+    <result column="region_province" property="regionProvince" />
+    <result column="region_city"  property="regionCity" />
+    <result column="region_area"  property="regionArea" />
+    <result column="region_code"  property="regionCode" />
+    <result column="region_creatime" property="regionCreatime" />
+  </resultMap>
+  
+  <insert id="insertRegion" parameterType="com.hefa.user.pojo.PlatformRegion" useGeneratedKeys="true" keyProperty="id">
+  	insert into platform_region
+  	(platfrom_user_code,region_province,region_city,region_area,region_code,region_creatime)
+  	values(#{platfromUserCode},#{regionProvince},#{regionCity},#{regionArea},#{regionCode},#{regionCreatime})
+  </insert>
+  
+  <select id="getRegionList" parameterType="com.hefa.user.pojo.bo.RegionUserParam" resultType="com.hefa.user.pojo.vo.RegionUserInfo">
+  	select CONCAT_WS('-',a.region_province,a.region_city,a.region_area) regionArea,a.region_code regionUserCode,
+  	DATE_FORMAT(a.region_creatime,'%Y-%m-%d') createTime,p.user_name regionUserName,pd.dept_name regionUserDept
+  	from platform_region a
+  	left join platform_user p on a.platfrom_user_code = p.user_code
+  	left join platform_dept pd on pd.id = p.dept_id
+  	<where>
+  		<if test="startTime != null and startTime != ''">
+			a.region_creatime >= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and a.region_creatime &lt;= #{endTime}
+		</if>
+  		<if test="areaName != null and areaName != ''">
+  			a.region_province like CONCAT('%', #{areaName}, '%')
+  			or
+  			a.region_city like CONCAT('%', #{areaName}, '%')
+  			or
+  			a.region_area like CONCAT('%', #{areaName}, '%')
+  		</if>
+  		<if test="regionName != null and regionName != ''">
+  			p.user_name like CONCAT('%', #{regionName}, '%')
+  		</if>
+  	</where>
+  	order by a.region_creatime desc
+  </select>
+</mapper>

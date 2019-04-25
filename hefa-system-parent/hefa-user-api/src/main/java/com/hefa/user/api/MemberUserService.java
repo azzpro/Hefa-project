@@ -21,5 +21,5 @@ public interface MemberUserService {
 	 * @author jonly  
 	 */
 	@RequestMapping("/hefa/api/member/getMemberUserList")
-	public JsonResult<Pagination<MemberInfo>> getMemberUserList(@RequestBody MemberParam param);
+	JsonResult<Pagination<MemberInfo>> getMemberUserList(@RequestBody MemberParam param);
 }
