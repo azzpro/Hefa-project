@@ -10,7 +10,6 @@ package com.hefa.platform.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +23,7 @@ import com.hefa.order.pojo.bo.SearchInvoiceInfoParam;
 import com.hefa.order.pojo.vo.ExpressCompanyInfo;
 import com.hefa.order.pojo.vo.InvoiceDetail;
 import com.hefa.order.pojo.vo.InvoiceInfo;
+import com.hefa.platform.utils.WebUtils;
 
 /**
  * <P>开票</P>
@@ -45,7 +45,7 @@ public class InvoiceController {
 	 * @author 黄智聪  2019年4月24日 下午7:04:36
 	 */
 	@RequestMapping("/getInvoiceInfos")
-	public JsonResult<Pagination<InvoiceInfo>> getInvoiceInfos(@RequestBody SearchInvoiceInfoParam param){
+	public JsonResult<Pagination<InvoiceInfo>> getInvoiceInfos(SearchInvoiceInfoParam param){
 		return invoiceService.getInvoiceInfos(param);
 	}
 	
@@ -80,7 +80,8 @@ public class InvoiceController {
 	 * @author 黄智聪  2019年4月24日 下午7:54:06
 	 */
 	@RequestMapping("/approveInvoice")
-	public JsonResult<String> approveInvoice(@RequestBody ApproveInvoiceParam param){
+	public JsonResult<String> approveInvoice(ApproveInvoiceParam param){
+		param.setModifier(WebUtils.getLoginUser().getUserInfo().getUserCode());
 		return invoiceService.approveInvoice(param);
 	}
 	
@@ -92,7 +93,8 @@ public class InvoiceController {
 	 * @author 黄智聪  2019年4月24日 下午7:54:06
 	 */
 	@RequestMapping("/rejectInvoice")
-	public JsonResult<String> rejectInvoice(@RequestBody RejectInvoiceParam param){
+	public JsonResult<String> rejectInvoice(RejectInvoiceParam param){
+		param.setModifier(WebUtils.getLoginUser().getUserInfo().getUserCode());
 		return invoiceService.rejectInvoice(param);
 	}
 

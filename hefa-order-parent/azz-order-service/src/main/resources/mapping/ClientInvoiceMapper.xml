@@ -250,7 +250,7 @@
 		ci.invoice_status AS invoiceStatus,
 		ci.order_code AS orderCode,
 		cit.invoice_type AS invoiceType,
-		im.telephone AS clientUserPhoneNumber
+		im.mobile AS clientUserPhoneNumber
 	FROM
 		client_invoice ci
 	JOIN client_order co ON ci.order_code = co.order_code
@@ -268,7 +268,7 @@
 		</if>
 		<if test="searchInput != null and searchInput != ''">
 			and (
-					im.telephone LIKE CONCAT('%', #{searchInput}, '%')
+					im.mobile LIKE CONCAT('%', #{searchInput}, '%')
 				or	ci.invoice_code = #{searchInput}
 			)
 		</if>

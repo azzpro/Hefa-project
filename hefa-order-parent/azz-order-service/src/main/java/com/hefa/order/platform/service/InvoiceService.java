@@ -110,7 +110,7 @@ public class InvoiceService {
 	 */
 	public JsonResult<String> approveInvoice(@RequestBody ApproveInvoiceParam param){
 		JSR303ValidateUtils.validateInputParam(param);
-		this.checkInvoice(param.getInvoiceCode());
+		ClientInvoice invoice = this.checkInvoice(param.getInvoiceCode());
 		Date nowDate = new Date();
 		ClientInvoiceLogistics logisticsRecord = null;
 		if(DeliveryType.EXPRESS.getValue() == param.getDeliveryType()) {
@@ -155,7 +155,7 @@ public class InvoiceService {
 				.modifier(param.getModifier())
 				.modifyTime(nowDate)
 				.invoiceStatus((byte)InvoiceStatus.APPROVED.getValue())
-				.invoiceCode(param.getInvoiceCode())
+				.id(invoice.getId())
 				.build();
 		clientInvoiceMapper.updateByPrimaryKeySelective(invoiceRecord);
 		// 新增开票快递信息
@@ -175,15 +175,15 @@ public class InvoiceService {
 	 */
 	public JsonResult<String> rejectInvoice(@RequestBody RejectInvoiceParam param){
 		JSR303ValidateUtils.validateInputParam(param);
-		this.checkInvoice(param.getInvoiceCode());
+		ClientInvoice invoice = this.checkInvoice(param.getInvoiceCode());
 		Date nowDate = new Date();
 		// 修改开票状态 
 		ClientInvoice invoiceRecord = ClientInvoice.builder()
 				.modifier(param.getModifier())
 				.modifyTime(nowDate)
 				.invoiceStatus((byte)InvoiceStatus.REJECTED.getValue())
-				.invoiceCode(param.getInvoiceCode())
 				.remark(param.getRemark())
+				.id(invoice.getId())
 				.build();
 		clientInvoiceMapper.updateByPrimaryKeySelective(invoiceRecord);
 		
@@ -196,7 +196,7 @@ public class InvoiceService {
 	 * @param invoiceCode
 	 * @author 黄智聪  2019年4月25日 上午10:29:01
 	 */
-	private void checkInvoice(String invoiceCode) {
+	private ClientInvoice checkInvoice(String invoiceCode) {
 		ClientInvoice invoice = clientInvoiceMapper.selectByCode(invoiceCode);
 		if(invoice == null) {
 			throw new ReturnDataException("开票记录不存在");
@@ -204,6 +204,7 @@ public class InvoiceService {
 		if(invoice.getInvoiceStatus() != InvoiceStatus.PENDING.getValue()) {
 			throw new BusinessException("开票状态异常");
 		}
+		return invoice;
 	}
 
 }
