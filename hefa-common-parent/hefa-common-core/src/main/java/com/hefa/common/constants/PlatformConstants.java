@@ -217,4 +217,35 @@ public abstract class PlatformConstants {
         
     }
 	
+	/**
+	 * 
+	 * <P>订单状态 1待支付 2待发货 3待签收 4已完成 5已关闭 </P>
+	 * @version 1.0
+	 * @author 黄智聪  2019年4月24日 下午7:56:59
+	 */
+	public enum OrderStatus {
+	   
+		NOT_PAID(1, "待支付"),
+
+	    NOT_DELIVERED(2, "待发货"),
+
+	    NOT_SIGNED(3, "待签收"),
+
+	    COMPLETED(4, "已完成"),
+	    
+	    CLOSED(5, "已关闭");
+
+        @Getter
+        private int value;
+
+        @Getter
+        private String desc;
+
+        OrderStatus(int value, String desc) {
+            this.value = value;
+            this.desc = desc;
+        }
+        
+    }
+	
 }

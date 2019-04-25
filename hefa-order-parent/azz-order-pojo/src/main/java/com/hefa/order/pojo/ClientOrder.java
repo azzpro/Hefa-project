@@ -4,6 +4,15 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.hefa.order.pojo.ClientOrderLogistics.ClientOrderLogisticsBuilder;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ClientOrder implements Serializable {
     /**
      * 主键id

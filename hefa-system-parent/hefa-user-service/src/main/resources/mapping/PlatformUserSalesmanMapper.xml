@@ -156,6 +156,7 @@
   
   <select id="getSalesmanInfos" parameterType="com.hefa.user.pojo.bo.SearchSalesmanInfoParam" resultType="com.hefa.user.pojo.vo.SalesmanInfo">
     SELECT
+    	pus.id as recordId,
 		pus.salesman_code AS salesmanCode,
 		pd.dept_name AS deptName,
 		pu.user_name AS userName,

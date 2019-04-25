@@ -89,7 +89,7 @@ public class ClientUserSalesmanService {
 	 */
 	public JsonResult<String> editClientUserSalesman(@RequestBody EditClientUserSalesmanParam param) {
 		JSR303ValidateUtils.validateInputParam(param);
-		ClientUserSalesman record = clientUserSalesmanMapper.selectByPrimaryKey(param.getId());
+		ClientUserSalesman record = clientUserSalesmanMapper.selectByPrimaryKey(param.getRecordId());
 		if(record == null) {
 			throw new ReturnDataException("所选记录不存在");
 		}
@@ -99,7 +99,7 @@ public class ClientUserSalesmanService {
 			throw new ReturnDataException("业务员记录不存在");
 		}
 		ClientUserSalesman updateRecord = ClientUserSalesman.builder()
-				.id(param.getId())
+				.id(param.getRecordId())
 				.salesmanCode(param.getSalesmanCode())
 				.modifier(param.getModifier())
 				.modifyTime(new Date())

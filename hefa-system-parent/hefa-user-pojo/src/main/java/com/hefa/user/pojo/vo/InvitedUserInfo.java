@@ -22,7 +22,7 @@ public class InvitedUserInfo {
 	private Long recordId;
 	private String mobile;
 	private Date createTime;
-	private String platformUserName;
+	private String salesman;
 	private Integer orderCount;
 
 }

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hefa.order.mapper.ClientOrderLogisticsMapper">
+  <resultMap id="BaseResultMap" type="com.hefa.order.pojo.ClientOrderLogistics">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
+    <result column="express_company_id" jdbcType="INTEGER" property="expressCompanyId" />
+    <result column="number" jdbcType="VARCHAR" property="number" />
+    <result column="delivery_type" jdbcType="INTEGER" property="deliveryType" />
+    <result column="delivery_person" jdbcType="VARCHAR" property="deliveryPerson" />
+    <result column="delivery_phone" jdbcType="VARCHAR" property="deliveryPhone" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_code, express_company_id, number, delivery_type, delivery_person, delivery_phone, 
+    remark, create_time, creator, modify_time, modifier
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from client_order_logistics
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from client_order_logistics
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hefa.order.pojo.ClientOrderLogistics">
+    insert into client_order_logistics (id, order_code, express_company_id, 
+      number, delivery_type, delivery_person, 
+      delivery_phone, remark, create_time, 
+      creator, modify_time, modifier
+      )
+    values (#{id,jdbcType=BIGINT}, #{orderCode,jdbcType=VARCHAR}, #{expressCompanyId,jdbcType=INTEGER}, 
+      #{number,jdbcType=VARCHAR}, #{deliveryType,jdbcType=INTEGER}, #{deliveryPerson,jdbcType=VARCHAR}, 
+      #{deliveryPhone,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{creator,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hefa.order.pojo.ClientOrderLogistics">
+    insert into client_order_logistics
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderCode != null">
+        order_code,
+      </if>
+      <if test="expressCompanyId != null">
+        express_company_id,
+      </if>
+      <if test="number != null">
+        number,
+      </if>
+      <if test="deliveryType != null">
+        delivery_type,
+      </if>
+      <if test="deliveryPerson != null">
+        delivery_person,
+      </if>
+      <if test="deliveryPhone != null">
+        delivery_phone,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderCode != null">
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="expressCompanyId != null">
+        #{expressCompanyId,jdbcType=INTEGER},
+      </if>
+      <if test="number != null">
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryType != null">
+        #{deliveryType,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryPerson != null">
+        #{deliveryPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryPhone != null">
+        #{deliveryPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hefa.order.pojo.ClientOrderLogistics">
+    update client_order_logistics
+    <set>
+      <if test="orderCode != null">
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="expressCompanyId != null">
+        express_company_id = #{expressCompanyId,jdbcType=INTEGER},
+      </if>
+      <if test="number != null">
+        number = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryType != null">
+        delivery_type = #{deliveryType,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryPerson != null">
+        delivery_person = #{deliveryPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryPhone != null">
+        delivery_phone = #{deliveryPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hefa.order.pojo.ClientOrderLogistics">
+    update client_order_logistics
+    set order_code = #{orderCode,jdbcType=VARCHAR},
+      express_company_id = #{expressCompanyId,jdbcType=INTEGER},
+      number = #{number,jdbcType=VARCHAR},
+      delivery_type = #{deliveryType,jdbcType=INTEGER},
+      delivery_person = #{deliveryPerson,jdbcType=VARCHAR},
+      delivery_phone = #{deliveryPhone,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

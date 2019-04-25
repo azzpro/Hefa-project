@@ -1,8 +1,18 @@
 package com.hefa.order.pojo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
+import com.hefa.order.pojo.ClientOrder.ClientOrderBuilder;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ClientOrderStatus implements Serializable {
     /**
      * 主键id

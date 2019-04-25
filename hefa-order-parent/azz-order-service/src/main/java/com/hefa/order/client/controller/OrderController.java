@@ -1,4 +1,4 @@
-package com.hefa.order.platform.controller;
+package com.hefa.order.client.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
 import com.hefa.order.platform.service.OrderService;
-import com.hefa.order.pojo.bo.ConfirmDeliveryParam;
 import com.hefa.order.pojo.bo.SearchCommissionOrderInfoParam;
 import com.hefa.order.pojo.bo.SearchOrderInfoParam;
 import com.hefa.order.pojo.vo.CommissionOrderInfo;
@@ -23,7 +22,7 @@ import com.hefa.order.pojo.vo.OrderInfo;
  * @author 黄智聪  2019年4月25日 上午11:15:40
  */
 @RestController
-@RequestMapping("/hefa/api/platform/order")
+@RequestMapping("/hefa/api/client/order")
 public class OrderController {
 	
 	@Autowired
@@ -52,18 +51,6 @@ public class OrderController {
 	@RequestMapping("/getOrderDetail")
 	public JsonResult<OrderDetail> getOrderDetail(@RequestParam("orderCode") String orderCode){
 		return orderService.getOrderDetail(orderCode);
-	}
-	
-	/**
-	 * 
-	 * <p>确认发货</p>
-	 * @param param
-	 * @return
-	 * @author 黄智聪  2019年4月22日 下午8:11:14
-	 */
-	@RequestMapping("/confirmDelivery")
-	public JsonResult<String> confirmDelivery(@RequestBody ConfirmDeliveryParam param){
-		return orderService.confirmDelivery(param);
 	}
 	
 	/**

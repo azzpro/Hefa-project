@@ -143,7 +143,7 @@
 		cus.id AS recordId,
 		im.mobile as mobile,
 		cus.create_time AS createTime,
-		pu.user_name as platformUserName,
+		pu.user_name as salesman,
 		IFNULL(t.orderCount, 0) AS orderCount
 	FROM
 		iwebshop_user iu

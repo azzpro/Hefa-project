@@ -19,6 +19,8 @@ import lombok.Data;
 @Data
 public class SalesmanInfo {
 	
+	private Long recordId;
+	
 	private String salesmanCode;
 	
 	private String deptName;
