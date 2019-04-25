@@ -37,7 +37,7 @@ import com.hefa.order.pojo.vo.OrderItemInfo;
  * @author 黄智聪  2019年4月22日 下午7:37:02
  */
 @Transactional(rollbackFor = Exception.class)
-@Service
+//@Service
 public class OrderService {
 	
 	@Autowired
