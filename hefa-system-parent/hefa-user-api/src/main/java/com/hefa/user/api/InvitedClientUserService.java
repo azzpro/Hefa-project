@@ -49,13 +49,13 @@ public interface InvitedClientUserService {
 	
 	/**
 	 * 
-	 * <p>查询业务员信息</p>
+	 * <p>查询已邀请的会员信息列表</p>
 	 * @param param
 	 * @return
 	 * @author 黄智聪  2019年4月24日 下午2:18:34
 	 */
-	@RequestMapping("/hefa/api/platform/invitedUser/getSalesmanInfos")
-	JsonResult<Pagination<InvitedUserInfo>> getSalesmanInfos(@RequestBody SearchInvitedUserInfoParam param);
+	@RequestMapping("/hefa/api/platform/invitedUser/getInvitedUserInfos")
+	JsonResult<Pagination<InvitedUserInfo>> getInvitedUserInfos(@RequestBody SearchInvitedUserInfoParam param);
 	
 }
 

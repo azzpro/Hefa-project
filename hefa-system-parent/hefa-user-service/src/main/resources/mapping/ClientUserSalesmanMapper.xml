@@ -141,7 +141,7 @@
   <select id="getInvitedUserInfos" parameterType="com.hefa.user.pojo.bo.SearchInvitedUserInfoParam" resultType="com.hefa.user.pojo.vo.InvitedUserInfo">
 	SELECT
 		cus.id AS recordId,
-		im.telephone,
+		im.mobile as mobile,
 		cus.create_time AS createTime,
 		pu.user_name as platformUserName,
 		IFNULL(t.orderCount, 0) AS orderCount

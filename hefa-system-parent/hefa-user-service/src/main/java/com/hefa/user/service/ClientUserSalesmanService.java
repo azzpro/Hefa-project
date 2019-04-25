@@ -111,12 +111,12 @@ public class ClientUserSalesmanService {
 	
 	/**
 	 * 
-	 * <p>查询业务员信息</p>
+	 * <p>查询已邀请的会员信息列表</p>
 	 * @param param
 	 * @return
 	 * @author 黄智聪  2019年4月24日 下午2:18:34
 	 */
-	public JsonResult<Pagination<InvitedUserInfo>> getSalesmanInfos(@RequestBody SearchInvitedUserInfoParam param){
+	public JsonResult<Pagination<InvitedUserInfo>> getInvitedUserInfos(@RequestBody SearchInvitedUserInfoParam param){
 		PageHelper.startPage(param.getPageNum(), param.getPageSize());
 		List<InvitedUserInfo> infos = clientUserSalesmanMapper.getInvitedUserInfos(param);
 		return JsonResult.successJsonResult(new Pagination<>(infos));

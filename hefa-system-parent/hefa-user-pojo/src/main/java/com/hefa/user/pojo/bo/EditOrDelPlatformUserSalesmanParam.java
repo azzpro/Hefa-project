@@ -14,20 +14,17 @@ package com.hefa.user.pojo.bo;
 
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
-
 import lombok.Data;
 
 @Data
 public class EditOrDelPlatformUserSalesmanParam {
 	
 	@NotNull(message = "缺少请求参数")
-	private int optType;
+	private Integer optType;
 	
 	@NotNull(message = "请选择记录")
 	private Long recordId;
 	
-	@NotBlank(message = "成员编码不允许为空")
 	private String userCode;
 	
 	private String modifier;

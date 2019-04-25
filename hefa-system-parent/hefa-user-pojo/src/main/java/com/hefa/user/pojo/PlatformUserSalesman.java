@@ -319,11 +319,11 @@ public class PlatformUserSalesman implements Serializable {
         return sb.toString();
     }
 
-	public int getInvitedClientUserCount() {
+	public Integer getInvitedClientUserCount() {
 		return invitedClientUserCount;
 	}
 
-	public void setInvitedClientUserCount(int invitedClientUserCount) {
+	public void setInvitedClientUserCount(Integer invitedClientUserCount) {
 		this.invitedClientUserCount = invitedClientUserCount;
 	}
 }

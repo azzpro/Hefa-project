@@ -10,6 +10,8 @@ package com.hefa.user.service;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +33,7 @@ import com.hefa.user.pojo.bo.EditOrDelPlatformUserSalesmanParam;
 import com.hefa.user.pojo.bo.SearchSalesmanInfoParam;
 import com.hefa.user.pojo.vo.SalesmanInfo;
 import com.hefa.utils.JSR303ValidateUtils;
+import com.hefa.utils.StringUtils;
 
 /**
  * <P>平台端用户与业务员的业务</P>
@@ -109,7 +112,7 @@ public class PlatformUserSalesmanService {
 			platformUserSalesmanMapper.updateByPrimaryKeySelective(updateRecord);
 			break;
 		default:
-			break;
+			throw new ValidationException("操作类型不存在");
 		}
 		return JsonResult.successJsonResult();
 	}
@@ -136,7 +139,7 @@ public class PlatformUserSalesmanService {
 	private void checkSalesman(String salesmanCode) {
 		int count = clientUserSalesmanMapper.countBySalesmanCode(salesmanCode);
 		if(count > 0) {
-			throw new BusinessException("业务人员存在绑定的会员信息，请变更后在进行删除");
+			throw new BusinessException("业务人员存在绑定的会员信息，请变更后再进行删除");
 		}
 	}
 	
@@ -150,6 +153,9 @@ public class PlatformUserSalesmanService {
 	 * @author 黄智聪  2019年4月23日 下午5:02:43
 	 */
 	private void checkPlatformUser(String platformUserCode, Long id) {
+		if(StringUtils.isBlank(platformUserCode)) {
+			throw new ValidationException("成员编码不允许为空");
+		}
 		PlatformUser platformUser = platformUserMapper.getUserByUserCode(platformUserCode);
 		if(platformUser == null) {
 			throw new ReturnDataException("成员编码不存在");

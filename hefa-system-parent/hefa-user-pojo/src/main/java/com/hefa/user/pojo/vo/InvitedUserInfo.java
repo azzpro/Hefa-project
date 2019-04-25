@@ -20,7 +20,7 @@ import lombok.Data;
 public class InvitedUserInfo {
 	
 	private Long recordId;
-	private String telephone;
+	private String mobile;
 	private Date createTime;
 	private String platformUserName;
 	private Integer orderCount;
