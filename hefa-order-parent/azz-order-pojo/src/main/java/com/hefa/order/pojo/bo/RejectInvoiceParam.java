@@ -7,8 +7,6 @@
  
 package com.hefa.order.pojo.bo;
 
-import javax.validation.constraints.NotNull;
-
 import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
@@ -19,21 +17,13 @@ import lombok.Data;
  * @author 黄智聪  2019年4月24日 下午7:39:49
  */
 @Data
-public class ApproveInvoiceParam {
+public class RejectInvoiceParam {
 	
 	@NotBlank(message = "请选择开票记录")
 	private String invoiceCode;
 	
-	@NotNull(message = "请选择配送方式")
-	private Byte deliveryType;
-	
-	private Integer expressCompanyId;
-	
-	private String deliveryPerson;
-	
-	private String deliveryPhone;
-	
-	private String number;
+	@NotBlank(message = "请选择开票记录")
+	private String remark;
 	
 	private String modifier;
 }

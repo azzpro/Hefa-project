@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.hefa.order.pojo.ClientInvoice;
 import com.hefa.order.pojo.bo.SearchInvoiceInfoParam;
+import com.hefa.order.pojo.vo.ExpressCompanyInfo;
 import com.hefa.order.pojo.vo.InvoiceDetail;
 import com.hefa.order.pojo.vo.InvoiceInfo;
 
@@ -18,7 +19,9 @@ public interface ClientInvoiceMapper {
     int insertSelective(ClientInvoice record);
 
     ClientInvoice selectByPrimaryKey(Long id);
-
+    
+    ClientInvoice selectByCode(String invoiceCode);
+    
     int updateByPrimaryKeySelective(ClientInvoice record);
 
     int updateByPrimaryKey(ClientInvoice record);
@@ -49,4 +52,12 @@ public interface ClientInvoiceMapper {
      * @author 黄智聪  2019年4月24日 下午7:52:18
      */
     int existExpressCompany(int expressCompanyId);
+    
+    /**
+     * 
+     * <p>查询所有快递公司信息</p>
+     * @return
+     * @author 黄智聪  2019年4月25日 上午10:52:05
+     */
+    List<ExpressCompanyInfo> getExpressCompanyInfos();
 }

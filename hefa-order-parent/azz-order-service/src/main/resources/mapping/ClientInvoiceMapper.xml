@@ -11,6 +11,7 @@
     <result column="amount" jdbcType="DECIMAL" property="amount" />
     <result column="quantity" jdbcType="INTEGER" property="quantity" />
     <result column="invoice_status" jdbcType="TINYINT" property="invoiceStatus" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="creator" jdbcType="VARCHAR" property="creator" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="modifier" jdbcType="VARCHAR" property="modifier" />
@@ -18,13 +19,19 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, invoice_code, user_code, order_code, invoice_template_code, shipping_address_code, 
-    amount, quantity, invoice_status, creator, create_time, modifier, modify_time
+    amount, quantity, invoice_status, creator, create_time, modifier, modify_time,remark
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from client_invoice
     where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByCode" parameterType="string" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from client_invoice
+    where invoice_code = #{invoiceCode}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from client_invoice
@@ -35,12 +42,12 @@
       order_code, invoice_template_code, shipping_address_code, 
       amount, quantity, invoice_status, 
       creator, create_time, modifier, 
-      modify_time)
+      modify_time, remark)
     values (#{id,jdbcType=BIGINT}, #{invoiceCode,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}, 
       #{orderCode,jdbcType=VARCHAR}, #{invoiceTemplateCode,jdbcType=VARCHAR}, #{shippingAddressCode,jdbcType=VARCHAR}, 
       #{amount,jdbcType=DECIMAL}, #{quantity,jdbcType=INTEGER}, #{invoiceStatus,jdbcType=TINYINT}, 
       #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
-      #{modifyTime,jdbcType=TIMESTAMP})
+      #{modifyTime,jdbcType=TIMESTAMP},#{remark,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.hefa.order.pojo.ClientInvoice">
     insert into client_invoice
@@ -84,6 +91,9 @@
       <if test="modifyTime != null">
         modify_time,
       </if>
+      <if test="remark != null">
+        remark,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -124,6 +134,9 @@
       </if>
       <if test="modifyTime != null">
         #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -166,6 +179,9 @@
       <if test="modifyTime != null">
         modify_time = #{modifyTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -182,7 +198,8 @@
       creator = #{creator,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       modifier = #{modifier,jdbcType=VARCHAR},
-      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
   
@@ -219,8 +236,8 @@
 	JOIN client_order co ON ci.order_code = co.order_code
 	JOIN client_invoice_template cit ON cit.invoice_template_code = ci.invoice_template_code
 	JOIN client_shipping_address csa ON csa.shipping_address_code = ci.shipping_address_code
-	JOIN client_invoice_logistics cil ON cil.invoice_code = ci.invoice_code
-	JOIN express_company ec ON ec.id = cil.express_company_id
+	LEFT JOIN client_invoice_logistics cil ON cil.invoice_code = ci.invoice_code
+	LEFT JOIN express_company ec ON ec.id = cil.express_company_id
 	WHERE
 		ci.invoice_code = #{invoiceCode}
   </select>
@@ -261,6 +278,14 @@
   
   <select id="existExpressCompany" parameterType="int" resultType="int">
   	select count(1) from express_company where id = #{expressCompanyId}
+  </select>
+  
+  <select id="getExpressCompanyInfos" resultType="com.hefa.order.pojo.vo.ExpressCompanyInfo">
+  	SELECT
+		id AS expressCompanyId,
+		company_name AS expressCompanyName
+	FROM
+		express_company
   </select>
   
 </mapper>

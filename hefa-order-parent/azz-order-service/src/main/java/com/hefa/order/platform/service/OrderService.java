@@ -61,7 +61,7 @@ public class OrderService {
 	
 	/**
 	 * 
-	 * <p>查询订单列表</p>
+	 * <p>查询订单详情</p>
 	 * @param param
 	 * @return
 	 * @author 黄智聪  2019年4月22日 下午8:11:14

@@ -190,8 +190,31 @@ public abstract class PlatformConstants {
 			this.value = value;
 			this.desc = desc;
 		}
-
 	}
 	
+	/**
+	 * 
+	 * <P>发票状态  1 待开票 2 已开票 3 已拒绝 </P>
+	 * @version 1.0
+	 * @author 黄智聪  2019年4月24日 下午7:56:59
+	 */
+	public enum InvoiceStatus {
+	   
+	    PENDING(1, "待开票"),
+        APPROVED(2, "已开票"),
+        REJECTED(3, "已拒绝");
+
+        @Getter
+        private int value;
+
+        @Getter
+        private String desc;
+
+        InvoiceStatus(int value, String desc) {
+            this.value = value;
+            this.desc = desc;
+        }
+        
+    }
 	
 }
