@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hefa.common.base.JsonResult;
+import com.hefa.common.exception.ValidationException;
 import com.hefa.common.page.Pagination;
 import com.hefa.user.api.PlatfromRegionService;
 import com.hefa.user.pojo.bo.RegionAdd;
@@ -47,5 +48,33 @@ public class PlatfromRegionController {
 	public JsonResult<String> addRegion( RegionAdd regionAdd){
 		JSR303ValidateUtils.validateInputParam(regionAdd);
 		return platfromRegionService.addRegion(regionAdd);
+	}
+	
+	/**
+	 * 
+	 * <p>售后区域变更 人员变更</p>
+	 * @param param
+	 * @return
+	 * @author jonly  
+	 */
+	@RequestMapping("/updateRegionchange")
+	public JsonResult<String> updateRegionchange( RegionAdd regionAdd){
+		JSR303ValidateUtils.validateInputParam(regionAdd);
+		return platfromRegionService.updateRegionchange(regionAdd);
+	}
+	
+	/**
+	 * 
+	 * <p>售后区域变更 人员变更</p>
+	 * @param param
+	 * @return
+	 * @author jonly  
+	 */
+	@RequestMapping("/deleteRegion")
+	public JsonResult<String> deleteRegion( Long id){
+		if(id == null) {
+			throw new ValidationException("输入参数为空");
+		}
+		return platfromRegionService.deleteRegion(id);
 	}
 }

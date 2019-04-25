@@ -10,6 +10,8 @@ public class PlatformRegion {
 	private String regionArea;//区域 区
 	private String regionCode;//区域售后专员编码
 	private Date regionCreatime;//创建时间
+	private Date regionModifytime;//修改时间
+	private Byte status;//状态1 正常 2删除
 	public Long getId() {
 		return id;
 	}
@@ -51,6 +53,18 @@ public class PlatformRegion {
 	}
 	public void setRegionCreatime(Date regionCreatime) {
 		this.regionCreatime = regionCreatime;
+	}
+	public Date getRegionModifytime() {
+		return regionModifytime;
+	}
+	public void setRegionModifytime(Date regionModifytime) {
+		this.regionModifytime = regionModifytime;
+	}
+	public Byte getStatus() {
+		return status;
+	}
+	public void setStatus(Byte status) {
+		this.status = status;
 	}
 	
 }
