@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hefa.user.mapper.PlatformSaleafterMapper">
+  <resultMap id="BaseResultMap" type="com.hefa.user.pojo.PlatformSaleAfter">
+    <id column="id"  property="id" />
+    <result column="service_number"  property="serviceNumber" />
+    <result column="order_code" property="orderCode" />
+    <result column="create_time"  property="createTime" />
+    <result column="status"  property="status" />
+    <result column="user_code"  property="user_code" />
+  </resultMap>
+  
+  <insert id="insertSaleAfter" parameterType="com.hefa.user.pojo.PlatformSaleAfter" useGeneratedKeys="true" keyProperty="id">
+  	insert into platform_saleafter
+  	(service_number,order_code,create_time,status,user_code)
+  	values(#{serviceNumber},#{orderCode},#{createTime},#{status},#{userCode})
+  </insert>
+  
+  <update id="updateSaleAfter">
+    update platform_saleafter
+    set status = #{status}
+    where service_number = #{number}
+  </update>
+  
+  
+  <select id="getSaleAfterList" parameterType="com.hefa.user.pojo.bo.ServiceSaleAfterParam" resultType="com.hefa.user.pojo.vo.ServiceSaleInfo">
+  	select a.service_number serviceNumber,a.status status,a.order_code orderCode,b.grand_total money,
+  	DATE_FORMAT(a.create_time,'%Y-%m-%d') appleTime,a.id id
+  	from platform_saleafter a
+  	left join client_order b on a.order_code = b.order_code
+  	where
+  		1=1
+  		<if test="startTime != null and startTime != ''">
+		and	a.create_time >= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and a.create_time &lt;= #{endTime}
+		</if>
+  		<if test="number != null and number != ''">
+  		 and (	a.service_number like CONCAT('%', #{number}, '%')
+  			or
+  			a.order_code like CONCAT('%', #{number}, '%')
+  			)
+  		</if>
+  	order by a.create_time desc
+  </select>
+  
+  <select id="getSaleAfterInfo" resultType="com.hefa.user.pojo.vo.SaleAfterInfo">
+  	select a.service_number returnGoodsNumber,a.status returnGoodsStatus,b.grand_total returnGoodsMoney,
+  	a.order_code orderCode,a.user_code userCode,c.receiver_name userName,c.receiver_phone_number userPhone,
+  	b.remark remake,CONCAT(c.province_name,c.city_name,c.area_name) contactAddress,c.detail_address address
+    from platform_saleafter a
+    left join client_order b on a.order_code = b.order_code
+    left join client_shipping_address c on a.user_code = c.user_code
+    where a.service_number = #{serviceName}
+  </select>
+  
+  <select id="getOrderItemInfosByOrderCode" parameterType="string" resultType="com.hefa.user.pojo.vo.OrderItemInfo">
+    SELECT
+		coi.product_code AS productCode,
+		coi.product_price AS productPrice,
+		coi.quantity AS quantity,
+		coi.specification_info AS specificationInfo,
+		coi.product_price * coi.quantity AS total
+	FROM
+		client_order_item coi
+	WHERE coi.order_code = #{orderCode}
+  </select>
+  
+  <select id="selectAreaNameById" resultType="map">
+  	select province_name pname,city_name cname, area_name aname
+  	from client_shipping_address where user_code = #{code}
+  </select>
+</mapper>

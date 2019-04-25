@@ -3,12 +3,14 @@ package com.hefa.user.service;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.github.pagehelper.PageHelper;
 import com.hefa.common.base.JsonResult;
+import com.hefa.common.exception.ValidationException;
 import com.hefa.common.page.Pagination;
 import com.hefa.system.sequence.api.DbSequenceService;
 import com.hefa.user.mapper.PlatformRegionMapper;
@@ -45,7 +47,10 @@ public class PlatfromRegionService {
 	 * @author jonly  
 	 */
 	public JsonResult<String> addRegion(@RequestBody RegionAdd regionAdd){
-		String[] split = regionAdd.getRegionArea().split("/");
+		String area = regionAdd.getRegionArea();
+		String area2 = platfromRegionMapper.selectUserCodeByArea(area.replace("/", ""));
+		if(StringUtils.isNotBlank(area2))  throw new ValidationException("区域已存在"); 
+		String[] split = area.split("/");
 		PlatformRegion pr = new PlatformRegion();
 		pr.setPlatfromUserCode(regionAdd.getPlatfromUserCode());
 		pr.setRegionCreatime(new Date());

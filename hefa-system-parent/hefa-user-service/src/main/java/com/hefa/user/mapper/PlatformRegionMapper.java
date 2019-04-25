@@ -11,6 +11,8 @@ import com.hefa.user.pojo.vo.RegionUserInfo;
 @Mapper
 public interface PlatformRegionMapper {
 	
+	String selectUserCodeByArea(String name);
+	
 	/**
 	 * 获取售后区域列表
 	 * @return
