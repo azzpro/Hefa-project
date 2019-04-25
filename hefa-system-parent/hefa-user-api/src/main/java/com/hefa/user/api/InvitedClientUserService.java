@@ -14,13 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
 import com.hefa.user.pojo.bo.AddClientUserSalesmanParam;
-import com.hefa.user.pojo.bo.AddPlatformUserSalesmanParam;
 import com.hefa.user.pojo.bo.EditClientUserSalesmanParam;
-import com.hefa.user.pojo.bo.EditOrDelPlatformUserSalesmanParam;
 import com.hefa.user.pojo.bo.SearchInvitedUserInfoParam;
-import com.hefa.user.pojo.bo.SearchSalesmanInfoParam;
 import com.hefa.user.pojo.vo.InvitedUserInfo;
-import com.hefa.user.pojo.vo.SalesmanInfo;
 
 /**
  * <P>TODO</P>
