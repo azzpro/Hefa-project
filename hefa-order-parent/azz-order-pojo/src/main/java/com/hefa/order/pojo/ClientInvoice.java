@@ -4,6 +4,13 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ClientInvoice implements Serializable {
     /**
      * id
@@ -67,6 +74,8 @@ public class ClientInvoice implements Serializable {
      * @mbg.generated
      */
     private Byte invoiceStatus;
+    
+    private String remark;
 
     /**
      * 创建人
@@ -480,4 +489,12 @@ public class ClientInvoice implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 }

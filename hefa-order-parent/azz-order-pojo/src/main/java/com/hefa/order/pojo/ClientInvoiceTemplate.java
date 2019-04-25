@@ -12,6 +12,13 @@ public class ClientInvoiceTemplate implements Serializable {
     private Long id;
 
     /**
+     * 开票模板编码
+     *
+     * @mbg.generated
+     */
+    private String invoiceTemplateCode;
+
+    /**
      * 关联的客户的用户编码
      *
      * @mbg.generated
@@ -147,6 +154,30 @@ public class ClientInvoiceTemplate implements Serializable {
      */
     public void setId(Long id) {
         this.id = id;
+    }
+
+    /**
+     * 开票模板编码<br/>
+     * 返回值对应的表列名 client_invoice_template.invoice_template_code
+     *
+     * @return 返回值对应 client_invoice_template.invoice_template_code
+     *
+     * @mbg.generated
+     */
+    public String getInvoiceTemplateCode() {
+        return invoiceTemplateCode;
+    }
+
+    /**
+     * 开票模板编码<br/>
+     * client_invoice_template.invoice_template_code
+     *
+     * @param invoiceTemplateCode 值对应 client_invoice_template.invoice_template_code
+     *
+     * @mbg.generated
+     */
+    public void setInvoiceTemplateCode(String invoiceTemplateCode) {
+        this.invoiceTemplateCode = invoiceTemplateCode == null ? null : invoiceTemplateCode.trim();
     }
 
     /**
@@ -546,6 +577,7 @@ public class ClientInvoiceTemplate implements Serializable {
         }
         ClientInvoiceTemplate other = (ClientInvoiceTemplate) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getInvoiceTemplateCode() == null ? other.getInvoiceTemplateCode() == null : this.getInvoiceTemplateCode().equals(other.getInvoiceTemplateCode()))
             && (this.getUserCode() == null ? other.getUserCode() == null : this.getUserCode().equals(other.getUserCode()))
             && (this.getInvoiceType() == null ? other.getInvoiceType() == null : this.getInvoiceType().equals(other.getInvoiceType()))
             && (this.getInvoiceTitle() == null ? other.getInvoiceTitle() == null : this.getInvoiceTitle().equals(other.getInvoiceTitle()))
@@ -569,6 +601,7 @@ public class ClientInvoiceTemplate implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getInvoiceTemplateCode() == null) ? 0 : getInvoiceTemplateCode().hashCode());
         result = prime * result + ((getUserCode() == null) ? 0 : getUserCode().hashCode());
         result = prime * result + ((getInvoiceType() == null) ? 0 : getInvoiceType().hashCode());
         result = prime * result + ((getInvoiceTitle() == null) ? 0 : getInvoiceTitle().hashCode());
@@ -595,6 +628,7 @@ public class ClientInvoiceTemplate implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
+        sb.append(", invoiceTemplateCode=").append(invoiceTemplateCode);
         sb.append(", userCode=").append(userCode);
         sb.append(", invoiceType=").append(invoiceType);
         sb.append(", invoiceTitle=").append(invoiceTitle);
