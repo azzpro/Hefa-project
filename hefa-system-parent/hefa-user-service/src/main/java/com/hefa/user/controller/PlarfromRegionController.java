@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
+import com.hefa.user.pojo.bo.RegionAdd;
 import com.hefa.user.pojo.bo.RegionUserParam;
 import com.hefa.user.pojo.vo.RegionUserInfo;
 import com.hefa.user.service.PlatfromRegionService;
+import com.hefa.utils.JSR303ValidateUtils;
 
 @RestController
 @RequestMapping("/hefa/api/region/")
@@ -39,7 +41,8 @@ public class PlarfromRegionController {
 	 * @author jonly  
 	 */
 	@RequestMapping("/addRegion")
-	public JsonResult<String> addRegion(@RequestParam("")){
-		return platfromRegionService.getRegionList(param);
+	public JsonResult<String> addRegion(@RequestBody RegionAdd regionAdd){
+		JSR303ValidateUtils.validateInputParam(regionAdd);
+		return platfromRegionService.addRegion(regionAdd);
 	}
 }

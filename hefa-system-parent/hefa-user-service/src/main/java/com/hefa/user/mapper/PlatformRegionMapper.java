@@ -9,7 +9,7 @@ import com.hefa.user.pojo.bo.RegionUserParam;
 import com.hefa.user.pojo.vo.RegionUserInfo;
 
 @Mapper
-public interface PlatfromRegionMapper {
+public interface PlatformRegionMapper {
 	
 	/**
 	 * 获取售后区域列表
@@ -22,5 +22,5 @@ public interface PlatfromRegionMapper {
 	 * @param pr
 	 * @return
 	 */
-	int insertSelective(PlatformRegion pr);
+	int insertRegion(PlatformRegion pr);
 }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
+import com.hefa.user.pojo.bo.RegionAdd;
 import com.hefa.user.pojo.bo.RegionUserParam;
 import com.hefa.user.pojo.vo.RegionUserInfo;
 
@@ -21,4 +22,12 @@ public interface PlatfromRegionService {
 	 */
 	@RequestMapping("/hefa/api/region/getRegionList")
 	JsonResult<Pagination<RegionUserInfo>> getRegionList(@RequestBody RegionUserParam param);
+	
+	/**
+	 * 添加区域
+	 * @param regionAdd
+	 * @return
+	 */
+	@RequestMapping("/hefa/api/region/addRegion")
+	public JsonResult<String> addRegion(@RequestBody RegionAdd regionAdd);
 }

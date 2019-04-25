@@ -54,3 +54,7 @@ hefa:
      id: PlatDeptSequence #平台部门编码
      type: PlatDeptCodeSequence
      args: {id: 'A3', maxSequenceValue: '99999', length: '5', step: '5'}
+    -
+     id: PlatRegionSequence #区域编码
+     type: PlatRegionSequence
+     args: {id: 'A8', maxSequenceValue: '99999', length: '5', step: '5'}
