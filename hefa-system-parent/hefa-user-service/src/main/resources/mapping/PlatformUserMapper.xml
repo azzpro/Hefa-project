@@ -461,5 +461,9 @@
     </if>
   </select>
   
+  <select id="getUserByCode" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" /> from platform_user where status !=0
+  	and user_code = #{code}
+  </select>
   
 </mapper>

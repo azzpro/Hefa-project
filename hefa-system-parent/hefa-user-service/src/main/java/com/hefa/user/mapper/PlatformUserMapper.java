@@ -25,6 +25,8 @@ public interface PlatformUserMapper {
     
     int updateByPrimaryKey(PlatformUser record);
     
+    PlatformUser getUserByCode(String code);
+    
     /**
      * 
      * <p>根据手机号查询用户实体</p>

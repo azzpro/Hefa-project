@@ -13,6 +13,12 @@
     <result column="status" property="status" />
   </resultMap>
   
+  
+  <select id="selectUserCodeByArea" resultType="string">
+  	select platfrom_user_code from platform_region
+  	where CONCAT(region_province,region_city,region_area) = #{name}
+  </select>
+  
   <insert id="insertRegion" parameterType="com.hefa.user.pojo.PlatformRegion" useGeneratedKeys="true" keyProperty="id">
   	insert into platform_region
   	(platfrom_user_code,region_province,region_city,region_area,region_code,region_creatime,region_modifytime,status)

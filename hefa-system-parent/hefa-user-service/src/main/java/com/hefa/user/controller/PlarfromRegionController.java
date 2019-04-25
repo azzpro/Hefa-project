@@ -12,8 +12,11 @@ import com.hefa.user.pojo.bo.RegionAdd;
 import com.hefa.user.pojo.bo.RegionUserParam;
 import com.hefa.user.pojo.vo.RegionUserInfo;
 import com.hefa.user.service.PlatfromRegionService;
-import com.hefa.utils.JSR303ValidateUtils;
 
+/**
+ * @author THINK
+ * 区域管理
+ */
 @RestController
 @RequestMapping("/hefa/api/region/")
 public class PlarfromRegionController {

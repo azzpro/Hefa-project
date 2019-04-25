@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hefa.user.mapper.PlatformSaledetailMapper">
+  <resultMap id="BaseResultMap" type="com.hefa.user.pojo.PlatformSaleDetail">
+    <id column="id"  property="id" />
+    <result column="service_number"  property="serviceNumber" />
+    <result column="dealing_man" property="dealingMan" />
+    <result column="dealint_time"  property="dealintTime" />
+    <result column="status"  property="status" />
+    <result column="remake"  property="remake" />
+  </resultMap>
+  
+  <insert id="insertSaleDetail" parameterType="com.hefa.user.pojo.PlatformSaleDetail" useGeneratedKeys="true" keyProperty="id">
+  	insert into platform_saledetail
+  	(service_number,dealing_man,dealint_time,status,remake)
+  	values(#{serviceNumber},#{dealingMan},#{dealintTime},#{status},#{remake})
+  </insert>
+  
+  
+  <select id="getSaleDetailList"  resultType="com.hefa.user.pojo.PlatformSaleDetail">
+  	select service_number serviceNumber,dealing_man dealingMan,DATE_FORMAT(dealint_time,'%Y-%m-%d') time,status status,remake remake from platform_saledetail where service_number = #{number}
+  </select>
+</mapper>
