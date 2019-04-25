@@ -21,6 +21,8 @@ public interface ClientOrderMapper {
     ClientOrder selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(ClientOrder record);
+    
+    int updateByOrderCodeSelective(ClientOrder record);
 
     int updateByPrimaryKey(ClientOrder record);
     

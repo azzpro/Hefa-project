@@ -244,6 +244,68 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <update id="updateByOrderCodeSelective" parameterType="com.hefa.order.pojo.ClientOrder">
+    update client_order
+    <set>
+      <if test="userCode != null">
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="salesmanCode != null">
+        salesman_code = #{salesmanCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingAddressCode != null">
+        shipping_address_code = #{shippingAddressCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orderCreator != null">
+        order_creator = #{orderCreator,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryDays != null">
+        delivery_days = #{deliveryDays,jdbcType=INTEGER},
+      </if>
+      <if test="grandTotal != null">
+        grand_total = #{grandTotal,jdbcType=DECIMAL},
+      </if>
+      <if test="productCount != null">
+        product_count = #{productCount,jdbcType=INTEGER},
+      </if>
+      <if test="orderStatus != null">
+        order_status = #{orderStatus,jdbcType=TINYINT},
+      </if>
+      <if test="paymentMethod != null">
+        payment_method = #{paymentMethod,jdbcType=TINYINT},
+      </if>
+      <if test="paymentStatus != null">
+        payment_status = #{paymentStatus,jdbcType=TINYINT},
+      </if>
+      <if test="paymentType != null">
+        payment_type = #{paymentType,jdbcType=TINYINT},
+      </if>
+      <if test="invoiceStatus != null">
+        invoice_status = #{invoiceStatus,jdbcType=TINYINT},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_code = #{orderCode,jdbcType=VARCHAR}
+  </update>
+  
   <update id="updateByPrimaryKey" parameterType="com.hefa.order.pojo.ClientOrder">
     update client_order
     set order_code = #{orderCode,jdbcType=VARCHAR},

@@ -27,8 +27,10 @@ import com.hefa.common.page.Pagination;
 import com.hefa.order.mapper.ClientInvoiceLogisticsMapper;
 import com.hefa.order.mapper.ClientInvoiceMapper;
 import com.hefa.order.mapper.ClientOrderItemMapper;
+import com.hefa.order.mapper.ClientOrderMapper;
 import com.hefa.order.pojo.ClientInvoice;
 import com.hefa.order.pojo.ClientInvoiceLogistics;
+import com.hefa.order.pojo.ClientOrder;
 import com.hefa.order.pojo.bo.ApproveInvoiceParam;
 import com.hefa.order.pojo.bo.RejectInvoiceParam;
 import com.hefa.order.pojo.bo.SearchInvoiceInfoParam;
@@ -50,6 +52,9 @@ public class InvoiceService {
 	
 	@Autowired
 	private ClientInvoiceMapper clientInvoiceMapper;
+	
+	@Autowired
+	private ClientOrderMapper clientOrderMapper;
 	
 	@Autowired
 	private ClientOrderItemMapper clientOrderItemMapper;
@@ -163,6 +168,11 @@ public class InvoiceService {
 		logisticsRecord.setCreator(param.getModifier());
 		logisticsRecord.setInvoiceCode(param.getInvoiceCode());
 		clientInvoiceLogisticsMapper.insertSelective(logisticsRecord);
+		// 修改订单开票状态为已开票
+		ClientOrder orderRecord = new ClientOrder();
+		orderRecord.setOrderCode(invoice.getOrderCode());
+		orderRecord.setInvoiceStatus((byte)1);
+		clientOrderMapper.updateByOrderCodeSelective(orderRecord);
 		return JsonResult.successJsonResult();
 	}
 	
