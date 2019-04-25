@@ -23,4 +23,18 @@ public interface PlatformRegionMapper {
 	 * @return
 	 */
 	int insertRegion(PlatformRegion pr);
+	
+	/**
+	 * 修改+
+	 * @param pr
+	 * @return
+	 */
+	int updateRegion(PlatformRegion pr);
+	
+	/**
+	 * 删除+
+	 * @param pr
+	 * @return
+	 */
+	int deleteRegion(Long id);
 }

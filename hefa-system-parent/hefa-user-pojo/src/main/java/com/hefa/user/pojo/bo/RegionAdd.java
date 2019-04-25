@@ -7,6 +7,7 @@ public class RegionAdd {
 	private String platfromUserCode;//平台用户CODE
 	@NotBlank(message="区域不能为空")
 	private String regionArea;//区域 区
+	private Long id;
 	public String getPlatfromUserCode() {
 		return platfromUserCode;
 	}
@@ -18,6 +19,12 @@ public class RegionAdd {
 	}
 	public void setRegionArea(String regionArea) {
 		this.regionArea = regionArea;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 }

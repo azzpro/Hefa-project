@@ -3,6 +3,7 @@ package com.hefa.user.api;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
@@ -30,4 +31,24 @@ public interface PlatfromRegionService {
 	 */
 	@RequestMapping("/hefa/api/region/addRegion")
 	public JsonResult<String> addRegion(@RequestBody RegionAdd regionAdd);
+	
+	/**
+	 * 
+	 * <p>售后区域变更 人员变更</p>
+	 * @param param
+	 * @return
+	 * @author jonly  
+	 */
+	@RequestMapping("/hefa/api/region/updateRegionchange")
+	public JsonResult<String> updateRegionchange(@RequestBody RegionAdd regionAdd);
+	
+	/**
+	 * 
+	 * <p>售后区域人员删除</p>
+	 * @param param
+	 * @return
+	 * @author jonly  
+	 */
+	@RequestMapping("/hefa/api/region/deleteRegion")
+	public JsonResult<String> deleteRegion(@RequestParam("id") Long id);
 }

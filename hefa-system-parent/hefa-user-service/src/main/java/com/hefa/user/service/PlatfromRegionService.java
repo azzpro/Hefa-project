@@ -53,7 +53,41 @@ public class PlatfromRegionService {
 		pr.setRegionCity(split.length >= 2? split[1]:"");
 		pr.setRegionArea(split.length >= 3? split[2]:"");
 		pr.setRegionCode(dbSequenceService.getPlatRegionNumber());
+		pr.setRegionModifytime(null);
+		pr.setStatus((byte)1);
 		platfromRegionMapper.insertRegion(pr);
+		return JsonResult.successJsonResult();
+	}
+	
+	/**
+	 * 
+	 * <p>售后区域变更 人员变更</p>
+	 * @param param
+	 * @return
+	 * @author jonly  
+	 */
+	public JsonResult<String> updateRegionchange(@RequestBody RegionAdd regionAdd){
+		String[] split = regionAdd.getRegionArea().split("/");
+		PlatformRegion pr = new PlatformRegion();
+		pr.setPlatfromUserCode(regionAdd.getPlatfromUserCode());
+		pr.setRegionProvince(split.length >= 1? split[0]:"");
+		pr.setRegionCity(split.length >= 2? split[1]:"");
+		pr.setRegionArea(split.length >= 3? split[2]:"");
+		pr.setId(regionAdd.getId());
+		pr.setRegionModifytime(new Date());
+		platfromRegionMapper.updateRegion(pr);
+		return JsonResult.successJsonResult();
+	}
+	
+	/**
+	 * 
+	 * <p>售后区域人员删除</p>
+	 * @param param
+	 * @return
+	 * @author jonly  
+	 */
+	public JsonResult<String> deleteRegion(Long id ){
+		platfromRegionMapper.deleteRegion(id);
 		return JsonResult.successJsonResult();
 	}
 }

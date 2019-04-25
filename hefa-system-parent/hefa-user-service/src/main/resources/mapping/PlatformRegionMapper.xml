@@ -9,38 +9,58 @@
     <result column="region_area"  property="regionArea" />
     <result column="region_code"  property="regionCode" />
     <result column="region_creatime" property="regionCreatime" />
+    <result column="region_modifytime" property="regionModifytime" />
+    <result column="status" property="status" />
   </resultMap>
   
   <insert id="insertRegion" parameterType="com.hefa.user.pojo.PlatformRegion" useGeneratedKeys="true" keyProperty="id">
   	insert into platform_region
-  	(platfrom_user_code,region_province,region_city,region_area,region_code,region_creatime)
-  	values(#{platfromUserCode},#{regionProvince},#{regionCity},#{regionArea},#{regionCode},#{regionCreatime})
+  	(platfrom_user_code,region_province,region_city,region_area,region_code,region_creatime,region_modifytime,status)
+  	values(#{platfromUserCode},#{regionProvince},#{regionCity},#{regionArea},#{regionCode},#{regionCreatime},#{regionModifytime},#{status})
   </insert>
   
+  <update id="updateRegion" parameterType="com.hefa.user.pojo.PlatformRegion">
+    update platform_region
+    set platfrom_user_code = #{platfromUserCode},
+      region_province = #{regionProvince},
+      region_city = #{regionCity},
+      region_area = #{regionArea},
+      region_modifytime = #{regionModifytime}
+    where id = #{id}
+  </update>
+  
+  
+  <update id="deleteRegion" parameterType="long">
+  	update  platform_region set status = 2
+  	where id = #{id}
+  </update>
+  
   <select id="getRegionList" parameterType="com.hefa.user.pojo.bo.RegionUserParam" resultType="com.hefa.user.pojo.vo.RegionUserInfo">
-  	select CONCAT_WS('-',a.region_province,a.region_city,a.region_area) regionArea,a.region_code regionUserCode,
-  	DATE_FORMAT(a.region_creatime,'%Y-%m-%d') createTime,p.user_name regionUserName,pd.dept_name regionUserDept
+  	select  CONCAT_WS('-',a.region_province,a.region_city,a.region_area) regionArea,a.region_code regionUserCode,
+  	DATE_FORMAT(a.region_creatime,'%Y-%m-%d') createTime,p.user_name regionUserName,pd.dept_name regionUserDept,a.id id
   	from platform_region a
   	left join platform_user p on a.platfrom_user_code = p.user_code
   	left join platform_dept pd on pd.id = p.dept_id
-  	<where>
+  	where
+  	a.status = 1
   		<if test="startTime != null and startTime != ''">
-			a.region_creatime >= #{startTime}
+		and	a.region_creatime >= #{startTime}
 		</if>
 		<if test="endTime != null and endTime != ''">
 			and a.region_creatime &lt;= #{endTime}
 		</if>
   		<if test="areaName != null and areaName != ''">
-  			a.region_province like CONCAT('%', #{areaName}, '%')
+  		and (	a.region_province like CONCAT('%', #{areaName}, '%')
   			or
   			a.region_city like CONCAT('%', #{areaName}, '%')
   			or
   			a.region_area like CONCAT('%', #{areaName}, '%')
+  			)
   		</if>
   		<if test="regionName != null and regionName != ''">
-  			p.user_name like CONCAT('%', #{regionName}, '%')
+  		and	p.user_name like CONCAT('%', #{regionName}, '%')
   		</if>
-  	</where>
+  		
   	order by a.region_creatime desc
   </select>
 </mapper>

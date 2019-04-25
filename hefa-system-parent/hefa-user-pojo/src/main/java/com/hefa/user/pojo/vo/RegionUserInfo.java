@@ -6,6 +6,14 @@ public class RegionUserInfo {
 	private String regionArea;//负责区域
 	private String createTime;//创建时间
 	private String regionUserCode;//售后专员编码
+	private Long id;
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getRegionUserName() {
 		return regionUserName;
 	}

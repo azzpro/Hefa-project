@@ -42,7 +42,30 @@ public class PlarfromRegionController {
 	 */
 	@RequestMapping("/addRegion")
 	public JsonResult<String> addRegion(@RequestBody RegionAdd regionAdd){
-		JSR303ValidateUtils.validateInputParam(regionAdd);
 		return platfromRegionService.addRegion(regionAdd);
+	}
+	
+	/**
+	 * 
+	 * <p>售后区域变更 人员变更</p>
+	 * @param param
+	 * @return
+	 * @author jonly  
+	 */
+	@RequestMapping("/updateRegionchange")
+	public JsonResult<String> updateRegionchange(@RequestBody RegionAdd regionAdd){
+		return platfromRegionService.updateRegionchange(regionAdd);
+	}
+	
+	/**
+	 * 
+	 * <p>售后区域人员删除</p>
+	 * @param param
+	 * @return
+	 * @author jonly  
+	 */
+	@RequestMapping("/deleteRegion")
+	public JsonResult<String> deleteRegion(@RequestParam("id") Long id){
+		return platfromRegionService.deleteRegion(id);
 	}
 }
