@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hefa.client.api.DemoClientApi;
-import com.hefa.order.platform.api.OrderDemoApi;
+import com.hefa.order.api.platform.OrderDemoApi;
 
 @RestController
 @RequestMapping("order")

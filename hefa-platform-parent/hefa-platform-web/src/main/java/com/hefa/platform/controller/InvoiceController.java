@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
-import com.hefa.order.platform.api.InvoiceService;
+import com.hefa.order.api.platform.InvoiceService;
 import com.hefa.order.pojo.bo.ApproveInvoiceParam;
 import com.hefa.order.pojo.bo.RejectInvoiceParam;
 import com.hefa.order.pojo.bo.SearchInvoiceInfoParam;

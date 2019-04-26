@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.exception.ValidationException;
 import com.hefa.common.page.Pagination;
-import com.hefa.order.platform.api.PayOrderManagementService;
+import com.hefa.order.api.platform.PayOrderManagementService;
 import com.hefa.order.platform.bo.PayOrderListParam;
 import com.hefa.order.platform.vo.PayListInfo;
 import com.hefa.order.platform.vo.PayOrderInfo;

@@ -1,4 +1,4 @@
-package com.hefa.order.platform.api;
+package com.hefa.order.api.platform;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
