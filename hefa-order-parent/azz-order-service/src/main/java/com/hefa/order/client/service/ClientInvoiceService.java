@@ -131,6 +131,7 @@ public class ClientInvoiceService {
 				.invoiceTemplateCode(invoiceTemplateCode)
 				.invoiceTitle(param.getInvoiceTitle())
 				.invoiceType(param.getInvoiceType())
+				.userCode(param.getUserCode())
 				.taxIdentificationNumber(param.getTaxIdentificationNumber())
 				.build();
 		clientInvoiceTemplateMapper.insertSelective(invoiceTemplateRecord);
@@ -156,6 +157,11 @@ public class ClientInvoiceService {
 		}
 		if(orderInfo.getOrderStatus() != OrderStatus.COMPLETED.getValue()) {
 			throw new ReturnDataException("订单状态异常，无法开票");
+		}
+		// 查询是否存在除已拒绝以外的开票记录
+		int count = clientInvoiceMapper.isOrderExistInvoiceRecord(param.getOrderCode());
+		if(count > 0 ) {
+			throw new ReturnDataException("该订单已存在审批中的开票记录或已开票，请勿重复申请");
 		}
 		ClientShippingAddress shippingAddress = clientShippingAddressMapper.selectByCode(param.getShippingAddressCode());
 		if(shippingAddress == null) {

@@ -39,6 +39,7 @@ public class OrderController {
 	 */
 	@RequestMapping("/getOrderInfos")
 	public JsonResult<Pagination<OrderInfo>> getOrderInfos(SearchOrderInfoParam param){
+		param.setUserCode("2"); //TODO
 		return orderService.getOrderInfos(param);
 	}
 	

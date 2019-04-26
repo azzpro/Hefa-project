@@ -22,6 +22,8 @@ import lombok.EqualsAndHashCode;
 public class SearchInvoiceInfoParam extends QueryPage{
 	
 	private static final long serialVersionUID = 6042045077002356564L;
+	
+	private String userCode;
 
 	private String startTime;
 	

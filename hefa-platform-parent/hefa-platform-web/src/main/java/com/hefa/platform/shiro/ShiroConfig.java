@@ -29,7 +29,7 @@ import org.springframework.web.filter.CorsFilter;
  * @version 1.0
  * @author 黄智聪 2018年10月16日 上午9:51:10
  */
-//@Configuration
+@Configuration
 public class ShiroConfig {
 	@Bean
 	public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {

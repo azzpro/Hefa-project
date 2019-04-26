@@ -60,4 +60,13 @@ public interface ClientInvoiceMapper {
      * @author 黄智聪  2019年4月25日 上午10:52:05
      */
     List<ExpressCompanyInfo> getExpressCompanyInfos();
+    
+    /**
+     * 
+     * <p>订单是否存在开票记录</p>
+     * @param orderCode
+     * @return
+     * @author 黄智聪  2019年4月26日 下午5:09:46
+     */
+    int isOrderExistInvoiceRecord(String orderCode);
 }

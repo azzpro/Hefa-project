@@ -257,6 +257,9 @@
 	JOIN client_invoice_template cit ON cit.invoice_template_code = ci.invoice_template_code
 	JOIN iwebshop_member im ON im.user_id = co.user_code
 	<where>
+		<if test="userCode != null and userCode != ''">
+			and ci.user_code= #{userCode}
+		</if>
 		<if test="startTime != null and startTime != ''">
 			and ci.create_time >= #{startTime}
 		</if>
@@ -287,6 +290,15 @@
 		company_name AS expressCompanyName
 	FROM
 		express_company
+  </select>
+  
+  <select id="isOrderExistInvoiceRecord" resultType="int" parameterType="string">
+  	SELECT
+		count(1)
+	FROM
+		client_invoice ci
+	where ci.order_code = #{orderCode}
+	and invoice_status != 3
   </select>
   
 </mapper>
