@@ -1,7 +1,6 @@
 package com.hefa.client.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,6 +35,7 @@ public class InvoiceController {
 	 */
 	@RequestMapping("/getInvoiceInfos")
 	public JsonResult<Pagination<InvoiceInfo>> getInvoiceInfos(SearchInvoiceInfoParam param){
+		param.setUserCode("2");
 		return invoiceService.getInvoiceInfos(param);
 	}
 	
@@ -58,9 +58,10 @@ public class InvoiceController {
 	 * @return
 	 * @author 黄智聪  2019年4月26日 上午11:06:28
 	 */
-	public JsonResult<String> invoiceApply(@RequestBody ApplyInvoiceParam param){
+	@RequestMapping("/invoiceApply")
+	public JsonResult<String> invoiceApply(ApplyInvoiceParam param){
 		// param.setUserCode(userCode);
-		param.setUserCode("1");
+		param.setUserCode("2");
 		return invoiceService.invoiceApply(param);
 	}
 

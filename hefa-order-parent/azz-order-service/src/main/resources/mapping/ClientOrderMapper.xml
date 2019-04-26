@@ -341,6 +341,9 @@
 		client_order co
 	<where>
 		co.`status` != 0
+		<if test="userCode != null and userCode != ''">
+			and co.user_code = #{userCode}
+		</if>
 		<if test="orderStartTime != null and orderStartTime != ''">
 			and co.create_time >= #{orderStartTime}
 		</if>

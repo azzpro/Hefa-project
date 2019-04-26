@@ -58,6 +58,7 @@ public class ClientInvoiceController {
 	 * @return
 	 * @author 黄智聪  2019年4月26日 上午11:06:28
 	 */
+	@RequestMapping("/invoiceApply")
 	public JsonResult<String> invoiceApply(@RequestBody ApplyInvoiceParam param){
 		return invoiceService.invoiceApply(param);
 	}
