@@ -23,9 +23,7 @@ import com.hefa.common.exception.ValidationException;
 import com.hefa.common.page.Pagination;
 import com.hefa.order.mapper.ClientOrderItemMapper;
 import com.hefa.order.mapper.ClientOrderMapper;
-import com.hefa.order.pojo.bo.SearchCommissionOrderInfoParam;
 import com.hefa.order.pojo.bo.SearchOrderInfoParam;
-import com.hefa.order.pojo.vo.CommissionOrderInfo;
 import com.hefa.order.pojo.vo.OrderDetail;
 import com.hefa.order.pojo.vo.OrderInfo;
 import com.hefa.order.pojo.vo.OrderItemInfo;
@@ -37,8 +35,8 @@ import com.hefa.order.pojo.vo.OrderItemInfo;
  * @author 黄智聪  2019年4月22日 下午7:37:02
  */
 @Transactional(rollbackFor = Exception.class)
-//@Service
-public class OrderService {
+@Service
+public class ClientOrderService {
 	
 	@Autowired
 	private ClientOrderMapper clientOrderMapper;

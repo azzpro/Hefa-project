@@ -47,8 +47,8 @@ import com.hefa.utils.StringUtils;
  * @author 黄智聪  2019年4月24日 下午5:46:51
  */
 @Transactional(rollbackFor = Exception.class)
-//@Service
-public class InvoiceService {
+@Service
+public class ClientInvoiceService {
 	
 	@Autowired
 	private ClientInvoiceMapper clientInvoiceMapper;

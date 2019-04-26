@@ -21,9 +21,9 @@ import com.hefa.order.pojo.vo.OrderInfo;
  * @version 1.0
  * @author 黄智聪  2019年4月25日 上午11:15:40
  */
-//@RestController
-//@RequestMapping("/hefa/api/client/order")
-public class OrderController {
+@RestController
+@RequestMapping("/hefa/api/client/order")
+public class ClientOrderController {
 	
 	@Autowired
 	private OrderService orderService;

@@ -362,19 +362,29 @@
 		co.order_status AS orderStatus,
 		co.delivery_days AS deliveryDays,
 		co.remark AS remark,
+		ps.service_number AS afterSaleCode,
 		pu.user_name AS salesman,
 		cosa.province_name AS provinceName,
 		cosa.city_name AS cityName,
 		cosa.area_name AS areaName,
 		cosa.detail_address AS detailAddress,
 		cosa.receiver_name AS receiverName,
-		cosa.receiver_phone_number AS receiverPhoneNumber
+		cosa.receiver_phone_number AS receiverPhoneNumber,
+		col.delivery_person AS deliveryPerson,
+		col.delivery_phone AS deliveryPhone,
+		col.delivery_type AS deliveryType,
+		col.number AS number,
+		ec.company_name AS expressCompanyName
 	FROM
 		client_order co
 	JOIN client_shipping_address cosa ON co.shipping_address_code = cosa.shipping_address_code
+	LEFT JOIN platform_saleafter ps on ps.order_code = co.order_code
 	LEFT JOIN platform_user_salesman pus ON co.salesman_code = pus.salesman_code
 	LEFT JOIN platform_user pu ON pu.user_code = pus.platform_user_code
-	where co.`status` != 0
+	LEFT JOIN client_order_logistics col ON col.order_code = co.order_code
+	LEFT JOIN express_company ec ON ec.id = col.express_company_id
+	WHERE
+		co.`status` != 0
 	and co.order_code = #{orderCode}
   </select>
   

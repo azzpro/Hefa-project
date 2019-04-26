@@ -50,5 +50,15 @@ public class OrderInfo {
 	
 	private String receiverPhoneNumber;
 	
+	private String deliveryPerson;
+	
+	private String deliveryPhone;
+	
+	private Byte deliveryType;
+	
+	private String number;
+	
+	private String expressCompanyName;
+	
 }
 
