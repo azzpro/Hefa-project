@@ -5,7 +5,7 @@
  * 注意：本内容仅限于爱智造内部传阅，禁止外泄以及用于其他的商业目的
  ******************************************************************************/
  
-package com.hefa.order.pojo.vo;
+package com.hefa.pojo.vo;
 
 import lombok.Data;
 

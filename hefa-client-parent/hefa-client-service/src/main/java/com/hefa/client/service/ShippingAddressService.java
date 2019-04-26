@@ -5,7 +5,7 @@
  * 注意：本内容仅限于爱智造内部传阅，禁止外泄以及用于其他的商业目的
  ******************************************************************************/
  
-package com.hefa.order.client.service;
+package com.hefa.client.service;
 
 import java.util.Date;
 import java.util.List;
@@ -15,17 +15,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.hefa.client.mapper.ClientShippingAddressMapper;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.constants.ClientConstants;
 import com.hefa.common.constants.PlatformConstants.ShippingAddressStatus;
 import com.hefa.common.constants.PlatformConstants.isDefaultShippingAddress;
 import com.hefa.common.exception.ValidationException;
-import com.hefa.order.mapper.ClientShippingAddressMapper;
-import com.hefa.order.pojo.ClientShippingAddress;
-import com.hefa.order.pojo.bo.AddShippingAddressParam;
-import com.hefa.order.pojo.bo.DelShippingAddressParam;
-import com.hefa.order.pojo.bo.EditShippingAddressParam;
-import com.hefa.order.pojo.vo.ShippingAddress;
+import com.hefa.pojo.ClientShippingAddress;
+import com.hefa.pojo.bo.AddShippingAddressParam;
+import com.hefa.pojo.bo.DelShippingAddressParam;
+import com.hefa.pojo.bo.EditShippingAddressParam;
+import com.hefa.pojo.vo.ShippingAddress;
 import com.hefa.utils.JSR303ValidateUtils;
 
 /**
@@ -173,7 +173,6 @@ public class ShippingAddressService {
 		clientShippingAddressMapper.updateByPrimaryKeySelective(shippingAddressRecord);
 		return JsonResult.successJsonResult();
 	}
-	
 	
 }
 

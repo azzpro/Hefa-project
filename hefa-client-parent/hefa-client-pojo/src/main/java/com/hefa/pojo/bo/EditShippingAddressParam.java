@@ -5,7 +5,7 @@
  * 注意：本内容仅限于爱智造内部传阅，禁止外泄以及用于其他的商业目的
  ******************************************************************************/
  
-package com.hefa.order.pojo.bo;
+package com.hefa.pojo.bo;
 
 import javax.validation.constraints.NotNull;
 
@@ -19,7 +19,10 @@ import lombok.Data;
  * @author 黄智聪  2018年11月13日 下午3:36:00
  */
 @Data
-public class AddShippingAddressParam {
+public class EditShippingAddressParam {
+	
+	@NotBlank(message = "请选择收货地址")
+	private String shippingAddressCode;
 	
 	@NotBlank(message = "请填写收货人姓名")
 	private String receiverName;
@@ -43,7 +46,7 @@ public class AddShippingAddressParam {
 
 	private String areaName;
 
-	@NotBlank(message = "请填写详细地址")
+	@NotBlank(message = "请填写详细地址	")
 	private String detailAddress;
 
 	@NotNull(message = "缺少请求参数")
@@ -51,7 +54,7 @@ public class AddShippingAddressParam {
 
 	private String addressAlias;
 	
-	private String creator;
+	private String modifier;
 
 }
 

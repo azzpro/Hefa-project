@@ -1,7 +1,5 @@
 package com.hefa.order.client.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,11 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
-import com.hefa.order.platform.service.InvoiceService;
-import com.hefa.order.pojo.bo.ApproveInvoiceParam;
-import com.hefa.order.pojo.bo.RejectInvoiceParam;
+import com.hefa.order.client.service.ClientInvoiceService;
+import com.hefa.order.pojo.bo.ApplyInvoiceParam;
 import com.hefa.order.pojo.bo.SearchInvoiceInfoParam;
-import com.hefa.order.pojo.vo.ExpressCompanyInfo;
 import com.hefa.order.pojo.vo.InvoiceDetail;
 import com.hefa.order.pojo.vo.InvoiceInfo;
 
@@ -29,7 +25,7 @@ import com.hefa.order.pojo.vo.InvoiceInfo;
 public class ClientInvoiceController {
 	
 	@Autowired
-	private InvoiceService invoiceService;
+	private ClientInvoiceService invoiceService;
 	
 	/**
 	 * 
@@ -57,37 +53,13 @@ public class ClientInvoiceController {
 	
 	/**
 	 * 
-	 * <p>查询所有快递公司信息</p>
-	 * @return
-	 * @author 黄智聪  2019年4月25日 上午10:52:36
-	 */
-	@RequestMapping("/getExpressCompanys")
-	public JsonResult<List<ExpressCompanyInfo>> getExpressCompanys() {
-		return invoiceService.getExpressCompanys();
-	}
-	
-	/**
-	 * 
-	 * <p>开票通过</p>
+	 * <p>开票申请</p>
 	 * @param param
 	 * @return
-	 * @author 黄智聪  2019年4月24日 下午7:54:06
+	 * @author 黄智聪  2019年4月26日 上午11:06:28
 	 */
-	@RequestMapping("/approveInvoice")
-	public JsonResult<String> approveInvoice(@RequestBody ApproveInvoiceParam param){
-		return invoiceService.approveInvoice(param);
-	}
-	
-	/**
-	 * 
-	 * <p>开票拒绝</p>
-	 * @param param
-	 * @return
-	 * @author 黄智聪  2019年4月24日 下午7:54:06
-	 */
-	@RequestMapping("/rejectInvoice")
-	public JsonResult<String> rejectInvoice(@RequestBody RejectInvoiceParam param){
-		return invoiceService.rejectInvoice(param);
+	public JsonResult<String> invoiceApply(@RequestBody ApplyInvoiceParam param){
+		return invoiceService.invoiceApply(param);
 	}
 
 }

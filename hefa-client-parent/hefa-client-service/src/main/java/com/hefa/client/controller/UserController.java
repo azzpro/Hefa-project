@@ -22,7 +22,7 @@ import com.hefa.pojo.vo.LoginUserInfo;
  * @author 黄智聪  2019年4月15日 下午2:40:55
  */
 @RestController
-@RequestMapping("/api/hefa/user")
+@RequestMapping("/api/hefa/client/user")
 public class UserController {
 	
 	@Autowired
