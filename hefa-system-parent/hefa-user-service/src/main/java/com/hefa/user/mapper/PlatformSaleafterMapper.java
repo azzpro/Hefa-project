@@ -30,6 +30,16 @@ public interface PlatformSaleafterMapper {
 	 */
 	int updateSaleAfter(@Param("status") Byte status,@Param("number") String id);
 	
+	
+	/**
+	 * 确认打款
+	 * @param status
+	 * @param id
+	 * @return
+	 */
+	int updatePayment(@Param("number") String id);
+	
+	
 	/**
 	 * 获取订单售后列表
 	 * @param ssap
@@ -37,12 +47,26 @@ public interface PlatformSaleafterMapper {
 	 */
 	List<ServiceSaleInfo> getSaleAfterList(ServiceSaleAfterParam ssap);
 	
+	
+	/**
+	 * 获取退款订单列表
+	 * @param ssap
+	 * @return
+	 */
+	List<ServiceSaleInfo> getSaleAfterOrderList(ServiceSaleAfterParam ssap);
 	/**
 	 * 订单售后详情
 	 * @param serviceName
 	 * @return
 	 */
 	SaleAfterInfo getSaleAfterInfo(String serviceName);
+	
+	/**
+	 * 退货订单详情
+	 * @param serviceName
+	 * @return
+	 */
+	SaleAfterInfo getSaleAfterOrderInfo(String serviceName);
 	
 	/**
 	 * 订单详情

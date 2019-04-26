@@ -40,6 +40,18 @@ public class PlarfromSaleAfterController {
 	
 	/**
 	 * 
+	 * <p>查询退款订单列表</p>
+	 * @param param
+	 * @return
+	 * @author jonly  
+	 */
+	@RequestMapping("/getSaleAfterOrderList")
+	public JsonResult<Pagination<ServiceSaleInfo>> getSaleAfterOrderList(@RequestBody ServiceSaleAfterParam param){
+		return platfromSaleafterService.getSaleAfterOrderList(param);
+	}
+	
+	/**
+	 * 
 	 * <p>查询订单售后详情</p>
 	 * @param param
 	 * @return
@@ -48,6 +60,18 @@ public class PlarfromSaleAfterController {
 	@RequestMapping("/getSaleAfterInfo")
 	public JsonResult<SaleAfterInfo> getSaleAfterInfo(@RequestParam("serviceNumber") String serviceNumber){
 		return platfromSaleafterService.getSaleAfterInfo(serviceNumber);
+	}
+	
+	/**
+	 * 
+	 * <p>查询退款订单详情</p>
+	 * @param param
+	 * @return
+	 * @author jonly  
+	 */
+	@RequestMapping("/getSaleAfterOrderInfo")
+	public JsonResult<SaleAfterInfo> getSaleAfterOrderInfo(@RequestParam("serviceNumber") String serviceNumber){
+		return platfromSaleafterService.getSaleAfterOrderInfo(serviceNumber);
 	}
 	
 	/**
@@ -72,6 +96,18 @@ public class PlarfromSaleAfterController {
 	@RequestMapping("/updateSaleAfter")
 	public JsonResult<String> updateSaleAfter(@RequestBody UpdateSaleInfo updateSaleInfo){
 		return platfromSaleafterService.updateSaleAfter(updateSaleInfo);
+	}
+	
+	/**
+	 * 
+	 * <p>确认打款</p>
+	 * @param param
+	 * @return
+	 * @author jonly  
+	 */
+	@RequestMapping("/updatePayment")
+	public JsonResult<String> updatePayment(@RequestBody UpdateSaleInfo updateSaleInfo){
+		return platfromSaleafterService.updatePayment(updateSaleInfo);
 	}
 	
 }

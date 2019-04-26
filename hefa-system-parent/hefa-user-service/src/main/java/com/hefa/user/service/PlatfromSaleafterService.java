@@ -1,6 +1,8 @@
 package com.hefa.user.service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.github.pagehelper.PageHelper;
 import com.hefa.common.base.JsonResult;
+import com.hefa.common.exception.ValidationException;
 import com.hefa.common.page.Pagination;
 import com.hefa.user.mapper.PlatformRegionMapper;
 import com.hefa.user.mapper.PlatformSaleafterMapper;
@@ -57,6 +60,17 @@ public class PlatfromSaleafterService {
 	}
 	
 	/**
+	 * 获取订单售后列表数据
+	 * @param param
+	 * @return
+	 */
+	public JsonResult<Pagination<ServiceSaleInfo>> getSaleAfterOrderList(@RequestBody ServiceSaleAfterParam param){
+		PageHelper.startPage(param.getPageNum(), param.getPageSize());
+		List<ServiceSaleInfo> saleAfterList = platformSaleafterMapper.getSaleAfterOrderList(param);
+		return JsonResult.successJsonResult(new Pagination<>(saleAfterList));
+	}
+	
+	/**
 	 * 获取订单售后详情
 	 * @param param
 	 * @return
@@ -66,6 +80,34 @@ public class PlatfromSaleafterService {
 		List<PlatformSaleDetail> detailList = platformSaledetailMapper.getSaleDetailList(serviceName);
 		List<OrderItemInfo> byOrderCode = platformSaleafterMapper.getOrderItemInfosByOrderCode(afterInfo.getOrderCode());
 		afterInfo.setPsds(detailList);
+		afterInfo.setOii(byOrderCode);
+		Optional<Map<String,String>> option = Optional.ofNullable(platformSaleafterMapper.selectAreaNameById(afterInfo.getUserCode()));
+		Map<String, String> map = option.orElse(new HashMap<String,String>());
+		String str;
+		if(!map.isEmpty()) {
+			 str = map.get("pname")+map.get("cname")+map.get("aname");
+			 String area = platformRegionMapper.selectUserCodeByArea(str);
+			 if(!StringUtils.isBlank(area)) {
+				 PlatformUser userByCode = platformUserMapper.getUserByCode(area);
+				 if(userByCode != null) {
+					 afterInfo.setSaleAfterMan(userByCode.getUserName()+"-"+userByCode.getPhoneNumber());
+				 }
+			 }
+		}
+		return JsonResult.successJsonResult(afterInfo);
+	}
+	
+	
+	
+	/**
+	 * 获取退款订单详情
+	 * @param param
+	 * @return
+	 */
+	public JsonResult<SaleAfterInfo> getSaleAfterOrderInfo(String serviceName){
+		SaleAfterInfo afterInfo = platformSaleafterMapper.getSaleAfterOrderInfo(serviceName);
+		afterInfo.setOrderStringTime(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm").format(LocalDateTime.ofInstant(Instant.ofEpochMilli(afterInfo.getOrderTime()),ZoneId.systemDefault())));
+		List<OrderItemInfo> byOrderCode = platformSaleafterMapper.getOrderItemInfosByOrderCode(afterInfo.getOrderCode());
 		afterInfo.setOii(byOrderCode);
 		Optional<Map<String,String>> option = Optional.ofNullable(platformSaleafterMapper.selectAreaNameById(afterInfo.getUserCode()));
 		Map<String, String> map = option.orElse(new HashMap<String,String>());
@@ -118,6 +160,28 @@ public class PlatfromSaleafterService {
 		psd.setRemake(updateSaleInfo.getRemake());
 		psd.setServiceNumber(updateSaleInfo.getServiceNumber());
 		psd.setStatus(updateSaleInfo.getType());
+		platformSaledetailMapper.insertSaleDetail(psd);
+		return JsonResult.successJsonResult();
+	}
+	
+	/**
+	 * 
+	 * <p>确认打款</p>
+	 * @param param
+	 * @return
+	 * @author jonly  
+	 */
+	public JsonResult<String> updatePayment(@RequestBody UpdateSaleInfo updateSaleInfo){
+		int i = platformSaleafterMapper.updatePayment(updateSaleInfo.getServiceNumber());
+		if(i != 1) {
+			throw new ValidationException("退款单状态错误");
+		}
+		PlatformSaleDetail psd = new PlatformSaleDetail();
+		psd.setDealingMan(updateSaleInfo.getMan());
+		psd.setDealintTime(new Date());
+		psd.setRemake(updateSaleInfo.getRemake());
+		psd.setServiceNumber(updateSaleInfo.getServiceNumber());
+		psd.setStatus((byte)2);
 		platformSaledetailMapper.insertSaleDetail(psd);
 		return JsonResult.successJsonResult();
 	}

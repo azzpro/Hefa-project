@@ -26,6 +26,17 @@ public interface PlatfromSaleAfterService {
 	@RequestMapping("/hefa/api/sale/getSaleAfterList")
 	public JsonResult<Pagination<ServiceSaleInfo>> getSaleAfterList(@RequestBody ServiceSaleAfterParam param);
 	
+	
+	/**
+	 * 
+	 * <p>查询退款订单列表</p>
+	 * @param param
+	 * @return
+	 * @author jonly  
+	 */
+	@RequestMapping("/hefa/api/sale/getSaleAfterOrderList")
+	public JsonResult<Pagination<ServiceSaleInfo>> getSaleAfterOrderList(@RequestBody ServiceSaleAfterParam param);
+	
 	/**
 	 * 
 	 * <p>添加售后区域</p>
@@ -48,6 +59,16 @@ public interface PlatfromSaleAfterService {
 	
 	/**
 	 * 
+	 * <p>确认打款</p>
+	 * @param param
+	 * @return
+	 * @author jonly  
+	 */
+	@RequestMapping("/hefa/api/sale/updatePayment")
+	public JsonResult<String> updatePayment(@RequestBody UpdateSaleInfo updateSaleInfo);
+	
+	/**
+	 * 
 	 * <p>查询订单售后详情</p>
 	 * @param param
 	 * @return
@@ -55,4 +76,14 @@ public interface PlatfromSaleAfterService {
 	 */
 	@RequestMapping("/hefa/api/sale/getSaleAfterInfo")
 	public JsonResult<SaleAfterInfo> getSaleAfterInfo(@RequestParam("serviceNumber") String serviceNumber);
+	
+	/**
+	 * 
+	 * <p>查询退款订单售后详情</p>
+	 * @param param
+	 * @return
+	 * @author jonly  
+	 */
+	@RequestMapping("/hefa/api/sale/getSaleAfterOrderInfo")
+	public JsonResult<SaleAfterInfo> getSaleAfterOrderInfo(@RequestParam("serviceNumber") String serviceNumber);
 }

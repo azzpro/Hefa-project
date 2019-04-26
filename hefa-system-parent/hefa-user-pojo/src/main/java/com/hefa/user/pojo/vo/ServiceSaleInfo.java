@@ -9,7 +9,14 @@ public class ServiceSaleInfo {
 	private String appleTime;
 	private Byte status;
 	private Long id;
+	private Byte instatus;
 	
+	public Byte getInstatus() {
+		return instatus;
+	}
+	public void setInstatus(Byte instatus) {
+		this.instatus = instatus;
+	}
 	public Long getId() {
 		return id;
 	}

@@ -61,12 +61,9 @@
   			a.region_city like CONCAT('%', #{areaName}, '%')
   			or
   			a.region_area like CONCAT('%', #{areaName}, '%')
+  			or p.user_name like CONCAT('%', #{areaName}, '%')
   			)
   		</if>
-  		<if test="regionName != null and regionName != ''">
-  		and	p.user_name like CONCAT('%', #{regionName}, '%')
-  		</if>
-  		
   	order by a.region_creatime desc
   </select>
 </mapper>

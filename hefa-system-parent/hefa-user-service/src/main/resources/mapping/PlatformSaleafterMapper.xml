@@ -22,6 +22,13 @@
     where service_number = #{number}
   </update>
   
+  <!-- 确认打款 -->
+  <update id="updatePayment">
+    update platform_saleafter
+    set status = 2
+    where status = 1 and service_number = #{number}
+  </update>
+  
   
   <select id="getSaleAfterList" parameterType="com.hefa.user.pojo.bo.ServiceSaleAfterParam" resultType="com.hefa.user.pojo.vo.ServiceSaleInfo">
   	select a.service_number serviceNumber,a.status status,a.order_code orderCode,b.grand_total money,
@@ -45,13 +52,47 @@
   	order by a.create_time desc
   </select>
   
+  <select id="getSaleAfterOrderList" parameterType="com.hefa.user.pojo.bo.ServiceSaleAfterParam" resultType="com.hefa.user.pojo.vo.ServiceSaleInfo">
+  	select a.service_number serviceNumber,a.status status,a.order_code orderCode,b.grand_total money,
+  	DATE_FORMAT(a.create_time,'%Y-%m-%d %H:%i') appleTime,a.id id,b.invoice_status instatus
+  	from platform_saleafter a
+  	left join client_order b on a.order_code = b.order_code
+  	where
+  		a.status in (1,2)
+  		<if test="startTime != null and startTime != ''">
+		and	a.create_time >= #{startTime}
+		</if>
+		<if test="endTime != null and endTime != ''">
+			and a.create_time &lt;= #{endTime}
+		</if>
+  		<if test="number != null and number != ''">
+  		 and (	a.service_number like CONCAT('%', #{number}, '%')
+  			)
+  		</if>
+  	order by a.create_time desc
+  </select>
+  
   <select id="getSaleAfterInfo" resultType="com.hefa.user.pojo.vo.SaleAfterInfo">
   	select a.service_number returnGoodsNumber,a.status returnGoodsStatus,b.grand_total returnGoodsMoney,
   	a.order_code orderCode,a.user_code userCode,c.receiver_name userName,c.receiver_phone_number userPhone,
   	b.remark remake,CONCAT(c.province_name,c.city_name,c.area_name) contactAddress,c.detail_address address
+  	
     from platform_saleafter a
     left join client_order b on a.order_code = b.order_code
     left join client_shipping_address c on a.user_code = c.user_code
+    where a.service_number = #{serviceName}
+  </select>
+  
+  <select id="getSaleAfterOrderInfo" resultType="com.hefa.user.pojo.vo.SaleAfterInfo">
+  	select a.service_number returnGoodsNumber,a.status returnGoodsStatus,b.grand_total returnGoodsMoney,
+  	a.order_code orderCode,a.user_code userCode,c.receiver_name userName,c.receiver_phone_number userPhone,
+  	b.remark remake,CONCAT(c.province_name,c.city_name,c.area_name) contactAddress,c.detail_address address
+    ,DATE_FORMAT(a.create_time,'%Y-%m-%d %H:%i') time,d.three_party_number threePartyNumber,
+    d.order_time orderTime
+    from platform_saleafter a
+    left join client_order b on a.order_code = b.order_code
+    left join client_shipping_address c on a.user_code = c.user_code
+    left join client_pay d on a.order_code = d.order_number
     where a.service_number = #{serviceName}
   </select>
   

@@ -16,6 +16,35 @@ public class SaleAfterInfo {
 	private String remake;
 	private String userCode;
 	private String address;
+	private String threePartyNumber;
+	private String time;
+	private Long orderTime;
+	private String orderStringTime;
+	
+	public String getOrderStringTime() {
+		return orderStringTime;
+	}
+	public void setOrderStringTime(String orderStringTime) {
+		this.orderStringTime = orderStringTime;
+	}
+	public Long getOrderTime() {
+		return orderTime;
+	}
+	public void setOrderTime(Long orderTime) {
+		this.orderTime = orderTime;
+	}
+	public String getThreePartyNumber() {
+		return threePartyNumber;
+	}
+	public void setThreePartyNumber(String threePartyNumber) {
+		this.threePartyNumber = threePartyNumber;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
+	}
 	private List<PlatformSaleDetail> psds;
 	private List<OrderItemInfo> oii;
 	
