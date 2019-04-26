@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
-import com.hefa.order.platform.service.OrderService;
-import com.hefa.order.pojo.bo.SearchCommissionOrderInfoParam;
+import com.hefa.order.client.service.ClientOrderService;
 import com.hefa.order.pojo.bo.SearchOrderInfoParam;
-import com.hefa.order.pojo.vo.CommissionOrderInfo;
 import com.hefa.order.pojo.vo.OrderDetail;
 import com.hefa.order.pojo.vo.OrderInfo;
 
@@ -26,7 +24,7 @@ import com.hefa.order.pojo.vo.OrderInfo;
 public class ClientOrderController {
 	
 	@Autowired
-	private OrderService orderService;
+	private ClientOrderService orderService;
 	
 	
 	/**
@@ -53,26 +51,4 @@ public class ClientOrderController {
 		return orderService.getOrderDetail(orderCode);
 	}
 	
-	/**
-	 * 
-	 * <p>查询分佣订单列表</p>
-	 * @param param
-	 * @return
-	 * @author 黄智聪  2019年4月24日 下午4:43:33
-	 */
-	@RequestMapping("/getCommissionOrderInfos")
-	public JsonResult<Pagination<CommissionOrderInfo>> getCommissionOrderInfos(@RequestBody SearchCommissionOrderInfoParam param){
-		return orderService.getCommissionOrderInfos(param);
-	}
-	
-	/**
-	 * 
-	 * <p>导出分佣订单</p>
-	 * @return
-	 * @author 黄智聪  2019年4月24日 下午4:46:23
-	 */
-	@RequestMapping("/exportCommissionOrder")
-	public JsonResult<String> exportCommissionOrder(){
-		return orderService.exportCommissionOrder();
-	}
 }

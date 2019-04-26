@@ -211,7 +211,7 @@
 		ci.invoice_status AS invoiceStatus,
 		ci.order_code AS orderCode,
 		co.create_time AS orderTime,
-		co.remark AS remark,
+		ci.remark AS remark,
 		cit.invoice_type AS invoiceType,
 		cit.invoice_title AS invoiceTitle,
 		cit.tax_identification_number AS taxIdentificationNumber,
@@ -270,6 +270,7 @@
 			and (
 					im.mobile LIKE CONCAT('%', #{searchInput}, '%')
 				or	ci.invoice_code = #{searchInput}
+				or	ci.order_code = #{searchInput}
 			)
 		</if>
 	</where>

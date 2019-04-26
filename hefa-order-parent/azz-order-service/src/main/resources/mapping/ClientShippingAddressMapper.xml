@@ -33,6 +33,13 @@
     from client_shipping_address
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectByCode" parameterType="string" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from client_shipping_address
+    where shipping_address_code = #{shippingAddressCode}
+    and status != 0
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from client_shipping_address
     where id = #{id,jdbcType=BIGINT}
@@ -256,4 +263,82 @@
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="getDefaultShippingAddressByUserCode" parameterType="string" resultType="com.hefa.order.pojo.vo.ShippingAddress">
+	  SELECT
+		csa.shipping_address_code AS shippingAddressCode,
+		csa.is_default AS isDefault,
+		csa.receiver_name AS receiverName,
+		csa.receiver_phone_number AS receiverPhoneNumber,
+		csa.province_code as provinceCode,
+		csa.province_name as provinceName,
+		csa.city_code as cityCode,
+		csa.city_name as cityName,
+		csa.area_code as areaCode,
+		csa.area_name as areaName,
+		csa.detail_address as detailAddress,
+		csa.address_alias as addressAlias
+	FROM
+		client_shipping_address csa
+	WHERE csa. STATUS != 0
+	and csa.is_default = 1
+	and csa.user_code = #{userCode}
+  </select>
+  
+  <select id="getShippingAddressByUserCode" parameterType="string" resultType="com.hefa.order.pojo.vo.ShippingAddress">
+	  SELECT
+		csa.shipping_address_code AS shippingAddressCode,
+		csa.is_default AS isDefault,
+		csa.receiver_name AS receiverName,
+		csa.receiver_phone_number AS receiverPhoneNumber,
+		csa.province_code as provinceCode,
+		csa.province_name as provinceName,
+		csa.city_code as cityCode,
+		csa.city_name as cityName,
+		csa.area_code as areaCode,
+		csa.area_name as areaName,
+		csa.detail_address as detailAddress,
+		csa.address_alias as addressAlias
+	FROM
+		client_shipping_address csa
+	WHERE csa. STATUS != 0
+	and csa.user_code = #{userCode}
+  </select>
+  
+  <select id="countShippingAddressByUserCode" parameterType="string" resultType="int">
+    SELECT
+		count(1)
+	FROM
+		client_shipping_address csa
+	WHERE csa. STATUS != 0
+	and csa.user_code = #{userCode}
+  </select>
+  
+  <select id="getShippingAddressByShippingAddressCode" parameterType="string" resultType="com.hefa.order.pojo.vo.ShippingAddress">
+    SELECT
+		csa.shipping_address_code AS shippingAddressCode,
+		csa.is_default AS isDefault,
+		csa.receiver_name AS receiverName,
+		csa.receiver_phone_number AS receiverPhoneNumber,
+		csa.province_code as provinceCode,
+		csa.province_name as provinceName,
+		csa.user_code as userCode,
+		csa.city_code as cityCode,
+		csa.city_name as cityName,
+		csa.area_code as areaCode,
+		csa.area_name as areaName,
+		csa.detail_address as detailAddress,
+		csa.address_alias as addressAlias
+	FROM
+		client_shipping_address csa
+	WHERE csa. STATUS != 0
+	and csa.shipping_address_code = #{shippingAddresscode}
+  </select>
+  
+  <update id="setOtherShippingAddressNotDefault" parameterType="string">
+    update client_shipping_address
+    set is_default = 0
+    where user_code = #{userCode}
+  </update>
+  
 </mapper>

@@ -18,25 +18,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageHelper;
 import com.hefa.common.base.JsonResult;
-import com.hefa.common.constants.PlatformConstants.DeliveryType;
 import com.hefa.common.constants.PlatformConstants.InvoiceStatus;
-import com.hefa.common.exception.BusinessException;
+import com.hefa.common.constants.PlatformConstants.Invoicetype;
+import com.hefa.common.constants.PlatformConstants.OrderStatus;
 import com.hefa.common.exception.ReturnDataException;
 import com.hefa.common.exception.ValidationException;
 import com.hefa.common.page.Pagination;
-import com.hefa.order.mapper.ClientInvoiceLogisticsMapper;
 import com.hefa.order.mapper.ClientInvoiceMapper;
+import com.hefa.order.mapper.ClientInvoiceTemplateMapper;
 import com.hefa.order.mapper.ClientOrderItemMapper;
 import com.hefa.order.mapper.ClientOrderMapper;
+import com.hefa.order.mapper.ClientShippingAddressMapper;
 import com.hefa.order.pojo.ClientInvoice;
-import com.hefa.order.pojo.ClientInvoiceLogistics;
-import com.hefa.order.pojo.ClientOrder;
-import com.hefa.order.pojo.bo.ApproveInvoiceParam;
-import com.hefa.order.pojo.bo.RejectInvoiceParam;
+import com.hefa.order.pojo.ClientInvoiceTemplate;
+import com.hefa.order.pojo.ClientShippingAddress;
+import com.hefa.order.pojo.bo.ApplyInvoiceParam;
 import com.hefa.order.pojo.bo.SearchInvoiceInfoParam;
-import com.hefa.order.pojo.vo.ExpressCompanyInfo;
 import com.hefa.order.pojo.vo.InvoiceDetail;
 import com.hefa.order.pojo.vo.InvoiceInfo;
+import com.hefa.order.pojo.vo.OrderInfo;
 import com.hefa.order.pojo.vo.OrderItemInfo;
 import com.hefa.utils.JSR303ValidateUtils;
 import com.hefa.utils.StringUtils;
@@ -58,9 +58,12 @@ public class ClientInvoiceService {
 	
 	@Autowired
 	private ClientOrderItemMapper clientOrderItemMapper;
+
+	@Autowired
+	private ClientShippingAddressMapper clientShippingAddressMapper;
 	
 	@Autowired
-	private ClientInvoiceLogisticsMapper clientInvoiceLogisticsMapper;
+	private ClientInvoiceTemplateMapper clientInvoiceTemplateMapper;
 	
 	/**
 	 * 
@@ -97,125 +100,69 @@ public class ClientInvoiceService {
 	
 	/**
 	 * 
-	 * <p>查询所有快递公司信息</p>
-	 * @return
-	 * @author 黄智聪  2019年4月25日 上午10:52:36
-	 */
-	public JsonResult<List<ExpressCompanyInfo>> getExpressCompanys() {
-		List<ExpressCompanyInfo> infos = clientInvoiceMapper.getExpressCompanyInfos();
-		return JsonResult.successJsonResult(infos);
-	}
-	
-	/**
-	 * 
-	 * <p>开票通过</p>
+	 * <p>开票申请</p>
 	 * @param param
 	 * @return
-	 * @author 黄智聪  2019年4月24日 下午7:54:06
+	 * @author 黄智聪  2019年4月26日 上午11:06:28
 	 */
-	public JsonResult<String> approveInvoice(@RequestBody ApproveInvoiceParam param){
-		JSR303ValidateUtils.validateInputParam(param);
-		ClientInvoice invoice = this.checkInvoice(param.getInvoiceCode());
+	public JsonResult<String> invoiceApply(@RequestBody ApplyInvoiceParam param){
+		OrderInfo orderInfo = this.checkApplyInvoiceParam(param);
 		Date nowDate = new Date();
-		ClientInvoiceLogistics logisticsRecord = null;
-		if(DeliveryType.EXPRESS.getValue() == param.getDeliveryType()) {
-			String number = param.getNumber();
-			if(StringUtils.isBlank(number)) {
-				throw new ValidationException("请填写快递单号");
-			}
-			Integer expressCompanyId = param.getExpressCompanyId();
-			if(expressCompanyId == null) {
-				throw new ValidationException("请选择快递公司");
-			}
-			int count = clientInvoiceMapper.existExpressCompany(expressCompanyId);
-			if(count == 0) {
-				throw new ReturnDataException("快递公司不存在");
-			}
-			// 开票快递信息
-			logisticsRecord = ClientInvoiceLogistics.builder()
-					.expressCompanyId(expressCompanyId)
-					.number(number)
-					.deliveryType((byte)DeliveryType.EXPRESS.getValue())
-					.build();
-		}else if(DeliveryType.SELF.getValue() == param.getDeliveryType()) {
-			String deliveryPerson = param.getDeliveryPerson();
-			if(StringUtils.isBlank(deliveryPerson)) {
-				throw new ValidationException("请填写配送人员姓名");
-			}
-			String deliveryPhone = param.getDeliveryPhone();
-			if(StringUtils.isBlank(deliveryPhone)) {
-				throw new ValidationException("请填写配送人员联系方式");
-			}
-			// 开票快递信息
-			logisticsRecord = ClientInvoiceLogistics.builder()
-					.deliveryPerson(deliveryPerson)
-					.deliveryPhone(deliveryPhone)
-					.deliveryType((byte)DeliveryType.SELF.getValue())
-					.build();
-		}else {
-			throw new ValidationException("配送方式不存在");
-		}
-		// 修改开票状态 
+		String invoiceTemplateCode = "it" + System.currentTimeMillis();// TODO
+		String invoiceCode = "i" + System.currentTimeMillis();// TODO
 		ClientInvoice invoiceRecord = ClientInvoice.builder()
-				.modifier(param.getModifier())
-				.modifyTime(nowDate)
-				.invoiceStatus((byte)InvoiceStatus.APPROVED.getValue())
-				.id(invoice.getId())
-				.build();
-		clientInvoiceMapper.updateByPrimaryKeySelective(invoiceRecord);
-		// 新增开票快递信息
-		logisticsRecord.setCreateTime(nowDate);
-		logisticsRecord.setCreator(param.getModifier());
-		logisticsRecord.setInvoiceCode(param.getInvoiceCode());
-		clientInvoiceLogisticsMapper.insertSelective(logisticsRecord);
-		// 修改订单开票状态为已开票
-		ClientOrder orderRecord = new ClientOrder();
-		orderRecord.setOrderCode(invoice.getOrderCode());
-		orderRecord.setInvoiceStatus((byte)1);
-		clientOrderMapper.updateByOrderCodeSelective(orderRecord);
-		return JsonResult.successJsonResult();
-	}
-	
-	/**
-	 * 
-	 * <p>开票拒绝</p>
-	 * @param param
-	 * @return
-	 * @author 黄智聪  2019年4月24日 下午7:54:06
-	 */
-	public JsonResult<String> rejectInvoice(@RequestBody RejectInvoiceParam param){
-		JSR303ValidateUtils.validateInputParam(param);
-		ClientInvoice invoice = this.checkInvoice(param.getInvoiceCode());
-		Date nowDate = new Date();
-		// 修改开票状态 
-		ClientInvoice invoiceRecord = ClientInvoice.builder()
-				.modifier(param.getModifier())
-				.modifyTime(nowDate)
-				.invoiceStatus((byte)InvoiceStatus.REJECTED.getValue())
+				.amount(orderInfo.getGrandTotal())
+				.createTime(nowDate)
+				.creator(param.getUserCode())
+				.invoiceCode(invoiceCode)
+				.invoiceStatus((byte)InvoiceStatus.PENDING.getValue())
+				.invoiceTemplateCode(invoiceTemplateCode)
+				.orderCode(param.getOrderCode())
+				.quantity(1)
 				.remark(param.getRemark())
-				.id(invoice.getId())
+				.shippingAddressCode(param.getShippingAddressCode())
+				.userCode(param.getUserCode())
 				.build();
-		clientInvoiceMapper.updateByPrimaryKeySelective(invoiceRecord);
-		
+		clientInvoiceMapper.insertSelective(invoiceRecord);
+		ClientInvoiceTemplate invoiceTemplateRecord = ClientInvoiceTemplate.builder()
+				.companyName(param.getCompanyName())
+				.creator(param.getUserCode())
+				.createTime(nowDate)
+				.invoiceTemplateCode(invoiceTemplateCode)
+				.invoiceTitle(param.getInvoiceTitle())
+				.invoiceType(param.getInvoiceType())
+				.taxIdentificationNumber(param.getTaxIdentificationNumber())
+				.build();
+		clientInvoiceTemplateMapper.insertSelective(invoiceTemplateRecord);
 		return JsonResult.successJsonResult();
 	}
 
 	/**
 	 * 
 	 * <p>校验开票信息</p>
-	 * @param invoiceCode
-	 * @author 黄智聪  2019年4月25日 上午10:29:01
+	 * @param param
+	 * @return
+	 * @author 黄智聪  2019年4月26日 下午1:44:14
 	 */
-	private ClientInvoice checkInvoice(String invoiceCode) {
-		ClientInvoice invoice = clientInvoiceMapper.selectByCode(invoiceCode);
-		if(invoice == null) {
-			throw new ReturnDataException("开票记录不存在");
+	private OrderInfo checkApplyInvoiceParam(ApplyInvoiceParam param) {
+		JSR303ValidateUtils.validateInputParam(param);
+		if(!Invoicetype.checkStatusExist(param.getInvoiceType())) {
+			throw new ValidationException("发票类型不存在");
 		}
-		if(invoice.getInvoiceStatus() != InvoiceStatus.PENDING.getValue()) {
-			throw new BusinessException("开票状态异常");
+		// 校验订单是否存在、状态是否为已完成
+		OrderInfo orderInfo = clientOrderMapper.getOrderInfoByOrderCode(param.getOrderCode());
+		if(orderInfo == null) {
+			throw new ReturnDataException("订单不存在");
 		}
-		return invoice;
+		if(orderInfo.getOrderStatus() != OrderStatus.COMPLETED.getValue()) {
+			throw new ReturnDataException("订单状态异常，无法开票");
+		}
+		ClientShippingAddress shippingAddress = clientShippingAddressMapper.selectByCode(param.getShippingAddressCode());
+		if(shippingAddress == null) {
+			throw new ReturnDataException("收货地址不存在");
+		}
+		return orderInfo;
 	}
-
+	
 }
 

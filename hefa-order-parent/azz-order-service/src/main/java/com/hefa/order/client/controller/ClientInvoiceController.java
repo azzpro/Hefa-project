@@ -25,7 +25,7 @@ import com.hefa.order.pojo.vo.InvoiceInfo;
  * @author 黄智聪  2019年4月25日 上午11:15:25
  */
 @RestController
-@RequestMapping("/hefa/api/platform/invoice")
+@RequestMapping("/hefa/api/client/invoice")
 public class ClientInvoiceController {
 	
 	@Autowired
