@@ -46,3 +46,11 @@ feign:
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mapping/**/*.xml
+  
+hefa-system-service: 
+  ribbon:
+    ConnectTimeout: 6000
+    ReadTimeout: 6000
+    OkToRetryOnAllOperations: false
+    MaxAutoRetriesNextServer: 0
+    MaxAutoRetries: 0

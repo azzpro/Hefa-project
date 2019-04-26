@@ -34,6 +34,7 @@ import com.hefa.common.constants.EmailConstants;
 import com.hefa.common.constants.SmsConstants.SmsCode;
 import com.hefa.common.constants.SmsErrorCode;
 import com.hefa.common.exception.SmsException;
+import com.hefa.common.exception.ValidationException;
 import com.hefa.system.bo.MailCheck;
 import com.hefa.system.bo.MailCodeValidation;
 import com.hefa.system.bo.MailParam;
@@ -125,9 +126,11 @@ public class SystemEmailService {
 		//发送频率校验
 		String today = CalendarUtil.getFormatDateTime(new Date(), "yyyy-MM-dd");
 		List<SystemMsgLog> logs = smlm.findMsgLogByMail(m.getTo(), today);
-		if (!emailSendRole(logs)) {
-			throw new SmsException(SmsErrorCode.BUSINESS_LIMIT_CONTROL);
-		}
+		/*if (emailSendRole(logs)) {
+			
+		}else {
+			throw new SmsException("发送频率过高");
+		}*/
 		SystemMsgLog sml = new SystemMsgLog();
 		sml.setMsgCode(RandomStringUtils.generNumCode(6));
 		sml.setMsgContent(EmailConstants.EMAIL_CONTENT_PERFIX.replace("${code}", sml.getMsgCode()));

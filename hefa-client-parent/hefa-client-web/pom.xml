@@ -30,10 +30,6 @@
     		<artifactId>jersey-server</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-config-client</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>com.hefa</groupId>
 			<artifactId>hefa-client-api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
@@ -41,6 +37,11 @@
 		<dependency>
 			<groupId>com.hefa</groupId>
 			<artifactId>hefa-order-api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.hefa</groupId>
+			<artifactId>hefa-user-api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>

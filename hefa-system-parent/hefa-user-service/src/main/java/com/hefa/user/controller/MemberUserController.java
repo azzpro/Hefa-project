@@ -22,6 +22,8 @@ public class MemberUserController {
 	@Autowired
 	private MemberUserService memberUserService;
 	
+	
+	
 	/**
 	 * 
 	 * <p>查询会员列表</p>

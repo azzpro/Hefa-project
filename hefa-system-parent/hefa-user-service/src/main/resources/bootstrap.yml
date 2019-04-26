@@ -1,5 +1,5 @@
 server:
-  port: 7201
+  port: 7002
 spring:
   application:
     name: hefa-user-service

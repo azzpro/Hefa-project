@@ -30,11 +30,23 @@
     <result column="last_login"  property="lastLogin" />
     <result column="custom" property="custom" />
     <result column="email"  property="email" />
-  </resultMap>
+  </resultMap> 
   
   <select id="countUserById" parameterType="java.lang.Integer" resultType="int">
   	select count(1) from iwebshop_user where id = #{id}
   </select>
+  
+  <update id="updatePassword">
+  	update iwebshop_user set password = #{password} where id = #{id}
+  </update>
+  
+  <update id="updatePhone">
+  	update iwebshop_member set mobile = #{phone} where user_id = #{id}
+  </update>
+  
+  <update id="updateEmail">
+  	update iwebshop_member set email = #{email} where user_id = #{id}
+  </update>
   
   <select id="getMemberUserList" resultType="com.hefa.user.pojo.vo.MemberInfo" parameterType="com.hefa.user.pojo.bo.MemberParam">
   	select b.mobile phone,pu.user_name RecommendUser,b.email regMail,DATE_FORMAT(b.time,'%Y-%m-%d') regTime,a.id userCode
