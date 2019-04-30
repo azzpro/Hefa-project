@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hefa.order.mapper.ClientSelectionRecordMapper">
+  <resultMap id="BaseResultMap" type="com.hefa.order.pojo.ClientSelectionRecord">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="selection_record_code" jdbcType="VARCHAR" property="selectionRecordCode" />
+    <result column="user_code" jdbcType="VARCHAR" property="userCode" />
+    <result column="product_code" jdbcType="VARCHAR" property="productCode" />
+    <result column="product_model_no" jdbcType="VARCHAR" property="productModelNo" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="specification_info" jdbcType="VARCHAR" property="specificationInfo" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modifier" jdbcType="VARCHAR" property="modifier" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, selection_record_code, user_code, product_code, product_model_no, product_name, 
+    price, specification_info, creator, create_time, modifier, modify_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from client_selection_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from client_selection_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.hefa.order.pojo.ClientSelectionRecord">
+    insert into client_selection_record (id, selection_record_code, user_code, 
+      product_code, product_model_no, product_name, 
+      price, specification_info, creator, 
+      create_time, modifier, modify_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{selectionRecordCode,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}, 
+      #{productCode,jdbcType=VARCHAR}, #{productModelNo,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{specificationInfo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.hefa.order.pojo.ClientSelectionRecord">
+    insert into client_selection_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="selectionRecordCode != null">
+        selection_record_code,
+      </if>
+      <if test="userCode != null">
+        user_code,
+      </if>
+      <if test="productCode != null">
+        product_code,
+      </if>
+      <if test="productModelNo != null">
+        product_model_no,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="specificationInfo != null">
+        specification_info,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="selectionRecordCode != null">
+        #{selectionRecordCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null">
+        #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null">
+        #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productModelNo != null">
+        #{productModelNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="specificationInfo != null">
+        #{specificationInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hefa.order.pojo.ClientSelectionRecord">
+    update client_selection_record
+    <set>
+      <if test="selectionRecordCode != null">
+        selection_record_code = #{selectionRecordCode,jdbcType=VARCHAR},
+      </if>
+      <if test="userCode != null">
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null">
+        product_code = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productModelNo != null">
+        product_model_no = #{productModelNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="specificationInfo != null">
+        specification_info = #{specificationInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hefa.order.pojo.ClientSelectionRecord">
+    update client_selection_record
+    set selection_record_code = #{selectionRecordCode,jdbcType=VARCHAR},
+      user_code = #{userCode,jdbcType=VARCHAR},
+      product_code = #{productCode,jdbcType=VARCHAR},
+      product_model_no = #{productModelNo,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      specification_info = #{specificationInfo,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=VARCHAR},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="getProductInfoByProductCode" parameterType="string" resultType="com.hefa.order.pojo.vo.ProductInfo">
+  	SELECT
+		ig.id AS productCode,
+		ig.goods_no AS productModelNo,
+		ig. NAME AS productName,
+		IFNULL(ig.market_price, 0) AS price,
+		CONCAT(
+			ig.para_pnd1,
+			',',
+			ig.para_pnd2,
+			',',
+			ig.para_pnd3,
+			',',
+			ig.para_pnd4,
+			',',
+			ig.para_pnd5,
+			',',
+			ig.para_pnd6,
+			',',
+			ig.para_pnd7,
+			',',
+			ig.para_pnd8,
+			',',
+			ig.para_pnd9,
+			',',
+			ig.para_pnd10
+		) AS specificationInfo,
+		csr.id as selectionRecordId,
+		csr.selection_record_code as selectionRecordCode
+	FROM
+		iwebshop_goods ig
+	LEFT JOIN client_selection_record csr on ig.id = csr.product_code
+	WHERE
+		ig.id = #{productCode}
+  </select>
+</mapper>
