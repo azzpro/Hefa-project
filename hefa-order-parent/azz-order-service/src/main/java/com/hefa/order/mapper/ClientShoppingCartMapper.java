@@ -1,6 +1,7 @@
 package com.hefa.order.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.hefa.order.pojo.ClientShoppingCart;
 
@@ -17,4 +18,6 @@ public interface ClientShoppingCartMapper {
     int updateByPrimaryKeySelective(ClientShoppingCart record);
 
     int updateByPrimaryKey(ClientShoppingCart record);
+
+	ClientShoppingCart selectBySelectionRecordCodeAndClientUserCode(@Param("selectionRecordCode")String selectionRecordCode, @Param("userCode")String userCode);
 }

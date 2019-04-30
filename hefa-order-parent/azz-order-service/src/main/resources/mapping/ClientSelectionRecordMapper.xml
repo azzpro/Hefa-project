@@ -210,4 +210,26 @@
 	WHERE
 		ig.id = #{productCode}
   </select>
+  
+  <select id="getSelectionInfos" parameterType="com.hefa.order.pojo.bo.SearchSelectionInfoParam" resultType="com.hefa.order.pojo.vo.SelectionProductInfo">
+  	SELECT
+		csr.product_code AS productCode,
+		csr.product_model_no AS productModelNo,
+		csr.product_name AS productName,
+		csr.price as price,
+		csr.specification_info as specificationInfo,
+		csr.selection_record_code as selectionRecordCode
+	FROM
+		client_selection_record csr 
+	<where>
+		csr.user_code = #{userCode}
+		<if test="searchInput != null and searchInput != ''">
+			and (
+					csr.product_model_no LIKE CONCAT('%', #{searchInput}, '%')
+				or	csr.product_name = #{searchInput}
+			)
+		</if>
+	</where>
+	ORDER BY csr.create_time DESC
+  </select>
 </mapper>

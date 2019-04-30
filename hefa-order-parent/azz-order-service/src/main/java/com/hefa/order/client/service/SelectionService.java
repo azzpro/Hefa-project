@@ -8,21 +8,27 @@
 package com.hefa.order.client.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.github.pagehelper.PageHelper;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.exception.ValidationException;
+import com.hefa.common.page.Pagination;
 import com.hefa.order.mapper.ClientSelectionRecordMapper;
 import com.hefa.order.mapper.ClientShoppingCartMapper;
 import com.hefa.order.pojo.ClientSelectionRecord;
 import com.hefa.order.pojo.ClientShoppingCart;
 import com.hefa.order.pojo.bo.AddSelectionRecordToShoppingCartParam;
 import com.hefa.order.pojo.bo.AddToShoppingCartParam;
+import com.hefa.order.pojo.bo.SearchSelectionInfoParam;
+import com.hefa.order.pojo.vo.OrderInfo;
 import com.hefa.order.pojo.vo.ProductInfo;
+import com.hefa.order.pojo.vo.SelectionProductInfo;
 import com.hefa.utils.JSR303ValidateUtils;
 
 /**
@@ -103,11 +109,35 @@ public class SelectionService {
 	 */
 	public JsonResult<String> addSelectionRecordToShoppingCart(@RequestBody AddSelectionRecordToShoppingCartParam param){
 		JSR303ValidateUtils.validateInputParam(param);
-		
-		
-		
-		
+		List<String> selectionRecordCodes = param.getSelectionRecordCodes();
+		Date nowDate = new Date();
+		for (String selectionRecordCode : selectionRecordCodes) {
+			// 查询客户选型记录所在的购物车
+			ClientShoppingCart record = clientShoppingCartMapper.selectBySelectionRecordCodeAndClientUserCode(selectionRecordCode, param.getUserCode());
+			if(record == null) {// 若选型记录未添加至购物车，才将选型记录添加至购物车，否则啥也不干
+				ClientShoppingCart shoppingCartRecord = ClientShoppingCart.builder()
+						.userCode(param.getUserCode())
+						.createTime(nowDate)
+						.creator(param.getUserCode())
+						.selectionRecordCode(selectionRecordCode)
+						.build();
+				clientShoppingCartMapper.insertSelective(shoppingCartRecord);
+			}
+		}
 		return JsonResult.successJsonResult();
+	}
+	
+	/**
+	 * 
+	 * <p>查询选型列表</p>
+	 * @param param
+	 * @return
+	 * @author 黄智聪  2019年4月30日 下午6:02:01
+	 */
+	public JsonResult<Pagination<SelectionProductInfo>> getSelectionInfos(@RequestBody SearchSelectionInfoParam param){
+		PageHelper.startPage(param.getPageNum(), param.getPageSize());
+		List<SelectionProductInfo> infos = clientSelectionRecordMapper.getSelectionInfos(param);
+		return JsonResult.successJsonResult(new Pagination<>(infos));
 	}
 
 }
