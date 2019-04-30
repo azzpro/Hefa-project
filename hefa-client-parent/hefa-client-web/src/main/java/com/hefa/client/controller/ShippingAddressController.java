@@ -27,7 +27,7 @@ import com.hefa.pojo.vo.ShippingAddress;
  * @author 黄智聪  2019年4月24日 下午5:46:51
  */
 @RestController
-@RequestMapping("/api/hefa/client/shippingAddress")
+@RequestMapping("/hefa/api/client/shippingAddress")
 public class ShippingAddressController {
 	
 	private String userCode = "2"; // TODO

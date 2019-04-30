@@ -7,9 +7,8 @@
  
 package com.hefa.pojo.bo;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.validator.constraints.NotBlank;
 
 import lombok.Data;
 
@@ -30,13 +29,11 @@ public class EditShippingAddressParam {
 	@NotBlank(message = "请填写收货人手机号码")
 	private String receiverPhoneNumber;
 
-	@NotBlank(message = "请选择省")
 	private String provinceCode;
 
 	@NotBlank(message = "请选择省")
 	private String provinceName;
 
-	@NotBlank(message = "请选择市")
 	private String cityCode;
 
 	@NotBlank(message = "请选择市")

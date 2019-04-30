@@ -20,6 +20,8 @@ public interface ClientShippingAddressMapper {
     ClientShippingAddress selectByCode(String shippingAddressCode);
 
     int updateByPrimaryKeySelective(ClientShippingAddress record);
+    
+    int updateByCodeSelective(ClientShippingAddress record);
 
     int updateByPrimaryKey(ClientShippingAddress record);
     

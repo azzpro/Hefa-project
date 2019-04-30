@@ -25,7 +25,7 @@ import com.hefa.pojo.vo.ShippingAddress;
  * @version 1.0
  * @author 黄智聪  2019年4月24日 下午5:46:51
  */
-@FeignClient(name = "hefa-user-service")
+@FeignClient(name = "hefa-client-service")
 public interface ShippingAddressService {
 	
 	/**

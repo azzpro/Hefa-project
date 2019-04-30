@@ -7,7 +7,8 @@
 
 package com.hefa.pojo.bo;
 
-import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 

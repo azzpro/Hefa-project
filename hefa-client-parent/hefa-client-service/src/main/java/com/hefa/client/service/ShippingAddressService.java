@@ -95,7 +95,9 @@ public class ShippingAddressService {
 		if(isDefaultShippingAddress.YES.getValue() == param.getIsDefault()) {
 			clientShippingAddressMapper.setOtherShippingAddressNotDefault(param.getCreator());
 		}
+		String shippingAddressCode = "s"+System.currentTimeMillis();
 		ClientShippingAddress shippingAddressRecord = ClientShippingAddress.builder()
+				.shippingAddressCode(shippingAddressCode)
 				.addressAlias(param.getAddressAlias())
 				.areaCode(param.getAreaCode())
 				.areaName(param.getAreaName())
@@ -150,7 +152,7 @@ public class ShippingAddressService {
 				.receiverName(param.getReceiverName())
 				.receiverPhoneNumber(param.getReceiverPhoneNumber())
 				.build();
-		clientShippingAddressMapper.updateByPrimaryKeySelective(shippingAddressRecord);
+		clientShippingAddressMapper.updateByCodeSelective(shippingAddressRecord);
 		return JsonResult.successJsonResult();
 	}
 	
@@ -170,7 +172,7 @@ public class ShippingAddressService {
 				.modifier(param.getModifier())
 				.modifyTime(new Date())
 				.build();
-		clientShippingAddressMapper.updateByPrimaryKeySelective(shippingAddressRecord);
+		clientShippingAddressMapper.updateByCodeSelective(shippingAddressRecord);
 		return JsonResult.successJsonResult();
 	}
 	

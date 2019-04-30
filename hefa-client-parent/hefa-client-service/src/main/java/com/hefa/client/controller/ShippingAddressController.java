@@ -28,7 +28,7 @@ import com.hefa.pojo.vo.ShippingAddress;
  * @author 黄智聪  2019年4月24日 下午5:46:51
  */
 @RestController
-@RequestMapping("/api/hefa/client/shippingAddress")
+@RequestMapping("/hefa/api/client/shippingAddress")
 public class ShippingAddressController {
 	
 	@Autowired
@@ -41,6 +41,7 @@ public class ShippingAddressController {
 	 * @return
 	 * @author 黄智聪  2018年11月13日 下午2:58:08
 	 */
+	@RequestMapping("/getDefaultShippingAddress")
 	public JsonResult<ShippingAddress> getDefaultShippingAddress(@RequestParam("userCode")String userCode){
 		return shippingAddressService.getDefaultShippingAddress(userCode);
 	}
@@ -52,6 +53,7 @@ public class ShippingAddressController {
 	 * @return
 	 * @author 黄智聪  2018年11月13日 下午2:58:08
 	 */
+	@RequestMapping("/getShippingAddressList")
 	public JsonResult<List<ShippingAddress>> getShippingAddressList(@RequestParam("userCode")String userCode){
 		return shippingAddressService.getShippingAddressList(userCode);
 	}
@@ -63,6 +65,7 @@ public class ShippingAddressController {
 	 * @return
 	 * @author 黄智聪  2018年11月13日 下午2:58:08
 	 */
+	@RequestMapping("/getShippingAddress")
 	public JsonResult<ShippingAddress> getShippingAddress(@RequestParam("shippingAddressCode")String shippingAddressCode){
 		return shippingAddressService.getShippingAddress(shippingAddressCode);
 	}
@@ -74,6 +77,7 @@ public class ShippingAddressController {
 	 * @return
 	 * @author 黄智聪  2018年11月13日 下午2:58:08
 	 */
+	@RequestMapping("/addShippingAddress")
 	public JsonResult<String> addShippingAddress(@RequestBody AddShippingAddressParam param){
 		return shippingAddressService.addShippingAddress(param);
 	}
@@ -85,6 +89,7 @@ public class ShippingAddressController {
 	 * @return
 	 * @author 黄智聪  2018年11月13日 下午2:58:08
 	 */
+	@RequestMapping("/editShippingAddress")
 	public JsonResult<String> editShippingAddress(@RequestBody EditShippingAddressParam param){
 		return shippingAddressService.editShippingAddress(param);
 	}
@@ -96,6 +101,7 @@ public class ShippingAddressController {
 	 * @return
 	 * @author 黄智聪  2018年11月13日 下午2:58:08
 	 */
+	@RequestMapping("/delShippingAddress")
 	public JsonResult<String> delShippingAddress(@RequestBody DelShippingAddressParam param){
 		return shippingAddressService.delShippingAddress(param);
 	}
