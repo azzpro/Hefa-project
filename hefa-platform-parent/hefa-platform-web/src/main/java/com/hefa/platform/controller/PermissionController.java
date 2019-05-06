@@ -9,8 +9,6 @@ package com.hefa.platform.controller;
 
 import java.util.List;
 
-import javax.management.relation.RoleInfo;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +22,7 @@ import com.hefa.user.pojo.bo.EditRoleParam;
 import com.hefa.user.pojo.bo.SearchRoleParam;
 import com.hefa.user.pojo.bo.SetRolePermissionParam;
 import com.hefa.user.pojo.vo.Permission;
+import com.hefa.user.pojo.vo.RoleInfo;
 import com.hefa.user.pojo.vo.TreePermission;
 
 /**
