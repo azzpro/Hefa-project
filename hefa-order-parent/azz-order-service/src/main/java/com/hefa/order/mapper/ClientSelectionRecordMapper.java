@@ -6,13 +6,14 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.hefa.order.pojo.ClientSelectionRecord;
 import com.hefa.order.pojo.bo.SearchSelectionInfoParam;
+import com.hefa.order.pojo.vo.ModelInfo;
 import com.hefa.order.pojo.vo.ProductInfo;
 import com.hefa.order.pojo.vo.SelectionProductInfo;
 
 @Mapper
 public interface ClientSelectionRecordMapper {
     int deleteByPrimaryKey(Long id);
-
+    
     int insert(ClientSelectionRecord record);
 
     int insertSelective(ClientSelectionRecord record);
@@ -20,6 +21,8 @@ public interface ClientSelectionRecordMapper {
     ClientSelectionRecord selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(ClientSelectionRecord record);
+    
+    int updateByCode(ClientSelectionRecord record);
 
     int updateByPrimaryKey(ClientSelectionRecord record);
     
@@ -40,4 +43,13 @@ public interface ClientSelectionRecordMapper {
      * @author 黄智聪  2019年4月30日 下午6:10:21
      */
     List<SelectionProductInfo> getSelectionInfos(SearchSelectionInfoParam param);
+    
+    /**
+     * 
+     * <p>查询产品型号信息</p>
+     * @param selectionRecordCode
+     * @return
+     * @author 黄智聪  2019年5月5日 下午4:37:00
+     */
+    ModelInfo getProductModelInfo(String selectionRecordCode);
 }

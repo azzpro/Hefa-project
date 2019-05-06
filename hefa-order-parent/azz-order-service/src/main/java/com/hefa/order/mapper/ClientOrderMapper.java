@@ -52,4 +52,13 @@ public interface ClientOrderMapper {
      * @author 黄智聪  2019年4月24日 下午4:40:30
      */
     List<CommissionOrderInfo> getCommissionOrderInfos(SearchCommissionOrderInfoParam param);
+    
+    /**
+     * 
+     * <p>查询用户的所属销售人员</p>
+     * @param userCode
+     * @return
+     * @author 黄智聪  2019年5月5日 下午7:12:38
+     */
+    String getSalesmanCodeByUserCode(String userCode);
 }

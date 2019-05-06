@@ -421,4 +421,13 @@
 		co.create_time DESC
   </select>
   
+  <select id="getSalesmanCodeByUserCode" parameterType="string" resultType="string">
+  	SELECT
+		salesman_code
+	FROM
+		client_user_salesman
+	WHERE
+		user_code = #{userCode}
+  </select>
+  
 </mapper>

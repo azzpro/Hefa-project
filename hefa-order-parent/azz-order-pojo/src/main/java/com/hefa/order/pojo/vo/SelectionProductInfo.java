@@ -39,7 +39,7 @@ public class SelectionProductInfo {
     private String productModelNo;
 
     /**
-     * 产品型号对应iwebshop_goods的name
+     * 产品名称对应iwebshop_goods的name
      *
      * @mbg.generated
      */

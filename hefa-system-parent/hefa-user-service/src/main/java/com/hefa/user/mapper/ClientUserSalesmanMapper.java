@@ -48,4 +48,5 @@ public interface ClientUserSalesmanMapper {
      * @author 黄智聪  2019年4月24日 下午4:08:42
      */
     List<InvitedUserInfo> getInvitedUserInfos(SearchInvitedUserInfoParam param);
+    
 }

@@ -23,6 +23,11 @@
     delete from client_shopping_cart
     where id = #{id,jdbcType=BIGINT}
   </delete>
+  <delete id="removeShoppingCartRecord" parameterType="com.hefa.order.pojo.bo.RemoveShoppingCartProductParam">
+    delete from client_shopping_cart
+    where selection_record_code = #{selectionRecordCode}
+    and user_code = #{userCode}
+  </delete>
   <insert id="insert" parameterType="com.hefa.order.pojo.ClientShoppingCart">
     insert into client_shopping_cart (id, user_code, selection_record_code, 
       creator, create_time, modifier, 
@@ -121,6 +126,65 @@
     from client_shopping_cart
     where selection_record_code = #{selectionRecordCode}
     and user_code = #{userCode}
+    and status = 1
   </select>
+  
+  <select id="getShoppingCartInfos" parameterType="string" resultType="com.hefa.order.pojo.vo.ShoppingCartInfo">
+  	SELECT
+		csc.selection_record_code AS selectionRecordCode,
+		csr.product_code AS productCode,
+		csr.product_model_no AS productModelNo,
+		csr.product_name AS productName,
+		csr.price AS price
+	FROM
+		client_shopping_cart csc
+	LEFT JOIN client_selection_record csr ON csr.selection_record_code = csc.selection_record_code
+	WHERE
+		csc.user_code = #{userCode}
+	ORDER BY csc.create_time DESC
+  </select>
+  
+  <select id="getShoppingCartOrderItems" resultType="com.hefa.order.pojo.vo.ShoppingCartInfo">
+	SELECT
+		ig.id AS productCode,
+		ig.goods_no AS productModelNo,
+		ig.name AS productName,
+		ig.market_price AS price,
+		CONCAT(
+			ig.para_pnd1,
+			',',
+			ig.para_pnd2,
+			',',
+			ig.para_pnd3,
+			',',
+			ig.para_pnd4,
+			',',
+			ig.para_pnd5,
+			',',
+			ig.para_pnd6,
+			',',
+			ig.para_pnd7,
+			',',
+			ig.para_pnd8,
+			',',
+			ig.para_pnd9,
+			',',
+			ig.para_pnd10
+		) AS specificationInfo
+	FROM
+		client_shopping_cart csc
+	JOIN client_selection_record csr ON csr.selection_record_code = csc.selection_record_code
+	JOIN iwebshop_goods ig ON ig.id = csr.product_code
+	WHERE csc.user_code = #{userCode}
+	AND ig.id in
+	<foreach collection="orderItems" item="orderItem" open="(" close=")" separator=",">
+		#{orderItem.productCode}
+	</foreach>
+  </select>
+  
+  <delete id="deleteShoppingCartByUserCode" parameterType="string">
+  	delete from client_shopping_cart
+    where user_code= #{userCode}
+  </delete>
   
 </mapper>

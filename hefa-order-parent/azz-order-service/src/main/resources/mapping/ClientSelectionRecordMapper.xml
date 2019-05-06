@@ -10,6 +10,7 @@
     <result column="product_name" jdbcType="VARCHAR" property="productName" />
     <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="specification_info" jdbcType="VARCHAR" property="specificationInfo" />
+    <result column="status" jdbcType="TINYINT" property="status" />
     <result column="creator" jdbcType="VARCHAR" property="creator" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="modifier" jdbcType="VARCHAR" property="modifier" />
@@ -17,7 +18,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, selection_record_code, user_code, product_code, product_model_no, product_name, 
-    price, specification_info, creator, create_time, modifier, modify_time
+    price, specification_info, status,creator, create_time, modifier, modify_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
@@ -32,12 +33,12 @@
   <insert id="insert" parameterType="com.hefa.order.pojo.ClientSelectionRecord">
     insert into client_selection_record (id, selection_record_code, user_code, 
       product_code, product_model_no, product_name, 
-      price, specification_info, creator, 
+      price, specification_info, status, creator, 
       create_time, modifier, modify_time
       )
     values (#{id,jdbcType=BIGINT}, #{selectionRecordCode,jdbcType=VARCHAR}, #{userCode,jdbcType=VARCHAR}, 
       #{productCode,jdbcType=VARCHAR}, #{productModelNo,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
-      #{price,jdbcType=DECIMAL}, #{specificationInfo,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{specificationInfo,jdbcType=VARCHAR},#{status,jdbcType=TINYINT}, #{creator,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, #{modifyTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -67,6 +68,9 @@
       </if>
       <if test="specificationInfo != null">
         specification_info,
+      </if>
+      <if test="status != null">
+        status,
       </if>
       <if test="creator != null">
         creator,
@@ -106,6 +110,9 @@
       <if test="specificationInfo != null">
         #{specificationInfo,jdbcType=VARCHAR},
       </if>
+      <if test="status != null">
+       	#{status,jdbcType=TINYINT},
+      </if>
       <if test="creator != null">
         #{creator,jdbcType=VARCHAR},
       </if>
@@ -144,6 +151,9 @@
       <if test="specificationInfo != null">
         specification_info = #{specificationInfo,jdbcType=VARCHAR},
       </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
       <if test="creator != null">
         creator = #{creator,jdbcType=VARCHAR},
       </if>
@@ -159,6 +169,45 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <update id="updateByCode" parameterType="com.hefa.order.pojo.ClientSelectionRecord">
+    update client_selection_record
+    <set>
+      <if test="userCode != null">
+        user_code = #{userCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productCode != null">
+        product_code = #{productCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productModelNo != null">
+        product_model_no = #{productModelNo,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="specificationInfo != null">
+        specification_info = #{specificationInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where selection_record_code = #{selectionRecordCode,jdbcType=VARCHAR}
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.hefa.order.pojo.ClientSelectionRecord">
     update client_selection_record
     set selection_record_code = #{selectionRecordCode,jdbcType=VARCHAR},
@@ -168,6 +217,7 @@
       product_name = #{productName,jdbcType=VARCHAR},
       price = #{price,jdbcType=DECIMAL},
       specification_info = #{specificationInfo,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
       creator = #{creator,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       modifier = #{modifier,jdbcType=VARCHAR},
@@ -222,7 +272,8 @@
 	FROM
 		client_selection_record csr 
 	<where>
-		csr.user_code = #{userCode}
+			csr.user_code = #{userCode}
+		and csr.status = 1
 		<if test="searchInput != null and searchInput != ''">
 			and (
 					csr.product_model_no LIKE CONCAT('%', #{searchInput}, '%')
@@ -231,5 +282,24 @@
 		</if>
 	</where>
 	ORDER BY csr.create_time DESC
+  </select>
+  
+  <select id="getProductModelInfo" parameterType="string" resultType="com.hefa.order.pojo.vo.ModelInfo">
+  	SELECT
+			ig.para_pnd1 as param1,
+			ig.para_pnd2 as param2,
+			ig.para_pnd3 as param3,
+			ig.para_pnd4 as param4,
+			ig.para_pnd5 as param5,
+			ig.para_pnd6 as param6,
+			ig.para_pnd7 as param7,
+			ig.para_pnd8 as param8,
+			ig.para_pnd9 as param9,
+			ig.para_pnd10 as param10
+	FROM
+		iwebshop_goods ig
+	JOIN client_selection_record csr on ig.id = csr.product_code
+	WHERE
+		csr.selection_record_code = #{selectionRecordCode}
   </select>
 </mapper>

@@ -67,6 +67,8 @@ public class ClientSelectionRecord implements Serializable {
      * @mbg.generated
      */
     private String specificationInfo;
+    
+    private Byte status;
 
     /**
      * 创建人
@@ -453,4 +455,12 @@ public class ClientSelectionRecord implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
+	public Byte getStatus() {
+		return status;
+	}
+
+	public void setStatus(Byte status) {
+		this.status = status;
+	}
 }
