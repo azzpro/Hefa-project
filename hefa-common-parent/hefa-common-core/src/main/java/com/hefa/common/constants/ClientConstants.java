@@ -7,13 +7,11 @@
 
 package com.hefa.common.constants;
 
-import com.hefa.common.constants.PlatformConstants.Invoicetype;
-
 import lombok.Getter;
 
 /**
  * <P>
- * 平台常量类
+ * 客户端常量类
  * </P>
  * 
  * @version 1.0
@@ -25,6 +23,11 @@ public abstract class ClientConstants {
      * 收货地址限制数量
      */
     public static final int SHIPPING_ADDRESS_AMOUNT_LIMIT = 10;
+    
+    /**
+     * 订单有效期
+     */
+    public static final int ORDER_VALID_TIME_HOURS = 6;
     
     /**
 	 * 

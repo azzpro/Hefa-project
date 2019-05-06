@@ -9,6 +9,7 @@ import com.hefa.order.pojo.bo.SearchCommissionOrderInfoParam;
 import com.hefa.order.pojo.bo.SearchOrderInfoParam;
 import com.hefa.order.pojo.vo.CommissionOrderInfo;
 import com.hefa.order.pojo.vo.OrderInfo;
+import com.hefa.order.pojo.vo.ShippingAddressInfo;
 
 @Mapper
 public interface ClientOrderMapper {
@@ -61,4 +62,13 @@ public interface ClientOrderMapper {
      * @author 黄智聪  2019年5月5日 下午7:12:38
      */
     String getSalesmanCodeByUserCode(String userCode);
+    
+    /**
+     * 
+     * <p>查询收货地址</p>
+     * @param userCode
+     * @return
+     * @author 黄智聪  2018年11月13日 下午3:28:37
+     */
+    ShippingAddressInfo getShippingAddressInfo(String shippingAddresscode);
 }

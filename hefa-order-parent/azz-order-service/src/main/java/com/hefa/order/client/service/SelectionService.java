@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageHelper;
 import com.hefa.common.base.JsonResult;
+import com.hefa.common.constants.ClientConstants;
 import com.hefa.common.constants.PlatformConstants.OrderStatus;
 import com.hefa.common.exception.ReturnDataException;
 import com.hefa.common.exception.ValidationException;
@@ -45,9 +46,12 @@ import com.hefa.order.pojo.bo.RemoveSelectionRecordParam;
 import com.hefa.order.pojo.bo.RemoveShoppingCartProductParam;
 import com.hefa.order.pojo.bo.SearchSelectionInfoParam;
 import com.hefa.order.pojo.vo.ModelInfo;
+import com.hefa.order.pojo.vo.PayOrderInfo;
 import com.hefa.order.pojo.vo.ProductInfo;
 import com.hefa.order.pojo.vo.SelectionProductInfo;
+import com.hefa.order.pojo.vo.ShippingAddressInfo;
 import com.hefa.order.pojo.vo.ShoppingCartInfo;
+import com.hefa.utils.DateUtils;
 import com.hefa.utils.JSR303ValidateUtils;
 import com.hefa.utils.StringUtils;
 
@@ -239,7 +243,7 @@ public class SelectionService {
 	 * @return
 	 * @author 黄智聪  2019年5月5日 下午5:53:01
 	 */
-	public JsonResult<String> generateOrder(@RequestBody GenerateOrderParam param){
+	public JsonResult<PayOrderInfo> generateOrder(@RequestBody GenerateOrderParam param){
 		JSR303ValidateUtils.validateInputParam(param);
 		String shippingAddressCode = param.getShippingAddressCode();
 		ClientShippingAddress shippingAddress = clientShippingAddressMapper.selectByCode(shippingAddressCode);
@@ -328,7 +332,14 @@ public class SelectionService {
 		// 清空客户的购物车信息
 		clientShoppingCartMapper.deleteShoppingCartByUserCode(userCode);
 		
-		return JsonResult.successJsonResult();
+		PayOrderInfo payOrderInfo = new PayOrderInfo();
+		payOrderInfo.setGrandTotal(grandTotal);
+		payOrderInfo.setOrderCode(orderCode);
+		Date validTime = DateUtils.addHour(nowDate, ClientConstants.ORDER_VALID_TIME_HOURS);
+		payOrderInfo.setValidTime(validTime);
+		ShippingAddressInfo shippingAddressInfo = clientOrderMapper.getShippingAddressInfo(shippingAddressCode);
+		payOrderInfo.setShippingAddressInfo(shippingAddressInfo);
+		return JsonResult.successJsonResult(payOrderInfo);
 	}
 	
 }

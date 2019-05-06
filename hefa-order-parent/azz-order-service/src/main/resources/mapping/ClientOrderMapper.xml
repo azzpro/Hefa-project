@@ -430,4 +430,18 @@
 		user_code = #{userCode}
   </select>
   
+  <select id="getShippingAddressInfo" parameterType="string" resultType="com.hefa.order.pojo.vo.ShippingAddressInfo">
+    SELECT
+		csa.receiver_name AS receiverName,
+		csa.receiver_phone_number AS receiverPhoneNumber,
+		csa.province_name as provinceName,
+		csa.city_name as cityName,
+		csa.area_name as areaName,
+		csa.detail_address as detailAddress
+	FROM
+		client_shipping_address csa
+	WHERE csa. STATUS != 0
+	and csa.shipping_address_code = #{shippingAddresscode}
+  </select>
+  
 </mapper>
