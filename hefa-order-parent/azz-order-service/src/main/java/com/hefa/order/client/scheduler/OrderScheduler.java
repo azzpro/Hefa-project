@@ -36,7 +36,7 @@ public class OrderScheduler {
 	 * <p>每20分钟执行一次关闭订单的定时任务</p>
 	 * @author 黄智聪  2018年11月17日 下午2:24:32
 	 */
-	@Scheduled(cron = "0 0/1 * * * ?")
+	@Scheduled(cron = "0 0/20 * * * ?")
 	public void closeClientOrders() {
 		log.info("定时任务【关闭6小时未支付的客户订单】执行开始");
 		selectionService.closeClientOrders();
