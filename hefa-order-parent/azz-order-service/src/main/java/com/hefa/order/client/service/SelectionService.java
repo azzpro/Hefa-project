@@ -125,14 +125,25 @@ public class SelectionService {
 			clientSelectionRecordMapper.updateByPrimaryKeySelective(selectionRecord);
 		}
 		// 2.加入购物车
-		ClientShoppingCart shoppingCartRecord = ClientShoppingCart.builder()
-				.createTime(nowDate)
-				.creator(param.getUserCode())
-				.selectionRecordCode(selectionRecordCode)
-				.userCode(param.getUserCode())
-				.build();
-		clientShoppingCartMapper.insertSelective(shoppingCartRecord);
-		
+		// 购物车中是否存在相同的产品
+		Long shoppingCartId = clientShoppingCartMapper.existSameProduct(selectionRecordCode);
+		if(shoppingCartId != null) {// 若存在，则直接更新购物车中selectionRecordCode为最新的
+			ClientShoppingCart shoppingCartRecord = ClientShoppingCart.builder()
+					.modifyTime(nowDate)
+					.modifier(param.getUserCode())
+					.selectionRecordCode(selectionRecordCode)
+					.id(shoppingCartId)
+					.build();
+			clientShoppingCartMapper.updateByPrimaryKeySelective(shoppingCartRecord);
+		}else {// 不存在，说明是新的产品，直接加入购物车
+			ClientShoppingCart shoppingCartRecord = ClientShoppingCart.builder()
+					.createTime(nowDate)
+					.creator(param.getUserCode())
+					.selectionRecordCode(selectionRecordCode)
+					.userCode(param.getUserCode())
+					.build();
+			clientShoppingCartMapper.insertSelective(shoppingCartRecord);
+		}
 		return JsonResult.successJsonResult();
 	}
 	
@@ -148,6 +159,10 @@ public class SelectionService {
 		List<String> selectionRecordCodes = param.getSelectionRecordCodes();
 		Date nowDate = new Date();
 		for (String selectionRecordCode : selectionRecordCodes) {
+			ClientSelectionRecord selectionRecord = clientSelectionRecordMapper.selectByCode(selectionRecordCode);
+			if(selectionRecord == null) {
+				throw new ReturnDataException("选型记录["+selectionRecordCode+"]不存在");
+			}
 			// 查询客户选型记录所在的购物车
 			ClientShoppingCart record = clientShoppingCartMapper.selectBySelectionRecordCodeAndClientUserCode(selectionRecordCode, param.getUserCode());
 			if(record == null) {// 若选型记录未添加至购物车，才将选型记录添加至购物车，否则啥也不干
@@ -172,6 +187,10 @@ public class SelectionService {
 	 */
 	public JsonResult<String> removeSelectionRecord(@RequestBody RemoveSelectionRecordParam param){
 		JSR303ValidateUtils.validateInputParam(param);
+		ClientSelectionRecord selectionRecord = clientSelectionRecordMapper.selectByCode(param.getSelectionRecordCode());
+		if(selectionRecord == null) {
+			throw new ReturnDataException("选型记录["+param.getSelectionRecordCode()+"]不存在");
+		}
 		ClientSelectionRecord record = ClientSelectionRecord.builder()
 				.status((byte)0)// 无效状态
 				.selectionRecordCode(param.getSelectionRecordCode())
@@ -232,6 +251,10 @@ public class SelectionService {
 	 */
 	public JsonResult<String> removeShoppingCartProduct(@RequestBody RemoveShoppingCartProductParam param){
 		JSR303ValidateUtils.validateInputParam(param);
+		ClientSelectionRecord selectionRecord = clientSelectionRecordMapper.selectByCode(param.getSelectionRecordCode());
+		if(selectionRecord == null) {
+			throw new ReturnDataException("选型记录["+param.getSelectionRecordCode()+"]不存在");
+		}
 		clientShoppingCartMapper.removeShoppingCartRecord(param);
 		return JsonResult.successJsonResult();
 	}
@@ -341,6 +364,37 @@ public class SelectionService {
 		payOrderInfo.setShippingAddressInfo(shippingAddressInfo);
 		return JsonResult.successJsonResult(payOrderInfo);
 	}
+	/**
+	 * 
+	 * <p>关闭订单--6小时未支付的待支付订单，状态改为已关闭</p>
+	 * @return
+	 * @author 黄智聪  2018年11月15日 上午10:38:19
+	 */
+	public JsonResult<String> closeClientOrders(){
+		// 查询6小时未支付的订单编码集合
+		List<String> orderCodes = clientOrderMapper.getSixHoursNotPaidOrderCodes();
+		Date nowDate = new Date();
+		for (String orderCode : orderCodes) {
+			// 修改订单状态订单状态为已关闭
+			ClientOrder clientOrderRecord = ClientOrder.builder()
+					.orderCode(orderCode)
+					.orderStatus((byte)OrderStatus.CLOSED.getValue())
+					.modifyTime(nowDate)
+					.remark("6小时未支付，订单状态改为已关闭")
+					.build(); 
+			clientOrderMapper.updateByOrderCodeSelective(clientOrderRecord);
+			// 新增订单状态变更记录
+			ClientOrderStatus clientOrderStatusRecord = ClientOrderStatus.builder()
+					.createTime(nowDate)
+					.orderCode(orderCode)
+					.orderStatus(OrderStatus.CLOSED.getValue())
+					.remark("6小时未支付，订单状态改为已关闭")
+					.build();
+			clientOrderStatusMapper.insertSelective(clientOrderStatusRecord);
+		}
+		return JsonResult.successJsonResult();
+	}
+	
 	
 }
 

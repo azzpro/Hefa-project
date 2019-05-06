@@ -71,4 +71,13 @@ public interface ClientOrderMapper {
      * @author 黄智聪  2018年11月13日 下午3:28:37
      */
     ShippingAddressInfo getShippingAddressInfo(String shippingAddresscode);
+    
+    /**
+     * 
+     * <p>查询6小时未支付的客户订单编码集合</p>
+     * @param clientOrderCode
+     * @return
+     * @author 黄智聪  2018年11月13日 上午11:06:57
+     */
+    List<String> getSixHoursNotPaidOrderCodes();
 }

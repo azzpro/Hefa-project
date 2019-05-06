@@ -62,4 +62,13 @@ public interface ClientShoppingCartMapper {
      * @author 黄智聪  2019年5月5日 下午7:35:15
      */
     int deleteShoppingCartByUserCode(String userCode);
+    
+    /**
+     * 
+     * <p>购物车中是否存在相同的产品</p>
+     * @param selectionRecordCode
+     * @return
+     * @author 黄智聪  2019年5月6日 下午3:30:36
+     */
+    Long existSameProduct(String selectionRecordCode);
 }

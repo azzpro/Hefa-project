@@ -114,7 +114,7 @@ public class DeptService{
         
         List<PlatformDept> pd = deptMapper.selectByParentDeptCode(parentCode);
         if(pd.size()>0) {
-            if(pd.get(0).getDescription().equals("2")) {
+            if("2".equals(pd.get(0).getDescription())) {
                 throw new ReturnDataException("已是三级部门");
             }
         }

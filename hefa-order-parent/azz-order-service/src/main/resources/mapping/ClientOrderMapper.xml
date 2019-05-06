@@ -444,4 +444,15 @@
 	and csa.shipping_address_code = #{shippingAddresscode}
   </select>
   
+  <select id="getSixHoursNotPaidOrderCodes" resultType="string">
+   SELECT
+		co.id
+	FROM
+		client_order co
+	WHERE
+		co. STATUS != 0
+	AND co.order_status = 1
+	AND DATE_ADD(co.create_time,INTERVAL 6 HOUR)  &lt; NOW()
+  </select>
+  
 </mapper>

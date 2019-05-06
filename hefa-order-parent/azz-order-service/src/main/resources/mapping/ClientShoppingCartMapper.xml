@@ -126,7 +126,6 @@
     from client_shopping_cart
     where selection_record_code = #{selectionRecordCode}
     and user_code = #{userCode}
-    and status = 1
   </select>
   
   <select id="getShoppingCartInfos" parameterType="string" resultType="com.hefa.order.pojo.vo.ShoppingCartInfo">
@@ -149,7 +148,7 @@
 		ig.id AS productCode,
 		ig.goods_no AS productModelNo,
 		ig.name AS productName,
-		ig.market_price AS price,
+		ifnull(ig.market_price,0) AS price,
 		CONCAT(
 			ig.para_pnd1,
 			',',
@@ -186,5 +185,20 @@
   	delete from client_shopping_cart
     where user_code= #{userCode}
   </delete>
+  
+  <select id="existSameProduct" parameterType="string" resultType="long">
+	SELECT
+		csc.id
+	FROM
+		client_shopping_cart csc
+	JOIN client_selection_record csr ON csr.selection_record_code = csc.selection_record_code
+	where csr.product_code = (
+		SELECT
+			csr.product_code
+		FROM
+			client_selection_record csr 
+		where csr.`status` = 1 and csr.selection_record_code = #{selectionRecordCode}
+	)
+  </select>
   
 </mapper>

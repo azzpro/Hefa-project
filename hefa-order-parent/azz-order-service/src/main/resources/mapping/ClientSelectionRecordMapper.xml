@@ -26,6 +26,13 @@
     from client_selection_record
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectByCode" parameterType="string" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from client_selection_record
+    where selection_record_code = #{selectionRecordCode,jdbcType=VARCHAR}
+    and status = 1
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from client_selection_record
     where id = #{id,jdbcType=BIGINT}
@@ -256,7 +263,7 @@
 		csr.selection_record_code as selectionRecordCode
 	FROM
 		iwebshop_goods ig
-	LEFT JOIN client_selection_record csr on ig.id = csr.product_code
+	LEFT JOIN client_selection_record csr on ig.id = csr.product_code and csr.status = 1
 	WHERE
 		ig.id = #{productCode}
   </select>

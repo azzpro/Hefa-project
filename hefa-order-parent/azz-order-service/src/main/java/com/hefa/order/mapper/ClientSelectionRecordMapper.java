@@ -19,7 +19,9 @@ public interface ClientSelectionRecordMapper {
     int insertSelective(ClientSelectionRecord record);
 
     ClientSelectionRecord selectByPrimaryKey(Long id);
-
+    
+    ClientSelectionRecord selectByCode(String selectionRecordCode);
+    
     int updateByPrimaryKeySelective(ClientSelectionRecord record);
     
     int updateByCode(ClientSelectionRecord record);
