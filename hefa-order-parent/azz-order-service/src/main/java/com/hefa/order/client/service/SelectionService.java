@@ -95,9 +95,13 @@ public class SelectionService {
 	 */
 	public JsonResult<String> addProductToShoppingCart(@RequestBody AddToShoppingCartParam param){
 		JSR303ValidateUtils.validateInputParam(param);
+		int count = clientShippingAddressMapper.existUser(param.getUserCode());
+		if(count == 0 ) {
+			throw new ReturnDataException("用户记录不存在");
+		}
 		ProductInfo productInfo = clientSelectionRecordMapper.getProductInfoByProductCode(param.getProductCode());
 		if(productInfo == null) {
-			throw new ValidationException("所选产品记录不存在");
+			throw new ReturnDataException("所选产品记录不存在");
 		}
 		Date nowDate = new Date();
 		String selectionRecordCode = null;

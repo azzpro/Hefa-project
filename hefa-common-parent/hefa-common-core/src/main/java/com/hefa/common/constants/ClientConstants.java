@@ -30,6 +30,11 @@ public abstract class ClientConstants {
     public static final int ORDER_VALID_TIME_HOURS = 6;
     
     /**
+     * 登录用户session key
+     */
+    public static final String LOGIN_USER = "loginUser";
+    
+    /**
 	 * 
 	 * <P>开票类型 0普通 1增值</P>
 	 * @version 1.0

@@ -30,17 +30,12 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
  * @version 1.0
  * @author 黄智聪  2018年10月15日 下午7:35:16
  */
-//@Configuration
+@Configuration
 public class WebConfig extends WebMvcConfigurationSupport {
 
 	@Bean
     public BadSqlInterceptor getBadSqlInterceptor() {
         return new BadSqlInterceptor();
-    }
-	
-	@Bean
-    public SignInterceptor getSignInterceptor() {
-        return new SignInterceptor();
     }
 	
     @Override
@@ -56,9 +51,6 @@ public class WebConfig extends WebMvcConfigurationSupport {
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration interceptor = registry.addInterceptor(getBadSqlInterceptor());
         interceptor.addPathPatterns("/**");
-        InterceptorRegistration signInterceptor = registry.addInterceptor(getSignInterceptor());
-        signInterceptor.addPathPatterns("/hefa/**");
-        signInterceptor.excludePathPatterns("/actuator/health");
     }
     
     @Bean

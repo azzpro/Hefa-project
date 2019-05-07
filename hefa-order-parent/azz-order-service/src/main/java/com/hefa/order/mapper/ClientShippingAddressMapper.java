@@ -20,4 +20,6 @@ public interface ClientShippingAddressMapper {
 
     int updateByPrimaryKey(ClientShippingAddress record);
     
+    int existUser(String userCode);
+    
 }

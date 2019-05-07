@@ -5,9 +5,10 @@
  * 注意：本内容仅限于爱智造内部传阅，禁止外泄以及用于其他的商业目的
  ******************************************************************************/
  
-package com.hefa.config;
+package com.hefa.client.interceptor;
 
 import java.math.BigDecimal;
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -33,14 +34,13 @@ public class SignInterceptor extends HandlerInterceptorAdapter{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		Map<?, ?> paramsMap = request.getParameterMap();
 		// 1.校验请求参数合法性
-		this.validateRequestParams(paramsMap);
-		String timestampStr = request.getParameter(RequiredRequestParam.TIMESTAMP.getValue());
+		Map<String, String> paramsMap = this.validateRequestParams(request);
+		String timestampStr = paramsMap.get(RequiredRequestParam.TIMESTAMP.getValue());
         long timestamp = this.getTimestamp(timestampStr);
         // 2.校验请求时间合法性
         this.validateTimestamp(timestamp);
-        String signature = request.getParameter(RequiredRequestParam.SIGNATURE.getValue());
+        String signature = paramsMap.get(RequiredRequestParam.SIGNATURE.getValue());
         // 3.校验签名合法性
         this.validateSignature(signature, timestamp, paramsMap);
 		return true;
@@ -52,10 +52,17 @@ public class SignInterceptor extends HandlerInterceptorAdapter{
 	 * @param paramsMap
 	 * @author 黄智聪  2019年4月16日 上午11:12:36
 	 */
-	private void validateRequestParams(Map<?, ?> paramsMap) {
+	private Map<String, String> validateRequestParams(HttpServletRequest request) {
+		Map<String, String> paramsMap = new TreeMap<>();
+		Enumeration<String> paramNames = request.getParameterNames();
+		while (paramNames.hasMoreElements()) {
+			String paramName = paramNames.nextElement();
+			paramsMap.put(paramName, request.getParameter(paramName));
+		}
 		if(!RequiredRequestParam.containsRequiredRequestParam(paramsMap)) {
 			throw new ApiSignException(ApiSignErrorCode.API_SIGN_ERROR_MISSING_SIGNATURE_PARAM);
 		}
+		return paramsMap;
 	}
 	
 	/**
@@ -111,12 +118,12 @@ public class SignInterceptor extends HandlerInterceptorAdapter{
      * @author 黄智聪（13510946256）  2018年8月28日 下午2:22:33
      * @param timestamp 
      */
-    private void validateSignature(String signature, long timestamp, Map<?, ?> paramsMap) {
+    private void validateSignature(String signature, long timestamp, Map<String, String> paramsMap) {
         if (signature == null) {
             throw new ApiSignException(ApiSignErrorCode.API_SIGN_ERROR_MISSING_SIGNATURE_PARAM);
         }
         // 将paramsMap转换成TreeMap,使paramsMap的key有序排列
-        TreeMap<?, ?> sortedParams = new TreeMap<>(paramsMap);	
+        TreeMap<String, String> sortedParams = new TreeMap<>(paramsMap);	
         // 需要去除signature参数，去生成我方签名
         sortedParams.remove(RequiredRequestParam.SIGNATURE.getValue());
         // 我方生成的签名

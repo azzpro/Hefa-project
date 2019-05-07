@@ -5,7 +5,7 @@
  * 注意：本内容仅限于深圳市齐采科技服务有限公司内部传阅，禁止外泄以及用于其他的商业目的
  ******************************************************************************/
  
-package com.hefa.utils;
+package com.hefa.client.util;
 
 import java.util.TreeMap;
 

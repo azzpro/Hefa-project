@@ -53,7 +53,6 @@ public class SelectionController {
 	 */
 	@RequestMapping("addProductToShoppingCart")
 	public JsonResult<String> addProductToShoppingCart(AddToShoppingCartParam param){
-		param.setUserCode("2");// TODO
 		return selectionService.addProductToShoppingCart(param);
 	}
 	
