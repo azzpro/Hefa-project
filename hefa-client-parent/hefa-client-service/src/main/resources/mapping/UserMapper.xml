@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hefa.client.mapper.UserMapper">
+
+	<select id="getLoginUser" resultType="com.hefa.pojo.vo.LoginUserInfo">
+		SELECT
+			iu.id AS userCode,
+			iu.username AS username,
+			im.true_name AS trueName,
+			im.telephone AS telephone,
+			im.mobile AS mobile,
+			im.sex AS sex,
+			im.birthday AS birthday,
+			im.qq AS qq,
+			im.email AS email
+		FROM
+			iwebshop_user iu
+		LEFT JOIN iwebshop_member im ON iu.id = im.user_id
+		<where>
+			iu.username = #{username}
+			<if test="password != null and password!=''">
+				AND iu.password = #{password}
+			</if>
+		</where>
+	</select>
+
+
+
+
+
+</mapper>

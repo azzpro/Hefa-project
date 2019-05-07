@@ -1,40 +1,40 @@
 /*******************************************************************************
  * Project Key : CPPII
- * Create on 2019年4月15日 下午2:40:55
+ * Create on 2019年4月15日 下午2:10:57
  * Copyright (c) 2018. 爱智造.
  * 注意：本内容仅限于爱智造内部传阅，禁止外泄以及用于其他的商业目的
  ******************************************************************************/
  
-package com.hefa.client.controller;
+package com.hefa.client.api;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.hefa.client.service.UserService;
 import com.hefa.common.base.JsonResult;
 import com.hefa.pojo.bo.LoginParam;
 import com.hefa.pojo.vo.LoginUserInfo;
 
-/**
- * <P>TODO</P>
- * @version 1.0
- * @author 黄智聪  2019年4月15日 下午2:40:55
- */
-@RestController
-@RequestMapping("/hefa/api/client/member")
-public class UserController {
-	
-	@Autowired
-	private UserService userService;
 
-	@RequestMapping("/login")
-	public JsonResult<LoginUserInfo> login(LoginParam param) {
-		return userService.login(param);
-    }
+/**
+ * <P>用户业务</P>
+ * @version 1.0
+ * @author 黄智聪  2019年4月15日 下午2:10:57
+ */
+@FeignClient(name = "hefa-client-service")
+public interface UserService {
 	
+	/**
+	 * 
+	 * <p>合发登录接口</p>
+	 * @param param
+	 * @return
+	 * @author 黄智聪  2019年5月7日 下午4:32:36
+	 */
+	@RequestMapping("/hefa/api/client/member/login")
+    public JsonResult<LoginUserInfo> login(@RequestBody LoginParam param);
+    
 	/**
 	 * 
 	 * <p>
@@ -45,10 +45,8 @@ public class UserController {
 	 * @return
 	 * @author 黄智聪 2018年10月23日 下午3:49:33
 	 */
-	@RequestMapping("/loginAuth")
-	public JsonResult<String> loginAuth(@RequestBody LoginParam param) {
-		return userService.loginAuth(param);
-	}
+	@RequestMapping("/hefa/api/client/member/loginAuth")
+	public JsonResult<String> loginAuth(@RequestBody LoginParam param);
 	
 	/**
 	 * 
@@ -57,10 +55,8 @@ public class UserController {
 	 * @return
 	 * @author 黄智聪  2019年5月7日 下午5:58:37
 	 */
-	@RequestMapping("/getLoginUser")
-	public JsonResult<LoginUserInfo> getLoginUser(@RequestParam("username")String username) {
-		return userService.getLoginUser(username);
-	}
-	
+	@RequestMapping("/hefa/api/client/member/getLoginUser")
+	public JsonResult<LoginUserInfo> getLoginUser(@RequestParam("username")String username);
+
 }
 

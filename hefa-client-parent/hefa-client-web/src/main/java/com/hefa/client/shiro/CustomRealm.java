@@ -18,11 +18,11 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.hefa.client.api.UserService;
 import com.hefa.common.base.JsonResult;
-import com.hefa.common.errorcode.SystemErrorCode;
+import com.hefa.common.constants.SystemErrorCode;
 import com.hefa.common.exception.SuppressedException;
-import com.hefa.user.api.UserService;
-import com.hefa.user.pojo.bo.LoginParam;
+import com.hefa.pojo.bo.LoginParam;
 
 /**
  * <P>
@@ -48,9 +48,9 @@ public class CustomRealm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
 			throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-		String phoneNumber = token.getUsername();
+		String username = token.getUsername();
 		String password = new String((char[]) token.getCredentials());
-		LoginParam param = new LoginParam(phoneNumber, password);
+		LoginParam param = new LoginParam(username, password);
 		JsonResult<String> jr = userService.loginAuth(param);
 		if (jr.getCode() != SystemErrorCode.SUCCESS.getCode()) {
 			AuthenticationException authException = new AuthenticationException();

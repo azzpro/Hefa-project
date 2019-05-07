@@ -7,6 +7,11 @@
  
 package com.hefa.pojo.vo;
 
+import java.io.Serializable;
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 /**
@@ -16,10 +21,16 @@ import lombok.Data;
  */
 @Data
 public class LoginUserInfo {
-	
+	private String userCode;
 	private String username;
+	private String trueName;
+	private String telephone;
+	private String mobile;
+	private String sex;
+	private Date birthday;
+	private String qq;
+	private String email;
 	
-	private String gender;
-
+	private Serializable sessionId;
 }
 
