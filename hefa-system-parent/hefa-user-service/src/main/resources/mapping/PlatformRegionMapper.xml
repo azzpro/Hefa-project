@@ -43,7 +43,7 @@
   
   <select id="getRegionList" parameterType="com.hefa.user.pojo.bo.RegionUserParam" resultType="com.hefa.user.pojo.vo.RegionUserInfo">
   	select  CONCAT_WS('-',a.region_province,a.region_city,a.region_area) regionArea,a.region_code regionUserCode,
-  	DATE_FORMAT(a.region_creatime,'%Y-%m-%d') createTime,p.user_name regionUserName,pd.dept_name regionUserDept,a.id id
+  	DATE_FORMAT(a.region_creatime,'%Y-%m-%d') createTime,p.user_name regionUserName,pd.dept_name regionUserDept,a.id id,a.platfrom_user_code userCode
   	from platform_region a
   	left join platform_user p on a.platfrom_user_code = p.user_code
   	left join platform_dept pd on pd.id = p.dept_id
