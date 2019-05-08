@@ -27,6 +27,7 @@ public class LoginUserInfo {
 	private String telephone;
 	private String mobile;
 	private String sex;
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
 	private Date birthday;
 	private String qq;
 	private String email;

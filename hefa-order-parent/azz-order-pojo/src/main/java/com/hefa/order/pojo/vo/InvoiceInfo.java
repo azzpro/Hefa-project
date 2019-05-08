@@ -10,6 +10,8 @@ package com.hefa.order.pojo.vo;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 /**
@@ -22,6 +24,7 @@ public class InvoiceInfo {
 	
 	private String invoiceCode;
 	private BigDecimal amount;
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd hh:mm:ss")
 	private Date invoiceCreateTime;
 	private Byte invoiceStatus;
 	private String orderCode;

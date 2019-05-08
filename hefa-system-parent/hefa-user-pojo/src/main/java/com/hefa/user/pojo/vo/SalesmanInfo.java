@@ -9,6 +9,8 @@ package com.hefa.user.pojo.vo;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 /**
@@ -26,7 +28,7 @@ public class SalesmanInfo {
 	private String deptName;
 	
 	private String userName;
-	
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd hh:mm:ss")
 	private Date createTime;
 	
 	private Integer invitedUserCount;

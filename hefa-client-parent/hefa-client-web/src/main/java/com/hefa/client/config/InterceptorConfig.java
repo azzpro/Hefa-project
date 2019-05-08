@@ -20,9 +20,9 @@ import com.hefa.client.interceptor.SignInterceptor;
  * @version 1.0
  * @author 黄智聪  2018年10月15日 下午7:35:16
  */
-@Configuration
-public class InterceptorConfig extends WebMvcConfigurationSupport {
-
+//@Configuration
+public class InterceptorConfig /*extends WebMvcConfigurationSupport*/ {
+/*
 	@Bean
     public SignInterceptor getSignInterceptor() {
         return new SignInterceptor();
@@ -34,6 +34,6 @@ public class InterceptorConfig extends WebMvcConfigurationSupport {
         signInterceptor.addPathPatterns("/hefa/api/client/selection/addProductToShoppingCart");
         signInterceptor.excludePathPatterns("/actuator/health");
     }
-    
+    */
 }
 

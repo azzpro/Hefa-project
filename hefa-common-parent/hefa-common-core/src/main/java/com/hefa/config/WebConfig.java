@@ -7,12 +7,16 @@
  
 package com.hefa.config;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -53,7 +57,7 @@ public class WebConfig extends WebMvcConfigurationSupport {
         interceptor.addPathPatterns("/**");
     }
     
-    //@Bean
+    @Bean
     public HttpMessageConverters fastJsonHttpMessageConverters(){
         //1.需要定义一个convert转换消息的对象;
         FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
@@ -71,5 +75,6 @@ public class WebConfig extends WebMvcConfigurationSupport {
         return new HttpMessageConverters(converter);
 
     }
+    
 }
 

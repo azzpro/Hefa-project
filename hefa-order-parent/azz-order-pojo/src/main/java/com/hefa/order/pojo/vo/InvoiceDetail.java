@@ -11,6 +11,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 /**
@@ -23,9 +25,11 @@ public class InvoiceDetail {
 	
 	private String invoiceCode;
 	private BigDecimal amount;
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd hh:mm:ss")
 	private Date invoiceCreateTime;
 	private Byte invoiceStatus;
 	private String orderCode;
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd hh:mm:ss")
 	private Date orderTime;
 	private String remark;
 	private Byte invoiceType;
