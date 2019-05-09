@@ -33,6 +33,21 @@ public abstract class ClientConstants {
      * 登录用户session key
      */
     public static final String LOGIN_USER = "loginUser";
+
+    /**
+     * 登录用户token存入redis的key的前缀
+     */
+    public static final String LOGIN_USER_TOKEN_REDIS_PREFIX = "userToken_";
+    
+    /**
+     * 登录用户token存入redis的失效时间  3小时
+     */
+    public static final long LOGIN_USER_TOKEN_REDIS_HOURS_TIME_OUT = 3;
+    
+    /**
+     * des加密的key
+     */
+    public final static String DEFAULT_DES_KEY = "qlemc5GkRiPVXH88";
     
     /**
 	 * 

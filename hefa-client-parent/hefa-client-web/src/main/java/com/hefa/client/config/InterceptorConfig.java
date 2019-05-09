@@ -7,33 +7,47 @@
  
 package com.hefa.client.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import com.hefa.client.interceptor.SignInterceptor;
+import com.hefa.client.interceptor.TokenInterceptor;
 
 /**
  * <P>web相关配置</P>
  * @version 1.0
  * @author 黄智聪  2018年10月15日 下午7:35:16
  */
-//@Configuration
-public class InterceptorConfig /*extends WebMvcConfigurationSupport*/ {
-/*
+@Configuration
+public class InterceptorConfig extends WebMvcConfigurationSupport {
+	
+	@Autowired
+	private StringRedisTemplate redis;
+
 	@Bean
     public SignInterceptor getSignInterceptor() {
         return new SignInterceptor();
     }
 	
+	@Bean
+    public TokenInterceptor getTokenInterceptor() {
+        return new TokenInterceptor(redis);
+    }
+	
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+    	InterceptorRegistration tokenInterceptor = registry.addInterceptor(getTokenInterceptor());
+    	tokenInterceptor.addPathPatterns("/hefa/api/client/**");
+    	tokenInterceptor.excludePathPatterns("/hefa/api/client/member/login");
         InterceptorRegistration signInterceptor = registry.addInterceptor(getSignInterceptor());
         signInterceptor.addPathPatterns("/hefa/api/client/selection/addProductToShoppingCart");
         signInterceptor.excludePathPatterns("/actuator/health");
     }
-    */
+    
 }
 

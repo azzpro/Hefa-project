@@ -12,7 +12,8 @@
 			im.sex AS sex,
 			im.birthday AS birthday,
 			im.qq AS qq,
-			im.email AS email
+			im.email AS email,
+			now() as loginTime
 		FROM
 			iwebshop_user iu
 		LEFT JOIN iwebshop_member im ON iu.id = im.user_id

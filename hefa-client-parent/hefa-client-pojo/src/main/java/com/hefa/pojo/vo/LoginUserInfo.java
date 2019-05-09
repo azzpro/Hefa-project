@@ -7,7 +7,6 @@
  
 package com.hefa.pojo.vo;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -32,6 +31,7 @@ public class LoginUserInfo {
 	private String qq;
 	private String email;
 	
-	private Serializable sessionId;
+	private Date loginTime;
+	
 }
 

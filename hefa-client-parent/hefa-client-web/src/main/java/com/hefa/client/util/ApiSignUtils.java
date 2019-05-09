@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.hefa.common.errorcode.ApiSignErrorCode;
 import com.hefa.common.exception.ApiSignException;
+import com.hefa.utils.MD5Encrypt;
 
 /**
  * <P>Redis基础API签名工具类</P>

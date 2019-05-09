@@ -3,6 +3,11 @@ server:
     uri-encoding: UTF-8
   max-http-header-size: 4048576
 spring: 
+  redis:
+    database: 0
+    host: 192.168.1.222
+    port: 6379
+    password: AgPaYRedis6
   aop:
     proxy-target-class: true
   servlet:
@@ -18,8 +23,3 @@ hefa-user-service:
     MaxAutoRetriesNextServer: 0
     MaxAutoRetries: 0 
 
-    
-# shiro登录失效时间      
-shiro:
-  session:
-    timeout: 1800000

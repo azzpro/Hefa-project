@@ -28,6 +28,9 @@ public class LoginParam {
 
 	@NotBlank(message = "密码不允许为空")
 	private String password;
+	
+	@NotBlank(message = "缺少请求参数")
+	private String ipAddress;
 
 	public LoginParam(String username, String password) {
 		super();

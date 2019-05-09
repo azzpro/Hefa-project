@@ -33,21 +33,8 @@ public interface UserService {
 	 * @author 黄智聪  2019年5月7日 下午4:32:36
 	 */
 	@RequestMapping("/hefa/api/client/member/login")
-    public JsonResult<LoginUserInfo> login(@RequestBody LoginParam param);
+    public JsonResult<String> login(@RequestBody LoginParam param);
     
-	/**
-	 * 
-	 * <p>
-	 * 客户登录认证
-	 * </p>
-	 * 
-	 * @param param
-	 * @return
-	 * @author 黄智聪 2018年10月23日 下午3:49:33
-	 */
-	@RequestMapping("/hefa/api/client/member/loginAuth")
-	public JsonResult<String> loginAuth(@RequestBody LoginParam param);
-	
 	/**
 	 * 
 	 * <p>查询登录用户信息</p>

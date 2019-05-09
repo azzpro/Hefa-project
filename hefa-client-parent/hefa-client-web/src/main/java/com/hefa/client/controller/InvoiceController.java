@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hefa.client.util.WebUtils;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
 import com.hefa.order.api.client.ClientInvoiceService;
@@ -35,7 +36,7 @@ public class InvoiceController {
 	 */
 	@RequestMapping("/getInvoiceInfos")
 	public JsonResult<Pagination<InvoiceInfo>> getInvoiceInfos(SearchInvoiceInfoParam param){
-		param.setUserCode("2");
+		param.setUserCode(WebUtils.getLoginUser().getUserCode());
 		return invoiceService.getInvoiceInfos(param);
 	}
 	
@@ -60,8 +61,7 @@ public class InvoiceController {
 	 */
 	@RequestMapping("/invoiceApply")
 	public JsonResult<String> invoiceApply(ApplyInvoiceParam param){
-		// param.setUserCode(userCode);
-		param.setUserCode("2");
+		param.setUserCode(WebUtils.getLoginUser().getUserCode());
 		return invoiceService.invoiceApply(param);
 	}
 

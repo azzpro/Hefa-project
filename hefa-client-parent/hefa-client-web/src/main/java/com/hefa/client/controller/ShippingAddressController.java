@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hefa.client.api.ShippingAddressService;
+import com.hefa.client.util.WebUtils;
 import com.hefa.common.base.JsonResult;
 import com.hefa.pojo.bo.AddShippingAddressParam;
 import com.hefa.pojo.bo.DelShippingAddressParam;
@@ -30,8 +31,6 @@ import com.hefa.pojo.vo.ShippingAddress;
 @RequestMapping("/hefa/api/client/shippingAddress")
 public class ShippingAddressController {
 	
-	private String userCode = "2"; // TODO
-	
 	@Autowired
 	private ShippingAddressService shippingAddressService;
 	
@@ -44,7 +43,7 @@ public class ShippingAddressController {
 	 */
 	@RequestMapping("/getDefaultShippingAddress")
 	public JsonResult<ShippingAddress> getDefaultShippingAddress(){
-		return shippingAddressService.getDefaultShippingAddress(userCode);
+		return shippingAddressService.getDefaultShippingAddress(WebUtils.getLoginUser().getUserCode());
 	}
 	
 	/**
@@ -56,7 +55,7 @@ public class ShippingAddressController {
 	 */
 	@RequestMapping("/getShippingAddressList")
 	public JsonResult<List<ShippingAddress>> getShippingAddressList(){
-		return shippingAddressService.getShippingAddressList(userCode);
+		return shippingAddressService.getShippingAddressList(WebUtils.getLoginUser().getUserCode());
 	}
 	
 	/**
@@ -80,7 +79,7 @@ public class ShippingAddressController {
 	 */
 	@RequestMapping("/addShippingAddress")
 	public JsonResult<String> addShippingAddress(AddShippingAddressParam param){
-		param.setCreator(userCode);
+		param.setCreator(WebUtils.getLoginUser().getUserCode());
 		return shippingAddressService.addShippingAddress(param);
 	}
 	
@@ -93,7 +92,7 @@ public class ShippingAddressController {
 	 */
 	@RequestMapping("/editShippingAddress")
 	public JsonResult<String> editShippingAddress(EditShippingAddressParam param){
-		param.setModifier(userCode);
+		param.setModifier(WebUtils.getLoginUser().getUserCode());
 		return shippingAddressService.editShippingAddress(param);
 	}
 	
@@ -106,7 +105,7 @@ public class ShippingAddressController {
 	 */
 	@RequestMapping("/delShippingAddress")
 	public JsonResult<String> delShippingAddress(DelShippingAddressParam param){
-		param.setModifier(userCode);
+		param.setModifier(WebUtils.getLoginUser().getUserCode());
 		return shippingAddressService.delShippingAddress(param);
 	}
 	

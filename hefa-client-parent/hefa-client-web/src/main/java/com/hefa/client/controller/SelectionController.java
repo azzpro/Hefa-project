@@ -9,11 +9,14 @@ package com.hefa.client.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hefa.client.util.WebUtils;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
 import com.hefa.order.api.client.SelectionService;
@@ -53,6 +56,7 @@ public class SelectionController {
 	 */
 	@RequestMapping("addProductToShoppingCart")
 	public JsonResult<String> addProductToShoppingCart(AddToShoppingCartParam param){
+		param.setUserCode(WebUtils.getLoginUser().getUserCode());
 		return selectionService.addProductToShoppingCart(param);
 	}
 	
@@ -65,7 +69,7 @@ public class SelectionController {
 	 */
 	@RequestMapping("addSelectionRecordToShoppingCart")
 	public JsonResult<String> addSelectionRecordToShoppingCart(AddSelectionRecordToShoppingCartParam param){
-		param.setUserCode("2");// TODO
+		param.setUserCode(WebUtils.getLoginUser().getUserCode());
 		return selectionService.addSelectionRecordToShoppingCart(param);
 	}
 	
@@ -78,7 +82,7 @@ public class SelectionController {
 	 */
 	@RequestMapping("removeSelectionRecord")
 	public JsonResult<String> removeSelectionRecord(RemoveSelectionRecordParam param){
-		param.setUserCode("2");// TODO
+		param.setUserCode(WebUtils.getLoginUser().getUserCode());
 		return selectionService.removeSelectionRecord(param);
 	}
 	
@@ -91,7 +95,7 @@ public class SelectionController {
 	 */
 	@RequestMapping("getSelectionInfos")
 	public JsonResult<Pagination<SelectionProductInfo>> getSelectionInfos(SearchSelectionInfoParam param){
-		param.setUserCode("2");
+		param.setUserCode(WebUtils.getLoginUser().getUserCode());
 		return selectionService.getSelectionInfos(param);
 	}
 	
@@ -116,8 +120,7 @@ public class SelectionController {
 	 */
 	@RequestMapping("getShoppingCartInfos")
 	public JsonResult<List<ShoppingCartInfo>> getShoppingCartInfos(){
-		String userCode = "2";// TODO
-		return selectionService.getShoppingCartInfos(userCode);
+		return selectionService.getShoppingCartInfos(WebUtils.getLoginUser().getUserCode());
 	}
 	
 	/**
@@ -129,7 +132,7 @@ public class SelectionController {
 	 */
 	@RequestMapping("removeShoppingCartProduct")
 	public JsonResult<String> removeShoppingCartProduct(RemoveShoppingCartProductParam param){
-		param.setUserCode("2");// TODO
+		param.setUserCode(WebUtils.getLoginUser().getUserCode());
 		return selectionService.removeShoppingCartProduct(param);
 	}
 	
@@ -142,7 +145,7 @@ public class SelectionController {
 	 */
 	@RequestMapping("generateOrder")
 	public JsonResult<PayOrderInfo> generateOrder(GenerateOrderParam param){
-		param.setUserCode("2"); // TODO
+		param.setUserCode(WebUtils.getLoginUser().getUserCode());
 		return selectionService.generateOrder(param);
 	}
 	

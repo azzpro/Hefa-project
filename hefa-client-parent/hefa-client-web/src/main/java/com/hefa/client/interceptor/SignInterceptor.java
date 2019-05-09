@@ -25,7 +25,7 @@ import com.hefa.common.exception.ApiSignException;
 import com.hefa.utils.ApiSignUtils;
 
 /**
- * <P>TODO</P>
+ * <P>签名验证拦截器</P>
  * @version 1.0
  * @author 黄智聪  2019年4月15日 下午3:13:54
  */

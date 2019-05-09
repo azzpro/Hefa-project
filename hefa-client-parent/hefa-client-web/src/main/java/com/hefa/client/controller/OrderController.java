@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hefa.client.util.WebUtils;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
 import com.hefa.order.api.client.ClientOrderService;
@@ -39,7 +40,7 @@ public class OrderController {
 	 */
 	@RequestMapping("/getOrderInfos")
 	public JsonResult<Pagination<OrderInfo>> getOrderInfos(SearchOrderInfoParam param){
-		param.setUserCode("2"); //TODO
+		param.setUserCode(WebUtils.getLoginUser().getUserCode());
 		return orderService.getOrderInfos(param);
 	}
 	
