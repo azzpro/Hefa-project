@@ -14,4 +14,4 @@ spring:
 # shiro登录失效时间      
 shiro:
   session:
-    timeout: 1800000
+    timeout: 3600000

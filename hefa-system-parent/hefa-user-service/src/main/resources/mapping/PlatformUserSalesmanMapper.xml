@@ -161,7 +161,8 @@
 		pd.dept_name AS deptName,
 		pu.user_name AS userName,
 		pus.create_time AS createTime,
-		pus.invited_client_user_count invitedUserCount
+		pus.invited_client_user_count invitedUserCount,
+		pus.platform_user_code as platformUserCode
 	FROM
 		platform_user_salesman pus
 	JOIN platform_user pu ON pu.user_code = pus.platform_user_code

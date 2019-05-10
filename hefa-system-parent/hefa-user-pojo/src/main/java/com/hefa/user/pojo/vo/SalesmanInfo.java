@@ -27,6 +27,8 @@ public class SalesmanInfo {
 	
 	private String deptName;
 	
+	private String platformUserCode;
+	
 	private String userName;
 	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd hh:mm:ss")
 	private Date createTime;
