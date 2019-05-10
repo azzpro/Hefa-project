@@ -9,6 +9,7 @@ package com.hefa.client.interceptor;
 
 
 import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -21,6 +22,7 @@ import com.hefa.common.exception.ApiRequestException;
 import com.hefa.pojo.vo.LoginUserInfo;
 import com.hefa.utils.AesUtils;
 import com.hefa.utils.StringUtils;
+import org.apache.commons.codec.binary.Base64;
 /**
  * <P>校验用户token，用户校验是否登录失效</P>
  * @version 1.0
@@ -44,7 +46,9 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
 		}
 		try {
 			String ipAddress = request.getRemoteAddr();
-			String userInfoJsonStr = AesUtils.decrypt(token, ClientConstants.DEFAULT_DES_KEY);
+			// 解密顺序：先base64解密，得到AES加密的密文，再AES解密，得到用户信息
+			String decodeBase64Str = new String(Base64.decodeBase64(token.getBytes()));
+			String userInfoJsonStr = AesUtils.decrypt(decodeBase64Str, ClientConstants.DEFAULT_DES_KEY);
 			LoginUserInfo userInfo = JSONObject.parseObject(userInfoJsonStr, LoginUserInfo.class);
 			if(userInfo == null) {
 				throw new ApiRequestException(ApiRequestErrorCode.API_REQUEST_ERROR_ILLEGAL_REQUEST);

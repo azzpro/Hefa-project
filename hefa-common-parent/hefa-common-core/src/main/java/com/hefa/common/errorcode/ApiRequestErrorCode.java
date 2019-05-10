@@ -20,13 +20,13 @@ import com.hefa.common.base.BaseErrorCode;
 public class ApiRequestErrorCode extends BaseErrorCode {
 
 
-	public static final ApiRequestErrorCode API_REQUEST_ERROR_ILLEGAL_REQUEST = new ApiRequestErrorCode(50001, "非法请求");
+	public static final ApiRequestErrorCode API_REQUEST_ERROR_ILLEGAL_REQUEST = new ApiRequestErrorCode(70001, "非法请求");
 	
-	public static final ApiRequestErrorCode API_REQUEST_ERROR_NO_LOGIN = new ApiRequestErrorCode(50002, "用户未登录或登录已失效");
+	public static final ApiRequestErrorCode API_REQUEST_ERROR_NO_LOGIN = new ApiRequestErrorCode(70002, "用户未登录或登录已失效");
 	
-	public static final ApiRequestErrorCode API_REQUEST_ERROR_OTHER_PLACE_LOGIN = new ApiRequestErrorCode(50003, "账号已在其他地方登录，被迫下线");
+	public static final ApiRequestErrorCode API_REQUEST_ERROR_OTHER_PLACE_LOGIN = new ApiRequestErrorCode(70003, "账号已在其他地方登录，被迫下线");
 
-	public static final ApiRequestErrorCode API_REQUEST_ERROR_LOGIN_ERROR = new ApiRequestErrorCode(50004, "登录认证出错");
+	public static final ApiRequestErrorCode API_REQUEST_ERROR_LOGIN_ERROR = new ApiRequestErrorCode(70004, "登录认证出错");
 
 	public ApiRequestErrorCode(int code, String message) {
 		super(code, message);

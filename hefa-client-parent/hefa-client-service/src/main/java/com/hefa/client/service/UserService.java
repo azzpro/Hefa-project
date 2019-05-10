@@ -9,6 +9,7 @@ package com.hefa.client.service;
 
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -65,7 +66,8 @@ public class UserService {
 		String userInfoJson = JSONObject.toJSONString(loginUser);
 		String userToken = null;
 		try {
-			userToken = AesUtils.encrypt(userInfoJson, ClientConstants.DEFAULT_DES_KEY);
+			// userToken加密方式:先用AES加密，然后再用base64编码一次，这样可以去除AES密文中的特殊字符
+			userToken = Base64.encodeBase64String(AesUtils.encrypt(userInfoJson, ClientConstants.DEFAULT_DES_KEY).getBytes());
 			String userCode = loginUser.getUserCode();
 			// 客户端用户地址
 			String currentIpAddress = param.getIpAddress();

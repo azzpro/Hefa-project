@@ -18,22 +18,22 @@ public class ApiSignErrorCode extends BaseErrorCode {
 	/**
 	 * 无效签名
 	 */
-	public static final ApiSignErrorCode API_SIGN_ERROR_INVALID_SIGNATURE = new ApiSignErrorCode(40000, "无效签名");
+	public static final ApiSignErrorCode API_SIGN_ERROR_INVALID_SIGNATURE = new ApiSignErrorCode(60000, "无效签名");
 	
 	/**
 	 * 接口调用已超时
 	 */
-	public static final ApiSignErrorCode API_SIGN_ERROR_REQUEST_TIMEOUT = new ApiSignErrorCode(40001, "接口调用已超时");
+	public static final ApiSignErrorCode API_SIGN_ERROR_REQUEST_TIMEOUT = new ApiSignErrorCode(60001, "接口调用已超时");
 	
 	/**
 	 * 无效时间戳
 	 */
-	public static final ApiSignErrorCode API_SIGN_ERROR_INVALID_TIMESTAMP = new ApiSignErrorCode(40002, "无效时间戳");
+	public static final ApiSignErrorCode API_SIGN_ERROR_INVALID_TIMESTAMP = new ApiSignErrorCode(60002, "无效时间戳");
 	
 	/**
 	 * 缺少验签参数
 	 */
-	public static final ApiSignErrorCode API_SIGN_ERROR_MISSING_SIGNATURE_PARAM = new ApiSignErrorCode(40003, "缺少验签参数");
+	public static final ApiSignErrorCode API_SIGN_ERROR_MISSING_SIGNATURE_PARAM = new ApiSignErrorCode(60003, "缺少验签参数");
     
 	public ApiSignErrorCode(int code, String message) {
         super(code, message);

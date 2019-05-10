@@ -19,7 +19,7 @@ public class BusinessErrorCode extends BaseErrorCode{
 	/**
 	 * [40001]业务逻辑异常
 	 */
-	public static final BusinessErrorCode BUSINESS_ERROR_LOGIC_ABNORMAL = new BusinessErrorCode(40001, "业务逻辑异常");
+	public static final BusinessErrorCode BUSINESS_ERROR_LOGIC_ABNORMAL = new BusinessErrorCode(50001, "业务逻辑异常");
 
 	public BusinessErrorCode(int code, String message) {
 		super(code, message);

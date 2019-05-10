@@ -9,6 +9,7 @@ package com.hefa.client.util;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -38,7 +39,9 @@ public class WebUtils {
 	public static LoginUserInfo getLoginUser() {
 		HttpServletRequest request = getHttpServletRequest();
 		String token = request.getHeader("token");
-		String userInfoJsonStr = AesUtils.decrypt(token, ClientConstants.DEFAULT_DES_KEY);;
+		// 解密顺序：先base64解密，得到AES加密的密文，再AES解密，得到用户信息
+		String decodeBase64Str = new String(Base64.decodeBase64(token.getBytes()));
+		String userInfoJsonStr = AesUtils.decrypt(decodeBase64Str, ClientConstants.DEFAULT_DES_KEY);
 		LoginUserInfo userInfo = JSONObject.parseObject(userInfoJsonStr, LoginUserInfo.class);
 		return userInfo;
 	}
