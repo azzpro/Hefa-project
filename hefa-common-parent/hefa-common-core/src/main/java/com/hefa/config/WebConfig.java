@@ -34,7 +34,7 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
  * @version 1.0
  * @author 黄智聪  2018年10月15日 下午7:35:16
  */
-@Configuration
+//@Configuration
 public class WebConfig extends WebMvcConfigurationSupport {
 
 	@Bean

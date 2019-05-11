@@ -19,6 +19,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.hefa.common.constants.ApiRequestConstants;
+import com.hefa.common.constants.ClientConstants;
 import com.hefa.common.constants.ApiRequestConstants.RequiredRequestParam;
 import com.hefa.common.errorcode.ApiSignErrorCode;
 import com.hefa.common.exception.ApiSignException;
@@ -34,6 +35,9 @@ public class SignInterceptor extends HandlerInterceptorAdapter{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		response.setHeader("access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "*");
+		response.setHeader("Access-Control-Allow-Headers", "*");
 		// 1.校验请求参数合法性
 		Map<String, String> paramsMap = this.validateRequestParams(request);
 		String timestampStr = paramsMap.get(RequiredRequestParam.TIMESTAMP.getValue());
@@ -124,8 +128,9 @@ public class SignInterceptor extends HandlerInterceptorAdapter{
         }
         // 将paramsMap转换成TreeMap,使paramsMap的key有序排列
         TreeMap<String, String> sortedParams = new TreeMap<>(paramsMap);	
-        // 需要去除signature参数，去生成我方签名
+        // 需要去除signature参数以及token，去生成我方签名
         sortedParams.remove(RequiredRequestParam.SIGNATURE.getValue());
+        sortedParams.remove(ClientConstants.REQUEST_HEADER_USER_TOKEN_NAME);
         // 我方生成的签名
         String selfSign = ApiSignUtils.getSign(sortedParams, timestamp, ApiRequestConstants.API_KEY);
         if (!signature.equals(selfSign)) {

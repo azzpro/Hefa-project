@@ -9,9 +9,9 @@ package com.hefa.client.interceptor;
 
 
 import javax.servlet.http.HttpServletRequest;
-
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -22,7 +22,6 @@ import com.hefa.common.exception.ApiRequestException;
 import com.hefa.pojo.vo.LoginUserInfo;
 import com.hefa.utils.AesUtils;
 import com.hefa.utils.StringUtils;
-import org.apache.commons.codec.binary.Base64;
 /**
  * <P>校验用户token，用户校验是否登录失效</P>
  * @version 1.0
@@ -40,7 +39,11 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		String token = request.getHeader(ClientConstants.REQUEST_HEADER_USER_TOKEN_NAME);
+		response.setHeader("access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "*");
+		response.setHeader("Access-Control-Allow-Headers", "*");
+		String token = request.getParameter(ClientConstants.REQUEST_HEADER_USER_TOKEN_NAME);
+		//String token = request.getHeader(ClientConstants.REQUEST_HEADER_USER_TOKEN_NAME);
 		if(StringUtils.isBlank(token)) {
 			throw new ApiRequestException(ApiRequestErrorCode.API_REQUEST_ERROR_ILLEGAL_REQUEST);
 		}
@@ -48,7 +51,7 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
 			String ipAddress = request.getRemoteAddr();
 			// 解密顺序：先base64解密，得到AES加密的密文，再AES解密，得到用户信息
 			String decodeBase64Str = new String(Base64.decodeBase64(token.getBytes()));
-			String userInfoJsonStr = AesUtils.decrypt(decodeBase64Str, ClientConstants.DEFAULT_DES_KEY);
+			String userInfoJsonStr = AesUtils.decrypt(decodeBase64Str, ClientConstants.DEFAULT_ASE_KEY);
 			LoginUserInfo userInfo = JSONObject.parseObject(userInfoJsonStr, LoginUserInfo.class);
 			if(userInfo == null) {
 				throw new ApiRequestException(ApiRequestErrorCode.API_REQUEST_ERROR_ILLEGAL_REQUEST);

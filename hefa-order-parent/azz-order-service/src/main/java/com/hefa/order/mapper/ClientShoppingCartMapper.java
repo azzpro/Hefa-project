@@ -24,6 +24,14 @@ public interface ClientShoppingCartMapper {
 
     int updateByPrimaryKey(ClientShoppingCart record);
 
+    /**
+     * 
+     * <p>用户是否存在选型记录</p>
+     * @param selectionRecordCode
+     * @param userCode
+     * @return
+     * @author 黄智聪  2019年5月11日 下午4:29:44
+     */
 	ClientShoppingCart selectBySelectionRecordCodeAndClientUserCode(@Param("selectionRecordCode")String selectionRecordCode, @Param("userCode")String userCode);
 
 	/**
@@ -65,10 +73,10 @@ public interface ClientShoppingCartMapper {
     
     /**
      * 
-     * <p>购物车中是否存在相同的产品</p>
+     * <p>用户购物车中是否存在相同的产品</p>
      * @param selectionRecordCode
      * @return
      * @author 黄智聪  2019年5月6日 下午3:30:36
      */
-    Long existSameProduct(String selectionRecordCode);
+    Long existSameProduct(@Param("selectionRecordCode") String selectionRecordCode,@Param("userCode") String userCode);
 }

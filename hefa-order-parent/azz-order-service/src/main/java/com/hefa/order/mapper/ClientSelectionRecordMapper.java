@@ -3,6 +3,7 @@ package com.hefa.order.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.hefa.order.pojo.ClientSelectionRecord;
 import com.hefa.order.pojo.bo.SearchSelectionInfoParam;
@@ -35,7 +36,7 @@ public interface ClientSelectionRecordMapper {
      * @return
      * @author 黄智聪  2019年4月30日 下午3:56:01
      */
-    ProductInfo getProductInfoByProductCode(String productCode);
+    ProductInfo getProductInfoByProductCode(@Param("productCode")String productCode, @Param("userCode") String userCode);
     
     /**
      * 

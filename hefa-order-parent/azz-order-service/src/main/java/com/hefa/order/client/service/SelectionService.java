@@ -99,7 +99,7 @@ public class SelectionService {
 		if(count == 0 ) {
 			throw new ReturnDataException("用户记录不存在");
 		}
-		ProductInfo productInfo = clientSelectionRecordMapper.getProductInfoByProductCode(param.getProductCode());
+		ProductInfo productInfo = clientSelectionRecordMapper.getProductInfoByProductCode(param.getProductCode(), param.getUserCode());
 		if(productInfo == null) {
 			throw new ReturnDataException("所选产品记录不存在");
 		}
@@ -130,7 +130,7 @@ public class SelectionService {
 		}
 		// 2.加入购物车
 		// 购物车中是否存在相同的产品
-		Long shoppingCartId = clientShoppingCartMapper.existSameProduct(selectionRecordCode);
+		Long shoppingCartId = clientShoppingCartMapper.existSameProduct(selectionRecordCode, param.getUserCode());
 		if(shoppingCartId != null) {// 若存在，则直接更新购物车中selectionRecordCode为最新的
 			ClientShoppingCart shoppingCartRecord = ClientShoppingCart.builder()
 					.modifyTime(nowDate)

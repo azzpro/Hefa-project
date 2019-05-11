@@ -232,7 +232,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   
-  <select id="getProductInfoByProductCode" parameterType="string" resultType="com.hefa.order.pojo.vo.ProductInfo">
+  <select id="getProductInfoByProductCode" resultType="com.hefa.order.pojo.vo.ProductInfo">
   	SELECT
 		ig.id AS productCode,
 		ig.goods_no AS productModelNo,
@@ -263,7 +263,7 @@
 		csr.selection_record_code as selectionRecordCode
 	FROM
 		iwebshop_goods ig
-	LEFT JOIN client_selection_record csr on ig.id = csr.product_code and csr.status = 1
+	LEFT JOIN client_selection_record csr on ig.id = csr.product_code and csr.status = 1 and csr.user_code = #{userCode}
 	WHERE
 		ig.id = #{productCode}
   </select>

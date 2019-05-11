@@ -186,18 +186,21 @@
     where user_code= #{userCode}
   </delete>
   
-  <select id="existSameProduct" parameterType="string" resultType="long">
+  <select id="existSameProduct" resultType="long">
 	SELECT
 		csc.id
 	FROM
 		client_shopping_cart csc
 	JOIN client_selection_record csr ON csr.selection_record_code = csc.selection_record_code
-	where csr.product_code = (
+	where 
+		csr.user_code = #{userCode}
+	and csr.product_code = (
 		SELECT
 			csr.product_code
 		FROM
 			client_selection_record csr 
-		where csr.`status` = 1 and csr.selection_record_code = #{selectionRecordCode}
+		where csr.`status` = 1 
+		and csr.selection_record_code = #{selectionRecordCode}
 	)
   </select>
   

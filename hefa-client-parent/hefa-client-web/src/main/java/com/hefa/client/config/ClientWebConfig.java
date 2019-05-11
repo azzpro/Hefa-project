@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -31,14 +30,19 @@ public class ClientWebConfig extends WebMvcConfigurationSupport {
 	@Autowired
 	private StringRedisTemplate redis;
 	
-	@Bean
-    public SignInterceptor getSignInterceptor() {
-        return new SignInterceptor();
+	@Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**");
     }
 	
 	@Bean
-    public TokenInterceptor getTokenInterceptor() {
-        return new TokenInterceptor(redis);
+	public TokenInterceptor getTokenInterceptor() {
+		return new TokenInterceptor(redis);
+	}
+	
+	@Bean
+    public SignInterceptor getSignInterceptor() {
+        return new SignInterceptor();
     }
 	
     @Override
@@ -46,19 +50,12 @@ public class ClientWebConfig extends WebMvcConfigurationSupport {
     	InterceptorRegistration tokenInterceptor = registry.addInterceptor(getTokenInterceptor());
     	tokenInterceptor.addPathPatterns("/hefa/api/client/**");
     	tokenInterceptor.excludePathPatterns("/hefa/api/client/member/login");
-        InterceptorRegistration signInterceptor = registry.addInterceptor(getSignInterceptor());
+    	
+    	
+    	//tokenInterceptor.excludePathPatterns("/hefa/api/client/member/getUserInfo");
+    	InterceptorRegistration signInterceptor = registry.addInterceptor(getSignInterceptor());
         signInterceptor.addPathPatterns("/hefa/api/client/selection/addProductToShoppingCart");
         signInterceptor.excludePathPatterns("/actuator/health");
-    }
-    
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedHeaders(CorsConfiguration.ALL)
-                .allowedMethods(CorsConfiguration.ALL)
-                .allowCredentials(true)
-                .allowedOrigins(CorsConfiguration.ALL);
-        super.addCorsMappings(registry);
     }
     
 }

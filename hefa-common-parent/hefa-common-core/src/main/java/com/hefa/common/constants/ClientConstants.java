@@ -39,7 +39,7 @@ public abstract class ClientConstants {
      */
     public static final String LOGIN_USER_TOKEN_REDIS_PREFIX = "userToken_";
     
-    public static final String REQUEST_HEADER_USER_TOKEN_NAME = "token";
+    public static final String REQUEST_HEADER_USER_TOKEN_NAME = "ut";
     
     /**
      * 登录用户token存入redis的失效时间  3小时
@@ -47,9 +47,9 @@ public abstract class ClientConstants {
     public static final long LOGIN_USER_TOKEN_REDIS_HOURS_TIME_OUT = 3;
     
     /**
-     * des加密的key
+     * ASE加密的key
      */
-    public final static String DEFAULT_DES_KEY = "qlemc5GkRiPVXH88";
+    public final static String DEFAULT_ASE_KEY = "qlemc5GkRiPVXH88";
     
     /**
 	 * 

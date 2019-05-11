@@ -67,7 +67,7 @@ public class UserService {
 		String userToken = null;
 		try {
 			// userToken加密方式:先用AES加密，然后再用base64编码一次，这样可以去除AES密文中的特殊字符
-			userToken = Base64.encodeBase64String(AesUtils.encrypt(userInfoJson, ClientConstants.DEFAULT_DES_KEY).getBytes());
+			userToken = Base64.encodeBase64String(AesUtils.encrypt(userInfoJson, ClientConstants.DEFAULT_ASE_KEY).getBytes());
 			String userCode = loginUser.getUserCode();
 			// 客户端用户地址
 			String currentIpAddress = param.getIpAddress();
@@ -86,7 +86,7 @@ public class UserService {
 			e.printStackTrace();
 			throw new ApiRequestException(ApiRequestErrorCode.API_REQUEST_ERROR_LOGIN_ERROR, "请重试");
 		}
-		System.out.println("用户token:" + userToken);
+		//System.out.println("用户token:" + userToken);
 		return JsonResult.successJsonResult(userToken);
     }
     
