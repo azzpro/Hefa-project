@@ -1,5 +1,6 @@
 package com.hefa.client.controller;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,6 +9,8 @@ import com.hefa.client.api.UserService;
 import com.hefa.client.util.WebUtils;
 import com.hefa.common.base.JsonResult;
 import com.hefa.pojo.bo.LoginParam;
+import com.hefa.pojo.vo.LoginUserInfo;
+import com.hefa.pojo.vo.UserInfo;
 import com.hefa.user.api.MemberUserService;
 import com.hefa.user.pojo.bo.CheckVerificationCodeParam;
 import com.hefa.user.pojo.bo.UpdataUserPasswd;
@@ -39,6 +42,21 @@ public class IwebshopUserController {
 		param.setIpAddress(WebUtils.getHttpServletRequest().getRemoteAddr());
 		JSR303ValidateUtils.validateInputParam(param);
 		return userService.login(param);
+	}
+	
+	/**
+	 * 
+	 * <p>获取用户信息</p>
+	 * @return
+	 * @author 黄智聪  2019年5月11日 上午10:20:26
+	 */
+	@RequestMapping(value = "/getUserInfo")
+	public JsonResult<UserInfo> getUserInfo(){
+		LoginUserInfo loginUserInfo = WebUtils.getLoginUser();
+		UserInfo userInfo = new UserInfo();
+		BeanUtils.copyProperties(loginUserInfo, userInfo);
+		// 该用户信息不包含用户登录时间
+		return JsonResult.successJsonResult(userInfo);
 	}
 	
 	/**

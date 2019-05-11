@@ -20,6 +20,8 @@ public interface PlatformUserSalesmanMapper {
     PlatformUserSalesman selectByPrimaryKey(Long id);
 
     int updateByPrimaryKeySelective(PlatformUserSalesman record);
+    
+    int updateByPlatformUserCode(PlatformUserSalesman record);
 
     int updateByPrimaryKey(PlatformUserSalesman record);
     

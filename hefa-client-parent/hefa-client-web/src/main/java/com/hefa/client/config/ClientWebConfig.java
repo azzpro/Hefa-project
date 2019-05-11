@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -24,11 +26,11 @@ import com.hefa.client.interceptor.TokenInterceptor;
  * @author 黄智聪  2018年10月15日 下午7:35:16
  */
 @Configuration
-public class InterceptorConfig extends WebMvcConfigurationSupport {
+public class ClientWebConfig extends WebMvcConfigurationSupport {
 	
 	@Autowired
 	private StringRedisTemplate redis;
-
+	
 	@Bean
     public SignInterceptor getSignInterceptor() {
         return new SignInterceptor();
@@ -47,6 +49,16 @@ public class InterceptorConfig extends WebMvcConfigurationSupport {
         InterceptorRegistration signInterceptor = registry.addInterceptor(getSignInterceptor());
         signInterceptor.addPathPatterns("/hefa/api/client/selection/addProductToShoppingCart");
         signInterceptor.excludePathPatterns("/actuator/health");
+    }
+    
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedHeaders(CorsConfiguration.ALL)
+                .allowedMethods(CorsConfiguration.ALL)
+                .allowCredentials(true)
+                .allowedOrigins(CorsConfiguration.ALL);
+        super.addCorsMappings(registry);
     }
     
 }

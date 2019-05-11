@@ -28,6 +28,6 @@ public class SearchCommissionOrderInfoParam extends QueryPage{
 	private String orderEndTime;
 	
 	private String searchInput;
-
+	
 }
 

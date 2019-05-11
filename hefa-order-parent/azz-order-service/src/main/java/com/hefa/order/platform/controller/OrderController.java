@@ -1,5 +1,7 @@
 package com.hefa.order.platform.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import com.hefa.order.pojo.bo.ConfirmDeliveryParam;
 import com.hefa.order.pojo.bo.SearchCommissionOrderInfoParam;
 import com.hefa.order.pojo.bo.SearchOrderInfoParam;
 import com.hefa.order.pojo.vo.CommissionOrderInfo;
+import com.hefa.order.pojo.vo.ExportOrderInfo;
 import com.hefa.order.pojo.vo.OrderDetail;
 import com.hefa.order.pojo.vo.OrderInfo;
 
@@ -85,7 +88,7 @@ public class OrderController {
 	 * @author 黄智聪  2019年4月24日 下午4:46:23
 	 */
 	@RequestMapping("/exportCommissionOrder")
-	public JsonResult<String> exportCommissionOrder(){
-		return orderService.exportCommissionOrder();
+	public List<ExportOrderInfo> exportCommissionOrder(@RequestBody SearchCommissionOrderInfoParam param){
+		return orderService.exportCommissionOrder(param);
 	}
 }

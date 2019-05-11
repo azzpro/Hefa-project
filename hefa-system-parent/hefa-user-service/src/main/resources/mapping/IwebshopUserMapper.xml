@@ -32,7 +32,7 @@
     <result column="email"  property="email" />
   </resultMap> 
   
-  <select id="countUserById" parameterType="java.lang.Integer" resultType="int">
+  <select id="countUserById" parameterType="string" resultType="int">
   	select count(1) from iwebshop_user where id = #{id}
   </select>
   

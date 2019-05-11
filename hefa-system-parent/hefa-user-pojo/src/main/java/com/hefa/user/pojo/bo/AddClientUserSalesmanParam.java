@@ -22,9 +22,9 @@ import lombok.Data;
 public class AddClientUserSalesmanParam {
 	
 	@NotNull(message = "会员编码不允许为空")
-	private Integer userCode;
+	private String userCode;
 	
-	@NotBlank(message = "会员编码不允许为空")
+	@NotBlank(message = "业务员编码不允许为空")
 	private String salesmanCode;
 	
 	private String creator;

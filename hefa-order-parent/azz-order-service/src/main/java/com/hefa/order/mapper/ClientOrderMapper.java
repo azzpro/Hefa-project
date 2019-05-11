@@ -8,6 +8,7 @@ import com.hefa.order.pojo.ClientOrder;
 import com.hefa.order.pojo.bo.SearchCommissionOrderInfoParam;
 import com.hefa.order.pojo.bo.SearchOrderInfoParam;
 import com.hefa.order.pojo.vo.CommissionOrderInfo;
+import com.hefa.order.pojo.vo.ExportOrderInfo;
 import com.hefa.order.pojo.vo.OrderInfo;
 import com.hefa.order.pojo.vo.ShippingAddressInfo;
 
@@ -80,4 +81,13 @@ public interface ClientOrderMapper {
      * @author 黄智聪  2018年11月13日 上午11:06:57
      */
     List<String> getSixHoursNotPaidOrderCodes();
+    
+    /**
+     * 
+     * <p>分佣导出订单信息</p>
+     * @param param
+     * @return
+     * @author 黄智聪  2019年5月10日 下午3:56:28
+     */
+    List<ExportOrderInfo> getExportOrderInfos(SearchCommissionOrderInfoParam param);
 }

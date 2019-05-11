@@ -144,7 +144,9 @@
 		im.mobile as mobile,
 		cus.create_time AS createTime,
 		pu.user_name as salesman,
-		IFNULL(t.orderCount, 0) AS orderCount
+		IFNULL(t.orderCount, 0) AS orderCount,
+		cus.user_code as userCode,
+		cus.salesman_code as salesmanCode
 	FROM
 		iwebshop_user iu
 	JOIN iwebshop_member im ON iu.id = im.user_id
@@ -177,6 +179,18 @@
 	</where>	
 	ORDER BY
 		cus.create_time DESC
+  </select>
+  
+  <select id="getPlatformUserCodeBySalesmanCode" parameterType="string" resultType="com.hefa.user.pojo.vo.InvitedUserCount">
+  	SELECT
+		pus.platform_user_code AS platformUserCode,
+		count(1) as invitedUserCount
+	FROM
+		client_user_salesman cus
+	JOIN platform_user_salesman pus ON pus.salesman_code = cus.salesman_code
+  	WHERE 
+  		pus.salesman_code = #{salesmanCode}
+  	group by pus.platform_user_code
   </select>
   
 </mapper>

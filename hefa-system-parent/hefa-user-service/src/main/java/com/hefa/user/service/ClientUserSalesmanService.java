@@ -23,9 +23,11 @@ import com.hefa.user.mapper.ClientUserSalesmanMapper;
 import com.hefa.user.mapper.MemberUserMapper;
 import com.hefa.user.mapper.PlatformUserSalesmanMapper;
 import com.hefa.user.pojo.ClientUserSalesman;
+import com.hefa.user.pojo.PlatformUserSalesman;
 import com.hefa.user.pojo.bo.AddClientUserSalesmanParam;
 import com.hefa.user.pojo.bo.EditClientUserSalesmanParam;
 import com.hefa.user.pojo.bo.SearchInvitedUserInfoParam;
+import com.hefa.user.pojo.vo.InvitedUserCount;
 import com.hefa.user.pojo.vo.InvitedUserInfo;
 import com.hefa.utils.JSR303ValidateUtils;
 
@@ -69,14 +71,23 @@ public class ClientUserSalesmanService {
 		if(count > 0) {
 			throw new ReturnDataException("会员已为邀请成员，请去变更关联的业务员信息");
 		}
+		Date nowDate = new Date();
 		ClientUserSalesman record = ClientUserSalesman.builder()
-				.createTime(new Date())
+				.createTime(nowDate)
 				.creator(param.getCreator())
 				.salesmanCode(param.getSalesmanCode())
 				.userCode(param.getUserCode() + "")
 				.build();
 		clientUserSalesmanMapper.insertSelective(record);
-		
+		// 更新业务人员的邀请会员人数
+		InvitedUserCount invitedUserCount = clientUserSalesmanMapper.getPlatformUserCodeBySalesmanCode(param.getSalesmanCode());
+		PlatformUserSalesman platformUserSalesmanRecord = PlatformUserSalesman.builder()
+				.modifier(param.getCreator())
+				.modifyTime(nowDate)
+				.platformUserCode(invitedUserCount.getPlatformUserCode())
+				.invitedClientUserCount(invitedUserCount.getInvitedUserCount())
+				.build();
+		platformUserSalesmanMapper.updateByPlatformUserCode(platformUserSalesmanRecord);
 		return JsonResult.successJsonResult();
 	}
 	

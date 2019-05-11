@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.hefa.user.pojo.ClientUserSalesman;
 import com.hefa.user.pojo.bo.SearchInvitedUserInfoParam;
+import com.hefa.user.pojo.vo.InvitedUserCount;
 import com.hefa.user.pojo.vo.InvitedUserInfo;
 
 @Mapper
@@ -48,5 +49,14 @@ public interface ClientUserSalesmanMapper {
      * @author 黄智聪  2019年4月24日 下午4:08:42
      */
     List<InvitedUserInfo> getInvitedUserInfos(SearchInvitedUserInfoParam param);
+    
+    /**
+     * 
+     * <p>根据业务员编码查询所属平台成员编码</p>
+     * @param salesmanCode
+     * @return
+     * @author 黄智聪  2019年5月10日 下午3:07:44
+     */
+    InvitedUserCount getPlatformUserCodeBySalesmanCode(String salesmanCode);
     
 }

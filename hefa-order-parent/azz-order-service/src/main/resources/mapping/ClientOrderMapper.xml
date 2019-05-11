@@ -351,7 +351,10 @@
 			and co.create_time &lt;= #{orderEndTime}
 		</if>
 		<if test="searchInput != null and searchInput != ''">
-			and co.order_code = #{searchInput}
+			and (
+					co.order_code = #{searchInput} 
+				or co.user_code = #{searchInput}
+			)
 		</if>
 	</where>
   </select>
@@ -453,6 +456,42 @@
 		co. STATUS != 0
 	AND co.order_status = 1
 	AND DATE_ADD(co.create_time,INTERVAL 6 HOUR)  &lt; NOW()
+  </select>
+  
+  <select id="getExportOrderInfos" parameterType="com.hefa.order.pojo.bo.SearchCommissionOrderInfoParam" resultType="com.hefa.order.pojo.vo.ExportOrderInfo">
+    SELECT
+		co.order_code AS orderCode,
+		co.grand_total AS grandTotal,
+		date_format(
+			co.create_time,
+			'%Y-%m-%d %T'
+		) AS orderTime,
+		pu.user_name AS salesman,
+		pd.dept_name AS deptName,
+		iu.username as username
+	FROM
+		client_order co
+	JOIN platform_user_salesman pus ON co.salesman_code = pus.salesman_code
+	JOIN platform_user pu ON pu.user_code = pus.platform_user_code
+	JOIN IWEBSHOP_USER iu on iu.id = co.user_code
+	LEFT JOIN platform_dept pd ON pd.id = pu.dept_id
+	<where>
+		co.`status` != 0
+		<if test="orderStartTime != null and orderStartTime != ''">
+			and co.create_time >= #{orderStartTime}
+		</if>
+		<if test="orderEndTime != null and orderEndTime != ''">
+			and co.create_time &lt;= #{orderEndTime}
+		</if>
+		<if test="searchInput != null and searchInput != ''">
+			and (
+					pu.user_name LIKE CONCAT('%', #{searchInput}, '%')
+				or	co.order_code = #{searchInput}
+			)
+		</if>
+	</where>
+	ORDER BY
+		co.create_time DESC
   </select>
   
 </mapper>

@@ -37,6 +37,7 @@ import com.hefa.order.pojo.bo.ConfirmDeliveryParam;
 import com.hefa.order.pojo.bo.SearchCommissionOrderInfoParam;
 import com.hefa.order.pojo.bo.SearchOrderInfoParam;
 import com.hefa.order.pojo.vo.CommissionOrderInfo;
+import com.hefa.order.pojo.vo.ExportOrderInfo;
 import com.hefa.order.pojo.vo.OrderDetail;
 import com.hefa.order.pojo.vo.OrderInfo;
 import com.hefa.order.pojo.vo.OrderItemInfo;
@@ -197,8 +198,10 @@ public class OrderService {
 	 * @return
 	 * @author 黄智聪  2019年4月24日 下午4:46:23
 	 */
-	public JsonResult<String> exportCommissionOrder(){
-		return JsonResult.successJsonResult();
+	public List<ExportOrderInfo> exportCommissionOrder(@RequestBody SearchCommissionOrderInfoParam param) {
+		// 根据条件查询订单列表信息
+		List<ExportOrderInfo> orderInfos = clientOrderMapper.getExportOrderInfos(param);
+		return orderInfos;
 	}
 	
 	/**

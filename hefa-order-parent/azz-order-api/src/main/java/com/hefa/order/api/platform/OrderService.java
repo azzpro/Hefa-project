@@ -7,6 +7,8 @@
  
 package com.hefa.order.api.platform;
 
+import java.util.List;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,7 @@ import com.hefa.order.pojo.bo.ConfirmDeliveryParam;
 import com.hefa.order.pojo.bo.SearchCommissionOrderInfoParam;
 import com.hefa.order.pojo.bo.SearchOrderInfoParam;
 import com.hefa.order.pojo.vo.CommissionOrderInfo;
+import com.hefa.order.pojo.vo.ExportOrderInfo;
 import com.hefa.order.pojo.vo.OrderDetail;
 import com.hefa.order.pojo.vo.OrderInfo;
 
@@ -77,7 +80,7 @@ public interface OrderService {
 	 * @author 黄智聪  2019年4月24日 下午4:46:23
 	 */
 	@RequestMapping("/hefa/api/platform/order/exportCommissionOrder")
-	JsonResult<String> exportCommissionOrder();
+	List<ExportOrderInfo> exportCommissionOrder(@RequestBody SearchCommissionOrderInfoParam param);
 
 }
 

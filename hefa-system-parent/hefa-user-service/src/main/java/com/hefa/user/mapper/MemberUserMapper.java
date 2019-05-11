@@ -18,7 +18,7 @@ public interface MemberUserMapper {
 	 * @return
 	 * @author 黄智聪  2019年4月24日 下午3:03:31
 	 */
-	int countUserById(Integer id);
+	int countUserById(String id);
 	
 	/**
 	 * 获取会员列表

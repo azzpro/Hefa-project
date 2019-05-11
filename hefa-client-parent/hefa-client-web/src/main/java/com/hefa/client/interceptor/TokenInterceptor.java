@@ -40,7 +40,7 @@ public class TokenInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		String token = request.getHeader("token");
+		String token = request.getHeader(ClientConstants.REQUEST_HEADER_USER_TOKEN_NAME);
 		if(StringUtils.isBlank(token)) {
 			throw new ApiRequestException(ApiRequestErrorCode.API_REQUEST_ERROR_ILLEGAL_REQUEST);
 		}

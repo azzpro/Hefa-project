@@ -39,6 +39,8 @@ public abstract class ClientConstants {
      */
     public static final String LOGIN_USER_TOKEN_REDIS_PREFIX = "userToken_";
     
+    public static final String REQUEST_HEADER_USER_TOKEN_NAME = "token";
+    
     /**
      * 登录用户token存入redis的失效时间  3小时
      */
