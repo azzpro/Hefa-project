@@ -9,7 +9,6 @@ package com.hefa.system.sequence.api;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * <P>TODO</P>
@@ -21,28 +20,81 @@ public interface DbSequenceService {
 	
 	
 	/**
-	 * <p>平台端  员工编号</p>
 	 * @return
-	 * @author 刘建麟  2018年10月24日 下午4:37:16
+	 * 部门编号
 	 */
-	@RequestMapping(value="/hefa/api/sequence/getPlatEmployeeNumber",method=RequestMethod.GET)
-	public String getPlatEmployeeNumber() ;
+	@RequestMapping("/hefa/api/sequence/getBMSequenceNo")
+	String getBMSequenceNo() ;
+		
 	
 	/**
-	 * <p>平台端  部门编号</p>
 	 * @return
-	 * @author 刘建麟  2018年10月24日 下午4:37:16
+	 * 开票编号
 	 */
-	@RequestMapping(value="/hefa/api/sequence/getPlatDepartmentNumber",method=RequestMethod.GET)
-	public String getPlatDepartmentNumber() ;
+	@RequestMapping("/hefa/api/sequence/getKPSequenceNo")
+	String getKPSequenceNo() ;
+		
 	
 	/**
-	 * <p>平台端  部门编号</p>
 	 * @return
-	 * @author 刘建麟  2018年10月24日 下午4:37:16
+	 * 退款编号
 	 */
-	@RequestMapping(value="/hefa/api/sequence/getPlatRegionNumber",method=RequestMethod.GET)
-	public String getPlatRegionNumber() ;
+	@RequestMapping("/hefa/api/sequence/getTKSequenceNo")
+	String getTKSequenceNo() ;
+		
 	
+	/**
+	 * @return
+	 * 订单编号
+	 */
+	@RequestMapping("/hefa/api/sequence/getPOSequenceNo")
+	String getPOSequenceNo() ;
+		
+	
+	/**
+	 * @return
+	 * 支付编号
+	 */
+	@RequestMapping("/hefa/api/sequence/getZFSequenceNo")
+	String getZFSequenceNo() ;
+		
+	
+	/**
+	 * @return
+	 * 会员编号
+	 */
+	@RequestMapping("/hefa/api/sequence/getHYSequenceNo")
+	String getHYSequenceNo() ;
+		
+	
+	/**
+	 * @return
+	 * 业务专员编号
+	 */
+	@RequestMapping("/hefa/api/sequence/getYWSequenceNo")
+	String getYWSequenceNo() ;
+		
+	
+	/**
+	 * @return
+	 * 售后专员编号
+	 */
+	@RequestMapping("/hefa/api/sequence/getSHSequenceNo")
+	String getSHSequenceNo();
+		
+	
+	/**
+	 * @return
+	 * 成员编号
+	 */
+	@RequestMapping("/hefa/api/sequence/getCYSequenceNo")
+	String getCYSequenceNo() ;
+	
+	/**
+	 * @return
+	 * 角色编号
+	 */
+	@RequestMapping("/hefa/api/sequence/getJSSequenceNo")
+	String getJSSequenceNo() ;
 }
 

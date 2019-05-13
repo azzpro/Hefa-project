@@ -42,19 +42,6 @@ feign:
     enabled: true #feign原生是调用java.url 去发起HTTP请求，此配置是将请求客户端更换成apahce http
   hystrix: 
     enabled: false
-hefa: 
-  sequence:
-    available: true
-    sequenceConfigs:
-    -
-     id: PlatEmployeeCodeSequence #
-     type: PlatEmployeeCodeSequence
-     args: {id: 'A2', maxSequenceValue: '99999', length: '5', step: '5'}
-    -
-     id: PlatDeptSequence #平台部门编码
-     type: PlatDeptCodeSequence
-     args: {id: 'A3', maxSequenceValue: '99999', length: '5', step: '5'}
-    -
-     id: PlatRegionSequence #区域编码
-     type: PlatRegionSequence
-     args: {id: 'A8', maxSequenceValue: '99999', length: '5', step: '5'}
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mapping/**/*.xml
