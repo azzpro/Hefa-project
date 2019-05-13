@@ -106,4 +106,13 @@ public class SequenceController {
 	public String getJSSequenceNo() {
 		return sm.getSequenceNo("JS");
 	}
+	
+	/**
+	 * @return
+	 * 售后区域编号
+	 */
+	@RequestMapping("getQYSequenceNo")
+	public String getQYSequenceNo() {
+		return sm.getSequenceNo("QY");
+	}
 }

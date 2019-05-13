@@ -78,7 +78,7 @@ public class DeptService{
             throw new ReturnDataException("部门已存在");
         }
         
-        String code = dbSequenceService.getPlatDepartmentNumber();
+        String code = dbSequenceService.getBMSequenceNo();
         dept.setDeptCode(SystemSeqUtils.getSeq(code));
         dept.setDeptName(param.getDeptName());
         dept.setStatus(param.getStatus());

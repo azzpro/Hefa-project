@@ -57,7 +57,7 @@ public class PlatfromRegionService {
 		pr.setRegionProvince(split.length >= 1? split[0]:"");
 		pr.setRegionCity(split.length >= 2? split[1]:"");
 		pr.setRegionArea(split.length >= 3? split[2]:"");
-		pr.setRegionCode(dbSequenceService.getPlatRegionNumber());
+		pr.setRegionCode(dbSequenceService.getQYSequenceNo());
 		pr.setRegionModifytime(null);
 		pr.setStatus((byte)1);
 		platfromRegionMapper.insertRegion(pr);

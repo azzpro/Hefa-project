@@ -38,6 +38,7 @@ import com.hefa.order.pojo.vo.InvoiceDetail;
 import com.hefa.order.pojo.vo.InvoiceInfo;
 import com.hefa.order.pojo.vo.OrderInfo;
 import com.hefa.order.pojo.vo.OrderItemInfo;
+import com.hefa.system.sequence.api.DbSequenceService;
 import com.hefa.utils.JSR303ValidateUtils;
 import com.hefa.utils.StringUtils;
 
@@ -64,6 +65,9 @@ public class ClientInvoiceService {
 	
 	@Autowired
 	private ClientInvoiceTemplateMapper clientInvoiceTemplateMapper;
+	
+	@Autowired
+	DbSequenceService dbSequenceService;
 	
 	/**
 	 * 
@@ -108,8 +112,8 @@ public class ClientInvoiceService {
 	public JsonResult<String> invoiceApply(@RequestBody ApplyInvoiceParam param){
 		OrderInfo orderInfo = this.checkApplyInvoiceParam(param);
 		Date nowDate = new Date();
-		String invoiceTemplateCode = "it" + System.currentTimeMillis();// TODO
-		String invoiceCode = "i" + System.currentTimeMillis();// TODO
+		String invoiceTemplateCode = "IT" + System.currentTimeMillis();
+		String invoiceCode = dbSequenceService.getKPSequenceNo();
 		ClientInvoice invoiceRecord = ClientInvoice.builder()
 				.amount(orderInfo.getGrandTotal())
 				.createTime(nowDate)

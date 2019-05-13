@@ -20,6 +20,8 @@ import lombok.Data;
 public class OrderItemInfo {
 
 	private String productCode;
+	
+	private String productName;
 
     private String specificationInfo;
 

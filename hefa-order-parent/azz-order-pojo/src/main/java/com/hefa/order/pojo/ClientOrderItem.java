@@ -32,6 +32,8 @@ public class ClientOrderItem implements Serializable {
      * @mbg.generated
      */
     private String productCode;
+    
+    private String productName;
 
     /**
      * 产品参数名称
@@ -385,4 +387,12 @@ public class ClientOrderItem implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
 }

@@ -448,7 +448,7 @@ public class UserService {
 		Password pwd = PasswordHelper.encryptPasswordByModel(randomPwd);
 		Date nowDate = new Date();
 		String creator = param.getCreator();
-		String code = dbSequenceService.getPlatEmployeeNumber();
+		String code = dbSequenceService.getCYSequenceNo();
 		PlatformUser userRecord = PlatformUser.builder().createTime(nowDate).creator(creator).deptId(dept.getId())
 				.email(param.getEmail()).password(pwd.getPassword()).phoneNumber(param.getPhoneNumber())
 				.postName(param.getPostName()).userCode(SystemSeqUtils.getSeq(code)).userName(param.getUserName())

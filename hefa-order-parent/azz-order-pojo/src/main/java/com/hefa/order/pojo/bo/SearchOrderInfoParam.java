@@ -30,6 +30,8 @@ public class SearchOrderInfoParam extends QueryPage{
 	private String orderEndTime;
 	
 	private String searchInput;
+	
+	private Byte orderStatus;
 
 }
 

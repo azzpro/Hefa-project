@@ -23,6 +23,7 @@ import com.hefa.common.constants.PlatformConstants.PlatformUserSalesmanRecordSta
 import com.hefa.common.exception.BusinessException;
 import com.hefa.common.exception.ReturnDataException;
 import com.hefa.common.page.Pagination;
+import com.hefa.system.sequence.api.DbSequenceService;
 import com.hefa.user.mapper.ClientUserSalesmanMapper;
 import com.hefa.user.mapper.PlatformUserMapper;
 import com.hefa.user.mapper.PlatformUserSalesmanMapper;
@@ -53,6 +54,9 @@ public class PlatformUserSalesmanService {
 	@Autowired
 	private PlatformUserMapper platformUserMapper;
 	
+	@Autowired
+	private DbSequenceService dbSequenceService;
+	
 	/**
 	 * 
 	 * <p>新增业务员</p>
@@ -64,7 +68,7 @@ public class PlatformUserSalesmanService {
 		JSR303ValidateUtils.validateInputParam(param);
 		// 校验平台成员是否能新增为业务员
 		this.checkPlatformUser(param.getUserCode(), null);
-		String salesmanCode = "S" + System.currentTimeMillis(); // TODO
+		String salesmanCode = dbSequenceService.getYWSequenceNo();
 		PlatformUserSalesman record = PlatformUserSalesman.builder()
 				.createTime(new Date())
 				.creator(param.getCreator())

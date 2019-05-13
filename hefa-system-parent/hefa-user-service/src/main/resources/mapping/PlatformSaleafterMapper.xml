@@ -99,6 +99,7 @@
   <select id="getOrderItemInfosByOrderCode" parameterType="string" resultType="com.hefa.user.pojo.vo.OrderItemInfo">
     SELECT
 		coi.product_code AS productCode,
+		coi.product_name AS productName,
 		coi.product_price AS productPrice,
 		coi.quantity AS quantity,
 		coi.specification_info AS specificationInfo,

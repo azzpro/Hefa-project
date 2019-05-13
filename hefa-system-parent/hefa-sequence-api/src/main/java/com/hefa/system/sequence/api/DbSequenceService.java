@@ -96,5 +96,12 @@ public interface DbSequenceService {
 	 */
 	@RequestMapping("/hefa/api/sequence/getJSSequenceNo")
 	String getJSSequenceNo() ;
+	
+	/**
+	 * @return
+	 * 售后区域编号
+	 */
+	@RequestMapping("/hefa/api/sequence/getQYSequenceNo")
+	String getQYSequenceNo() ;
 }
 

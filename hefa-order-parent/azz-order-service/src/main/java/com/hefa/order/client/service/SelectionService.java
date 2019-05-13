@@ -51,6 +51,7 @@ import com.hefa.order.pojo.vo.ProductInfo;
 import com.hefa.order.pojo.vo.SelectionProductInfo;
 import com.hefa.order.pojo.vo.ShippingAddressInfo;
 import com.hefa.order.pojo.vo.ShoppingCartInfo;
+import com.hefa.system.sequence.api.DbSequenceService;
 import com.hefa.utils.DateUtils;
 import com.hefa.utils.JSR303ValidateUtils;
 import com.hefa.utils.StringUtils;
@@ -81,6 +82,9 @@ public class SelectionService {
 
 	@Autowired
 	private ClientShippingAddressMapper clientShippingAddressMapper;
+	
+	@Autowired
+	DbSequenceService dbSequenceService;
 	
 	/**
 	 * 
@@ -314,7 +318,7 @@ public class SelectionService {
 		}
 		Date nowDate = new Date();
 		// 新增未支付的订单记录
-		String orderCode = "HFO" + System.currentTimeMillis(); // TODO
+		String orderCode = dbSequenceService.getPOSequenceNo();
 		String salesmanCode = clientOrderMapper.getSalesmanCodeByUserCode(userCode);
 		ClientOrder clientOrderRecord = ClientOrder.builder()
 				.orderCode(orderCode)
@@ -349,6 +353,7 @@ public class SelectionService {
 					.creator(userCode)
 					.orderCode(orderCode)
 					.productCode(shoppingCartInfo.getProductCode())
+					.productName(shoppingCartInfo.getProductName())
 					.productPrice(shoppingCartInfo.getPrice())
 					.quantity(itemMap.get(shoppingCartInfo.getProductCode()))
 					.specificationInfo(shoppingCartInfo.getSpecificationInfo())

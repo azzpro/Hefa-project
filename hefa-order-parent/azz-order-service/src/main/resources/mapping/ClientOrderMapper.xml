@@ -344,6 +344,9 @@
 		<if test="userCode != null and userCode != ''">
 			and co.user_code = #{userCode}
 		</if>
+		<if test="orderStatus != null">
+			and co.order_status = #{orderStatus}
+		</if>
 		<if test="orderStartTime != null and orderStartTime != ''">
 			and co.create_time >= #{orderStartTime}
 		</if>

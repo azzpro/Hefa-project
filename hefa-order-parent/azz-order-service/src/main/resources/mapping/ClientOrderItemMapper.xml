@@ -5,6 +5,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
     <result column="product_code" jdbcType="VARCHAR" property="productCode" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
     <result column="specification_info" jdbcType="VARCHAR" property="specificationInfo" />
     <result column="product_price" jdbcType="DECIMAL" property="productPrice" />
     <result column="quantity" jdbcType="INTEGER" property="quantity" />
@@ -14,7 +15,7 @@
     <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_code, product_code, specification_info, product_price, quantity, creator, 
+    id, order_code, product_code, product_name, specification_info, product_price, quantity, creator, 
     create_time, modifier, modify_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
@@ -28,11 +29,11 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.hefa.order.pojo.ClientOrderItem">
-    insert into client_order_item (id, order_code, product_code, 
+    insert into client_order_item (id, order_code, product_code, product_name,
       specification_info, product_price, quantity, 
       creator, create_time, modifier, 
       modify_time)
-    values (#{id,jdbcType=BIGINT}, #{orderCode,jdbcType=VARCHAR}, #{productCode,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT}, #{orderCode,jdbcType=VARCHAR}, #{productCode,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
       #{specificationInfo,jdbcType=VARCHAR}, #{productPrice,jdbcType=DECIMAL}, #{quantity,jdbcType=INTEGER}, 
       #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=VARCHAR}, 
       #{modifyTime,jdbcType=TIMESTAMP})
@@ -48,6 +49,9 @@
       </if>
       <if test="productCode != null">
         product_code,
+      </if>
+      <if test="productName != null">
+        product_name,
       </if>
       <if test="specificationInfo != null">
         specification_info,
@@ -81,6 +85,9 @@
       <if test="productCode != null">
         #{productCode,jdbcType=VARCHAR},
       </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
       <if test="specificationInfo != null">
         #{specificationInfo,jdbcType=VARCHAR},
       </if>
@@ -113,6 +120,9 @@
       <if test="productCode != null">
         product_code = #{productCode,jdbcType=VARCHAR},
       </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
       <if test="specificationInfo != null">
         specification_info = #{specificationInfo,jdbcType=VARCHAR},
       </if>
@@ -141,6 +151,7 @@
     update client_order_item
     set order_code = #{orderCode,jdbcType=VARCHAR},
       product_code = #{productCode,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
       specification_info = #{specificationInfo,jdbcType=VARCHAR},
       product_price = #{productPrice,jdbcType=DECIMAL},
       quantity = #{quantity,jdbcType=INTEGER},
@@ -155,6 +166,7 @@
     SELECT
 		coi.product_code AS productCode,
 		coi.product_price AS productPrice,
+		coi.product_name AS productName,
 		coi.quantity AS quantity,
 		coi.specification_info AS specificationInfo,
 		coi.product_price * coi.quantity AS total
