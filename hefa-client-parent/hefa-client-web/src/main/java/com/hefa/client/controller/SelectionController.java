@@ -10,6 +10,7 @@ package com.hefa.client.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -65,8 +66,8 @@ public class SelectionController {
 	 * @return
 	 * @author 黄智聪  2019年4月30日 下午3:52:37
 	 */
-	@RequestMapping("addSelectionRecordToShoppingCart")
-	public JsonResult<String> addSelectionRecordToShoppingCart(AddSelectionRecordToShoppingCartParam param){
+	@RequestMapping(value = "addSelectionRecordToShoppingCart", produces = "application/json")
+	public JsonResult<String> addSelectionRecordToShoppingCart(@RequestBody AddSelectionRecordToShoppingCartParam param){
 		param.setUserCode(WebUtils.getLoginUser().getUserCode());
 		return selectionService.addSelectionRecordToShoppingCart(param);
 	}
