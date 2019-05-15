@@ -7,6 +7,8 @@
  
 package com.hefa.client.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +33,7 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping("/login")
-	public JsonResult<String> login(@RequestBody LoginParam param) {
+	public JsonResult<Map<String, String>> login(@RequestBody LoginParam param) {
 		return userService.login(param);
     }
 	

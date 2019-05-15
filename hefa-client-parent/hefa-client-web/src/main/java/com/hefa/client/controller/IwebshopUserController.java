@@ -1,5 +1,7 @@
 package com.hefa.client.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +40,7 @@ public class IwebshopUserController {
 	 * @author 黄智聪  2019年5月7日 下午6:13:33
 	 */
 	@RequestMapping(value = "/login")
-	public JsonResult<String> login(LoginParam param) {
+	public JsonResult<Map<String, String>> login(LoginParam param) {
 		param.setIpAddress(WebUtils.getHttpServletRequest().getRemoteAddr());
 		JSR303ValidateUtils.validateInputParam(param);
 		return userService.login(param);

@@ -7,6 +7,8 @@
  
 package com.hefa.client.service;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.codec.binary.Base64;
@@ -54,7 +56,7 @@ public class UserService {
 	 * @return
 	 * @author 黄智聪  2019年5月7日 下午4:32:36
 	 */
-    public JsonResult<String> login(@RequestBody LoginParam param) {
+    public JsonResult<Map<String, String>> login(@RequestBody LoginParam param) {
 		JSR303ValidateUtils.validateInputParam(param);
 		String username = param.getUsername();
 		String password = param.getPassword();
@@ -87,7 +89,10 @@ public class UserService {
 			throw new ApiRequestException(ApiRequestErrorCode.API_REQUEST_ERROR_LOGIN_ERROR, "请重试");
 		}
 		//System.out.println("用户token:" + userToken);
-		return JsonResult.successJsonResult(userToken);
+		Map<String, String> userInfo = new HashMap<String, String>();
+		userInfo.put("un", loginUser.getUsername());
+		userInfo.put("ut", userToken);
+		return JsonResult.successJsonResult(userInfo);
     }
     
 	/**
