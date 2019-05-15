@@ -142,10 +142,22 @@ public class SelectionController {
 	 * @return
 	 * @author 黄智聪  2019年5月5日 下午5:53:01
 	 */
-	@RequestMapping("generateOrder")
-	public JsonResult<PayOrderInfo> generateOrder(GenerateOrderParam param){
+	@RequestMapping(value = "generateOrder", produces= "application/json")
+	public JsonResult<PayOrderInfo> generateOrder(@RequestBody GenerateOrderParam param){
 		param.setUserCode(WebUtils.getLoginUser().getUserCode());
 		return selectionService.generateOrder(param);
+	}
+	
+	/**
+	 * 
+	 * <p>获取支付订单信息</p>
+	 * @param param
+	 * @return
+	 * @author 黄智聪  2019年5月5日 下午5:53:01
+	 */
+	@RequestMapping(value = "getPayOrderInfo")
+	public JsonResult<PayOrderInfo> getPayOrderInfo(@RequestParam("orderCode") String orderCode){
+		return selectionService.getPayOrderInfo(orderCode);
 	}
 	
 }

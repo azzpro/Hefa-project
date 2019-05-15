@@ -134,6 +134,7 @@
 		csr.product_code AS productCode,
 		csr.product_model_no AS productModelNo,
 		csr.product_name AS productName,
+		csr.specification_info as specificationInfo,
 		csr.price AS price
 	FROM
 		client_shopping_cart csc

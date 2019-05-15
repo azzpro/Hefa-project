@@ -141,5 +141,17 @@ public class SelectionController {
 		return selectionService.generateOrder(param);
 	}
 	
+	/**
+	 * 
+	 * <p>获取支付订单信息</p>
+	 * @param param
+	 * @return
+	 * @author 黄智聪  2019年5月5日 下午5:53:01
+	 */
+	@RequestMapping("getPayOrderInfo")
+	public JsonResult<PayOrderInfo> getPayOrderInfo(@RequestParam("orderCode") String orderCode){
+		return selectionService.getPayOrderInfo(orderCode);
+	}
+	
 }
 

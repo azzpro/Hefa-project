@@ -46,6 +46,7 @@ import com.hefa.order.pojo.bo.RemoveSelectionRecordParam;
 import com.hefa.order.pojo.bo.RemoveShoppingCartProductParam;
 import com.hefa.order.pojo.bo.SearchSelectionInfoParam;
 import com.hefa.order.pojo.vo.ModelInfo;
+import com.hefa.order.pojo.vo.OrderInfo;
 import com.hefa.order.pojo.vo.PayOrderInfo;
 import com.hefa.order.pojo.vo.ProductInfo;
 import com.hefa.order.pojo.vo.SelectionProductInfo;
@@ -373,6 +374,37 @@ public class SelectionService {
 		payOrderInfo.setShippingAddressInfo(shippingAddressInfo);
 		return JsonResult.successJsonResult(payOrderInfo);
 	}
+	
+	/**
+	 * 
+	 * <p>获取支付订单信息</p>
+	 * @param param
+	 * @return
+	 * @author 黄智聪  2019年5月5日 下午5:53:01
+	 */
+	public JsonResult<PayOrderInfo> getPayOrderInfo(@RequestParam("orderCode") String orderCode){
+		JSR303ValidateUtils.validateNullOrBlank(orderCode, "请选择订单");
+		OrderInfo orderInfo = clientOrderMapper.getOrderInfoByOrderCode(orderCode);
+		if(orderInfo == null) {
+			throw new ReturnDataException("订单信息不存在");
+		}
+		PayOrderInfo payOrderInfo = new PayOrderInfo();
+		payOrderInfo.setGrandTotal(orderInfo.getGrandTotal());
+		payOrderInfo.setOrderCode(orderCode);
+		Date validTime = DateUtils.addHour(orderInfo.getOrderTime(), ClientConstants.ORDER_VALID_TIME_HOURS);
+		payOrderInfo.setValidTime(validTime);
+		ShippingAddressInfo shippingAddressInfo = new ShippingAddressInfo();
+		shippingAddressInfo.setAreaName(orderInfo.getAreaName());
+		shippingAddressInfo.setCityName(orderInfo.getCityName());
+		shippingAddressInfo.setProvinceName(orderInfo.getProvinceName());
+		shippingAddressInfo.setDetailAddress(orderInfo.getDetailAddress());
+		shippingAddressInfo.setReceiverName(orderInfo.getReceiverName());
+		shippingAddressInfo.setReceiverPhoneNumber(orderInfo.getReceiverPhoneNumber());
+		payOrderInfo.setShippingAddressInfo(shippingAddressInfo);
+		return JsonResult.successJsonResult(payOrderInfo);
+	}
+	
+	
 	/**
 	 * 
 	 * <p>关闭订单--6小时未支付的待支付订单，状态改为已关闭</p>
