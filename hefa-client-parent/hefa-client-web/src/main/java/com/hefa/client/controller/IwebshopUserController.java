@@ -42,7 +42,6 @@ public class IwebshopUserController {
 	@RequestMapping(value = "/login")
 	public JsonResult<Map<String, String>> login(LoginParam param) {
 		param.setIpAddress(WebUtils.getHttpServletRequest().getRemoteAddr());
-		JSR303ValidateUtils.validateInputParam(param);
 		return userService.login(param);
 	}
 	
