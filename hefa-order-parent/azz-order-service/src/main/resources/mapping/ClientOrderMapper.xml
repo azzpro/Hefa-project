@@ -452,7 +452,7 @@
   
   <select id="getSixHoursNotPaidOrderCodes" resultType="string">
    SELECT
-		co.id
+		co.order_code
 	FROM
 		client_order co
 	WHERE
