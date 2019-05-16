@@ -49,8 +49,7 @@ public class ClientWebConfig extends WebMvcConfigurationSupport {
     public void addInterceptors(InterceptorRegistry registry) {
     	InterceptorRegistration tokenInterceptor = registry.addInterceptor(getTokenInterceptor());
     	tokenInterceptor.addPathPatterns("/hefa/api/client/**");
-    	tokenInterceptor.excludePathPatterns("/hefa/api/client/member/login");
-    	
+    	tokenInterceptor.excludePathPatterns("/actuator/health","/hefa/api/client/member/login");
     	
     	//tokenInterceptor.excludePathPatterns("/hefa/api/client/member/getUserInfo");
     	InterceptorRegistration signInterceptor = registry.addInterceptor(getSignInterceptor());

@@ -137,7 +137,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>1.5.4.RELEASE</version>
 				<configuration>
-					<mainClass>com.hefa.HefaSystemServiceApplication</mainClass>
+					<mainClass>com.hefa.HefaUserServiceApplication</mainClass>
 					<layout>JAR</layout>
 				</configuration>
 				<executions>

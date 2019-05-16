@@ -8,6 +8,7 @@
 package com.hefa.client.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +16,7 @@ import com.hefa.client.util.WebUtils;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
 import com.hefa.order.api.client.ClientOrderService;
+import com.hefa.order.pojo.bo.ConfirmOrderDeliveryParam;
 import com.hefa.order.pojo.bo.SearchOrderInfoParam;
 import com.hefa.order.pojo.vo.OrderDetail;
 import com.hefa.order.pojo.vo.OrderInfo;
@@ -30,6 +32,18 @@ public class OrderController {
 	
 	@Autowired
 	private ClientOrderService orderService;
+	
+	/**
+	 * 
+	 * <p>客户确认送达</p>
+	 * @param param
+	 * @return
+	 * @author 黄智聪  2019年5月16日 下午4:58:38
+	 */
+	public JsonResult<String> confirmOrderDelivery(ConfirmOrderDeliveryParam param){
+		param.setUserCode(WebUtils.getLoginUser().getUserCode());
+		return orderService.confirmOrderDelivery(param);
+	}
 	
 	/**
 	 * 

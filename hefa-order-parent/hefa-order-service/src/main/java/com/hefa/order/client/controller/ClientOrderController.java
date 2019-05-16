@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
 import com.hefa.order.client.service.ClientOrderService;
+import com.hefa.order.pojo.bo.ConfirmOrderDeliveryParam;
 import com.hefa.order.pojo.bo.SearchOrderInfoParam;
 import com.hefa.order.pojo.vo.OrderDetail;
 import com.hefa.order.pojo.vo.OrderInfo;
@@ -25,6 +26,18 @@ public class ClientOrderController {
 	
 	@Autowired
 	private ClientOrderService orderService;
+	
+	/**
+	 * 
+	 * <p>客户确认送达</p>
+	 * @param param
+	 * @return
+	 * @author 黄智聪  2019年5月16日 下午4:58:38
+	 */
+	@RequestMapping("/confirmOrderDelivery")
+	public JsonResult<String> confirmOrderDelivery(@RequestBody ConfirmOrderDeliveryParam param){
+		return orderService.confirmOrderDelivery(param);
+	}
 	
 	
 	/**
