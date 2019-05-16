@@ -39,6 +39,7 @@ public class OrderController {
 	 * @return
 	 * @author 黄智聪  2019年5月16日 下午4:58:38
 	 */
+	@RequestMapping("/confirmOrderDelivery")
 	public JsonResult<String> confirmOrderDelivery(ConfirmOrderDeliveryParam param){
 		param.setUserCode(WebUtils.getLoginUser().getUserCode());
 		return orderService.confirmOrderDelivery(param);
