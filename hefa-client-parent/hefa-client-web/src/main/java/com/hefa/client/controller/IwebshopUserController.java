@@ -22,7 +22,6 @@ import com.hefa.user.api.MemberUserService;
 import com.hefa.user.pojo.bo.CheckVerificationCodeParam;
 import com.hefa.user.pojo.bo.UpdataUserPasswd;
 import com.hefa.utils.AesUtils;
-import com.hefa.utils.JSR303ValidateUtils;
 import com.hefa.utils.StringUtils;
 
 /**
