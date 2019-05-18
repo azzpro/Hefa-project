@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.github.pagehelper.PageHelper;
 import com.hefa.common.base.JsonResult;
+import com.hefa.common.constants.ClientConstants;
 import com.hefa.common.constants.EmailConstants;
 import com.hefa.common.constants.SmsConstants;
 import com.hefa.common.constants.UserConstants;
@@ -163,12 +164,31 @@ public class MemberUserService {
 		if(!Objects.equals(up.getNewPasswd(), up.getReqPasswd())) {
 			throw new ValidationException("密码不一致");
 		}
-		memberUserMapper.updatePassword(up.getId(), MD5Encrypt.encryptMD5(up.getNewPasswd()));
+		memberUserMapper.updatePassword(up.getId(), this.getActualPassword(up.getNewPasswd()));
 		return JsonResult.successJsonResult();
 	}
 	
+	
+	
 	/**
-	 * 更新密码
+     * 
+     * <p>获取实际存储的密码</p>
+     * @param password
+     * @return
+     * @author 黄智聪  2019年5月18日 上午10:20:32
+     */
+	private String getActualPassword(String password) {
+		String suffix = ClientConstants.PASSWORD_ENCRYPT_SUFFIX;
+		String md5Password = MD5Encrypt.encryptMD5(password + suffix);
+		int length = md5Password.length();	
+		String sb = md5Password.substring(0, 3);		
+		String se = md5Password.substring(length - 3 , length); 
+		String sm = md5Password.substring(3, length - 3);  
+		return se + sm + sb;
+	}
+	
+	/**
+	 * 更新手机
 	 * @param up
 	 * @return
 	 */

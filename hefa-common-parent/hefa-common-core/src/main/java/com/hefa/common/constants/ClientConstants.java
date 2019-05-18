@@ -47,6 +47,11 @@ public abstract class ClientConstants {
     public static final long LOGIN_USER_TOKEN_REDIS_HOURS_TIME_OUT = 3;
     
     /**
+     * 	密码加密时的后缀
+     */
+    public static final String PASSWORD_ENCRYPT_SUFFIX = "ihf";
+    
+    /**
      * ASE加密的key
      */
     public final static String DEFAULT_ASE_KEY = "qlemc5GkRiPVXH88";
