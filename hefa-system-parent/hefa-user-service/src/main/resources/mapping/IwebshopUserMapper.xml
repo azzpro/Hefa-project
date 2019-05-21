@@ -63,9 +63,11 @@
 			and b.time &lt;= #{endTime}
 		</if>
   		<if test="meberNumber != null and meberNumber != ''">
+  		(
   			b.mobile like CONCAT('%', #{meberNumber}, '%')
   			or
   			a.id like CONCAT('%', #{meberNumber}, '%')
+  		)	
   		</if>
   	</where>
   	order by b.time desc
