@@ -26,6 +26,8 @@ public interface PlatfromSaleAfterService {
 	@RequestMapping("/hefa/api/sale/getSaleAfterList")
 	public JsonResult<Pagination<ServiceSaleInfo>> getSaleAfterList(@RequestBody ServiceSaleAfterParam param);
 	
+	@RequestMapping("/hefa/api/sale/selectOrderCount")
+	public int selectOrderCount(@RequestParam("code")String code);
 	
 	/**
 	 * 

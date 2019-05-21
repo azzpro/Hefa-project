@@ -16,6 +16,10 @@
   	values(#{serviceNumber},#{orderCode},#{createTime},#{status},#{userCode})
   </insert>
   
+  <select id="selectOrderCount" resultType="int">
+  select count(1) from platform_saleafter where order_code = #{code} and status != 3
+  </select>
+  
   <update id="updateSaleAfter">
     update platform_saleafter
     set status = #{status}

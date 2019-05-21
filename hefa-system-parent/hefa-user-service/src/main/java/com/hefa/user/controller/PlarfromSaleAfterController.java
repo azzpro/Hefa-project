@@ -26,6 +26,11 @@ public class PlarfromSaleAfterController {
 	@Autowired
 	private PlatfromSaleafterService platfromSaleafterService;
 	
+	@RequestMapping("/selectOrderCount")
+	public int selectOrderCount(@RequestParam("code")String code){
+		return platfromSaleafterService.selectOrderCount(code);
+	}
+	
 	/**
 	 * 
 	 * <p>查询订单售后列表</p>

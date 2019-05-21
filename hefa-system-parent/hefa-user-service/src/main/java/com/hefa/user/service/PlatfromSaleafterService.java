@@ -47,6 +47,14 @@ public class PlatfromSaleafterService {
 	@Autowired
 	private PlatformUserMapper platformUserMapper;
 	
+	/**
+	 * 获取订单售后列表个数
+	 * @param param
+	 * @return
+	 */
+	public int selectOrderCount(String code){
+		return platformSaleafterMapper.selectOrderCount(code);
+	}
 	
 	/**
 	 * 获取订单售后列表数据

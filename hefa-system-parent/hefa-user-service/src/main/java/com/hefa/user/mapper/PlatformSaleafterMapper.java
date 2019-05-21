@@ -15,6 +15,8 @@ import com.hefa.user.pojo.vo.ServiceSaleInfo;
 @Mapper
 public interface PlatformSaleafterMapper {
 
+	int selectOrderCount(String code);
+	
 	/**
 	 * 新增订单售后
 	 * @param psf
