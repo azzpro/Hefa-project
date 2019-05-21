@@ -15,6 +15,9 @@ import com.hefa.client.api.UserService;
 import com.hefa.client.util.WebUtils;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.constants.ClientConstants;
+import com.hefa.common.constants.SmsConstants.SmsCode;
+import com.hefa.common.errorcode.SystemErrorCode;
+import com.hefa.common.exception.ValidationException;
 import com.hefa.pojo.bo.LoginParam;
 import com.hefa.pojo.vo.LoginUserInfo;
 import com.hefa.pojo.vo.UserInfo;
@@ -140,12 +143,15 @@ public class IwebshopUserController {
 	 */
 	@RequestMapping("/updatePhone")
 	public JsonResult<String> updatePhone(String phone,Integer id, String code){
-		memberUserService.updatePhone(phone,id,code);
-		LoginUserInfo loginUser = WebUtils.getLoginUser();
-		loginUser.setMobile(phone);
-		// 替换用户token
-		String newUserToken = this.replaceUserToken(loginUser);
-		return JsonResult.successJsonResult(newUserToken);
+		JsonResult<String>  jr = memberUserService.updatePhone(phone,id,code);
+		if (jr.getCode() == SystemErrorCode.SUCCESS.getCode()) {
+			LoginUserInfo loginUser = WebUtils.getLoginUser();
+			loginUser.setMobile(phone);
+			// 替换用户token
+			String newUserToken = this.replaceUserToken(loginUser);
+			return JsonResult.successJsonResult(newUserToken);
+		}
+		return jr;
 	} 
 	
 	/**
@@ -157,12 +163,15 @@ public class IwebshopUserController {
 	 */
 	@RequestMapping("/updateEmail")
 	public JsonResult<String> updateEmail(String email,Integer id, String code){
-		memberUserService.updateEmail(email,id,code);
-		LoginUserInfo loginUser = WebUtils.getLoginUser();
-		loginUser.setEmail(email);
-		// 替换用户token
-		String newUserToken = this.replaceUserToken(loginUser);
-		return JsonResult.successJsonResult(newUserToken);
+		JsonResult<String>  jr = memberUserService.updateEmail(email,id,code);
+		if (jr.getCode() == SystemErrorCode.SUCCESS.getCode()) {
+			LoginUserInfo loginUser = WebUtils.getLoginUser();
+			loginUser.setEmail(email);
+			// 替换用户token
+			String newUserToken = this.replaceUserToken(loginUser);
+			return JsonResult.successJsonResult(newUserToken);
+		}
+		return jr;
 	}
 
 	/**
