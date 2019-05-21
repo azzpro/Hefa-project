@@ -7,6 +7,7 @@
  
 package com.hefa.order.client.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -18,15 +19,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageHelper;
 import com.hefa.common.base.JsonResult;
+import com.hefa.common.constants.PlatformConstants.OrderStatus;
 import com.hefa.common.exception.ReturnDataException;
 import com.hefa.common.exception.ValidationException;
 import com.hefa.common.page.Pagination;
 import com.hefa.order.mapper.ClientOrderItemMapper;
 import com.hefa.order.mapper.ClientOrderMapper;
+import com.hefa.order.mapper.ClientOrderStatusMapper;
+import com.hefa.order.pojo.ClientOrder;
+import com.hefa.order.pojo.ClientOrderStatus;
+import com.hefa.order.pojo.bo.ConfirmOrderDeliveryParam;
 import com.hefa.order.pojo.bo.SearchOrderInfoParam;
 import com.hefa.order.pojo.vo.OrderDetail;
 import com.hefa.order.pojo.vo.OrderInfo;
 import com.hefa.order.pojo.vo.OrderItemInfo;
+import com.hefa.utils.JSR303ValidateUtils;
 
 /**
  * 
@@ -43,6 +50,48 @@ public class ClientOrderService {
 	
 	@Autowired
 	private ClientOrderItemMapper clientOrderItemMapper;
+	
+	@Autowired
+	private ClientOrderStatusMapper clientOrderStatusMapper;
+	
+	
+	
+	/**
+	 * 
+	 * <p>客户确认送达</p>
+	 * @param param
+	 * @return
+	 * @author 黄智聪  2019年5月16日 下午4:58:38
+	 */
+	public JsonResult<String> confirmOrderDelivery(@RequestBody ConfirmOrderDeliveryParam param){
+		JSR303ValidateUtils.validateInputParam(param);
+		OrderInfo orderInfo = clientOrderMapper.getOrderInfoByOrderCode(param.getOrderCode());
+		if(orderInfo == null) {
+			throw new ReturnDataException("订单不存在");
+		}
+		int status = orderInfo.getOrderStatus();
+		if(OrderStatus.NOT_SIGNED.getValue() != status) {
+			throw new ReturnDataException("订单状态异常");
+		}
+		Date nowDate = new Date();
+		ClientOrder record = ClientOrder.builder()
+				.orderCode(param.getOrderCode())
+				.orderStatus((byte)OrderStatus.COMPLETED.getValue())
+				.modifier(param.getUserCode())
+				.modifyTime(nowDate)
+				.build();
+		clientOrderMapper.updateByOrderCodeSelective(record);
+		// 新增客户订单状态变更记录
+		ClientOrderStatus clientOrderStatusRecord = ClientOrderStatus.builder()
+				.createTime(nowDate)
+				.creator(param.getUserCode())
+				.orderCode(param.getOrderCode())
+				.orderStatus(OrderStatus.COMPLETED.getValue())
+				.remark("客户确认收货")
+				.build();
+		clientOrderStatusMapper.insertSelective(clientOrderStatusRecord);
+		return JsonResult.successJsonResult();
+	}
 	
 	/**
 	 * 

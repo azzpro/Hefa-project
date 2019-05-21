@@ -60,8 +60,8 @@ public class UserService {
 		JSR303ValidateUtils.validateInputParam(param);
 		String username = param.getUsername();
 		String password = param.getPassword();
-		String md5Password = MD5Encrypt.encryptMD5(password);
-		LoginUserInfo loginUser = userMapper.getLoginUser(username, md5Password);
+		String actualPassword = this.getActualPassword(password);	
+		LoginUserInfo loginUser = userMapper.getLoginUser(username, actualPassword);
 		if (loginUser == null) {
 			throw new ApiRequestException(ApiRequestErrorCode.API_REQUEST_ERROR_LOGIN_ERROR, "请输入正确的账号或密码");
 		}
@@ -94,6 +94,23 @@ public class UserService {
 		userInfo.put("ut", userToken);
 		return JsonResult.successJsonResult(userInfo);
     }
+
+    /**
+     * 
+     * <p>获取实际存储的密码</p>
+     * @param password
+     * @return
+     * @author 黄智聪  2019年5月18日 上午10:20:32
+     */
+	private String getActualPassword(String password) {
+		String suffix = ClientConstants.PASSWORD_ENCRYPT_SUFFIX;
+		String md5Password = MD5Encrypt.encryptMD5(password + suffix);
+		int length = md5Password.length();	
+		String sb = md5Password.substring(0, 3);		
+		String se = md5Password.substring(length - 3 , length); 
+		String sm = md5Password.substring(3, length - 3);  
+		return se + sm + sb;
+	}
     
 	/**
 	 * 
@@ -109,6 +126,8 @@ public class UserService {
 		}
 		return JsonResult.successJsonResult(loginUser);
 	}
+	
+	
 
 }
 

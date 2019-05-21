@@ -1,22 +1,29 @@
 package com.hefa.client.controller;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
 import com.hefa.client.api.UserService;
 import com.hefa.client.util.WebUtils;
 import com.hefa.common.base.JsonResult;
+import com.hefa.common.constants.ClientConstants;
+import com.hefa.common.errorcode.SystemErrorCode;
 import com.hefa.pojo.bo.LoginParam;
 import com.hefa.pojo.vo.LoginUserInfo;
 import com.hefa.pojo.vo.UserInfo;
 import com.hefa.user.api.MemberUserService;
 import com.hefa.user.pojo.bo.CheckVerificationCodeParam;
 import com.hefa.user.pojo.bo.UpdataUserPasswd;
-import com.hefa.utils.JSR303ValidateUtils;
+import com.hefa.utils.AesUtils;
+import com.hefa.utils.StringUtils;
 
 /**
  * @author THINK
@@ -31,6 +38,9 @@ public class IwebshopUserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private StringRedisTemplate redis;
 	
 	/**
 	 * 
@@ -131,7 +141,15 @@ public class IwebshopUserController {
 	 */
 	@RequestMapping("/updatePhone")
 	public JsonResult<String> updatePhone(String phone,Integer id, String code){
-		return memberUserService.updatePhone(phone,id,code);
+		JsonResult<String>  jr = memberUserService.updatePhone(phone,id,code);
+		if (jr.getCode() == SystemErrorCode.SUCCESS.getCode()) {
+			LoginUserInfo loginUser = WebUtils.getLoginUser();
+			loginUser.setMobile(phone);
+			// 替换用户token
+			String newUserToken = this.replaceUserToken(loginUser);
+			return JsonResult.successJsonResult(newUserToken);
+		}
+		return jr;
 	} 
 	
 	/**
@@ -143,6 +161,46 @@ public class IwebshopUserController {
 	 */
 	@RequestMapping("/updateEmail")
 	public JsonResult<String> updateEmail(String email,Integer id, String code){
-		return memberUserService.updateEmail(email,id,code);
+		JsonResult<String>  jr = memberUserService.updateEmail(email,id,code);
+		if (jr.getCode() == SystemErrorCode.SUCCESS.getCode()) {
+			LoginUserInfo loginUser = WebUtils.getLoginUser();
+			loginUser.setEmail(email);
+			// 替换用户token
+			String newUserToken = this.replaceUserToken(loginUser);
+			return JsonResult.successJsonResult(newUserToken);
+		}
+		return jr;
+	}
+
+	/**
+	 * 
+	 * <p>替换用户token</p>
+	 * @param loginUser
+	 * @author 黄智聪  2019年5月16日 下午5:46:51
+	 */
+	private String replaceUserToken(LoginUserInfo loginUser) {
+		String userToken = null;
+		try {
+			String userInfoJson = JSONObject.toJSONString(loginUser);
+			// userToken加密方式:先用AES加密，然后再用base64编码一次，这样可以去除AES密文中的特殊字符
+			userToken = Base64.encodeBase64String(AesUtils.encrypt(userInfoJson, ClientConstants.DEFAULT_ASE_KEY).getBytes());
+			String userCode = loginUser.getUserCode();
+			// 客户端用户地址
+			String currentIpAddress = WebUtils.getHttpServletRequest().getRemoteAddr();
+			String redisUserIpKey = ClientConstants.LOGIN_USER_TOKEN_REDIS_PREFIX + userCode;
+			String redisIpAddress = redis.opsForValue().get(redisUserIpKey);
+			// 若当前ip地址与redis存的ip地址不一致，说明是异地登录了，将redis原来的ip删除。
+			if(!StringUtils.isBlank(redisIpAddress) && !currentIpAddress.equals(redisIpAddress)) {
+				redis.delete(ClientConstants.LOGIN_USER_TOKEN_REDIS_PREFIX + userCode + "_" + redisIpAddress);
+			}
+			// 当前用户的ip存入redis，以userToken_userCode为key，value是对应的ip地址
+			redis.opsForValue().set(redisUserIpKey, currentIpAddress, ClientConstants.LOGIN_USER_TOKEN_REDIS_HOURS_TIME_OUT, TimeUnit.HOURS);
+			// 用户token存入redis，以userToken_userCode_ipAddress为key
+			String redisUserTokenKey = ClientConstants.LOGIN_USER_TOKEN_REDIS_PREFIX + userCode + "_" + currentIpAddress;
+			redis.opsForValue().set(redisUserTokenKey, userToken, ClientConstants.LOGIN_USER_TOKEN_REDIS_HOURS_TIME_OUT, TimeUnit.HOURS);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return userToken;
 	} 
 }

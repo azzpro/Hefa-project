@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
+import com.hefa.order.pojo.bo.ConfirmOrderDeliveryParam;
 import com.hefa.order.pojo.bo.SearchOrderInfoParam;
 import com.hefa.order.pojo.vo.OrderDetail;
 import com.hefa.order.pojo.vo.OrderInfo;
@@ -26,6 +27,16 @@ import com.hefa.order.pojo.vo.OrderInfo;
  */
 @FeignClient(name = "hefa-order-service")
 public interface ClientOrderService {
+	
+	/**
+	 * 
+	 * <p>客户确认送达</p>
+	 * @param param
+	 * @return
+	 * @author 黄智聪  2019年5月16日 下午4:58:38
+	 */
+	@RequestMapping("/hefa/api/client/order/confirmOrderDelivery")
+	JsonResult<String> confirmOrderDelivery(@RequestBody ConfirmOrderDeliveryParam param);
 	
 	/**
 	 * 

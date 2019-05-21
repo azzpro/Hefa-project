@@ -7,6 +7,7 @@ spring:
     database: 0
     host: 192.168.1.222
     #host: 120.78.162.226
+    #host: 192.168.1.222
     port: 6379
     password: AgPaYRedis6
   aop:

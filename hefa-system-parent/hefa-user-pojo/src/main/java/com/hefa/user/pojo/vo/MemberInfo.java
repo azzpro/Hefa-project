@@ -6,6 +6,7 @@ public class MemberInfo {
 	private String regMail;//注册邮箱
 	private String regTime;//注册时间
 	private String userCode;//会员编号
+	private String username;// 用户名
 	public String getPhone() {
 		return phone;
 	}
@@ -35,6 +36,12 @@ public class MemberInfo {
 	}
 	public void setUserCode(String userCode) {
 		this.userCode = userCode;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 	
