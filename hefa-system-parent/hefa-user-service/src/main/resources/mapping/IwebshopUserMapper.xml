@@ -49,7 +49,7 @@
   </update>
   
   <select id="getMemberUserList" resultType="com.hefa.user.pojo.vo.MemberInfo" parameterType="com.hefa.user.pojo.bo.MemberParam">
-  	select b.mobile phone,pu.user_name RecommendUser,b.email regMail,DATE_FORMAT(b.time,'%Y-%m-%d') regTime,a.id userCode
+  	select b.mobile phone,pu.user_name RecommendUser,b.email regMail,DATE_FORMAT(b.time,'%Y-%m-%d') regTime,a.id userCode,a.username as username
   	from iwebshop_user a
   	left join iwebshop_member b on a.id = b.user_id
   	left join client_user_salesman c on c.user_code = a.id
