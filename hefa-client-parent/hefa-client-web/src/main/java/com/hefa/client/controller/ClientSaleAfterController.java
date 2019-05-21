@@ -1,9 +1,6 @@
 package com.hefa.client.controller;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,7 +12,6 @@ import com.hefa.common.page.Pagination;
 import com.hefa.user.api.PlatfromSaleAfterService;
 import com.hefa.user.pojo.PlatformSaleAfter;
 import com.hefa.user.pojo.bo.ServiceSaleAfterParam;
-import com.hefa.user.pojo.bo.UpdateSaleInfo;
 import com.hefa.user.pojo.vo.SaleAfterInfo;
 import com.hefa.user.pojo.vo.ServiceSaleInfo;
 
