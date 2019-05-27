@@ -22,6 +22,8 @@ public class OrderItemInfo {
 	private String productCode;
 	
 	private String productName;
+	
+	private String productModuleNo;
 
     private String specificationInfo;
 

@@ -202,6 +202,7 @@
 		coi.product_code AS productCode,
 		coi.product_price AS productPrice,
 		coi.product_name AS productName,
+		ig.goods_no AS productModuleNo,
 		coi.quantity AS quantity,
 		coi.specification_info AS specificationInfo,
 		coi.total_discount_product_price AS totalDiscountProductPrice,
@@ -209,6 +210,7 @@
 		coi.product_discount as productDiscount
 	FROM
 		client_order_item coi
+	join iwebshop_goods ig on coi.product_code = ig.id
 	WHERE coi.order_code = #{orderCode}
   </select>
 </mapper>
