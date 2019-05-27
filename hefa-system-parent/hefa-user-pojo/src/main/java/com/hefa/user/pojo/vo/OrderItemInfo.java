@@ -23,7 +23,7 @@ public class OrderItemInfo {
 	
 	private String productName;
 	
-	private String productModuleNo;
+	private String productModelNo;
 
     private String specificationInfo;
 

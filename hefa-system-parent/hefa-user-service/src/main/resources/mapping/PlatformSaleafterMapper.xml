@@ -104,7 +104,7 @@
     SELECT
 		coi.product_code AS productCode,
 		coi.product_name AS productName,
-		ig.goods_no AS productModuleNo,
+		ig.goods_no AS productModelNo,
 		coi.product_price AS productPrice,
 		coi.quantity AS quantity,
 		coi.specification_info AS specificationInfo,

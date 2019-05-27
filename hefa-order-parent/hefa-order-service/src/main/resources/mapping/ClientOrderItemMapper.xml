@@ -202,7 +202,7 @@
 		coi.product_code AS productCode,
 		coi.product_price AS productPrice,
 		coi.product_name AS productName,
-		ig.goods_no AS productModuleNo,
+		ig.goods_no AS productModelNo,
 		coi.quantity AS quantity,
 		coi.specification_info AS specificationInfo,
 		coi.total_discount_product_price AS totalDiscountProductPrice,
