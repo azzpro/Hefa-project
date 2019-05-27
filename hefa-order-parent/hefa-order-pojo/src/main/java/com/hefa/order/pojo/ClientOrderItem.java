@@ -48,6 +48,14 @@ public class ClientOrderItem implements Serializable {
      * @mbg.generated
      */
     private BigDecimal productPrice;
+    
+    
+    private BigDecimal productTip;
+	
+	private BigDecimal productDiscount;
+	
+	private BigDecimal totalDiscountProductPrice;
+    
 
     /**
      * 下单数量
@@ -394,5 +402,29 @@ public class ClientOrderItem implements Serializable {
 
 	public void setProductName(String productName) {
 		this.productName = productName;
+	}
+
+	public BigDecimal getProductTip() {
+		return productTip;
+	}
+
+	public void setProductTip(BigDecimal productTip) {
+		this.productTip = productTip;
+	}
+
+	public BigDecimal getProductDiscount() {
+		return productDiscount;
+	}
+
+	public void setProductDiscount(BigDecimal productDiscount) {
+		this.productDiscount = productDiscount;
+	}
+
+	public BigDecimal getTotalDiscountProductPrice() {
+		return totalDiscountProductPrice;
+	}
+
+	public void setTotalDiscountProductPrice(BigDecimal totalDiscountProductPrice) {
+		this.totalDiscountProductPrice = totalDiscountProductPrice;
 	}
 }

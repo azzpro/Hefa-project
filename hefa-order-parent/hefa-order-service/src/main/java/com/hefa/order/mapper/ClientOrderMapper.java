@@ -8,6 +8,7 @@ import com.hefa.order.pojo.ClientOrder;
 import com.hefa.order.pojo.bo.SearchCommissionOrderInfoParam;
 import com.hefa.order.pojo.bo.SearchOrderInfoParam;
 import com.hefa.order.pojo.vo.CommissionOrderInfo;
+import com.hefa.order.pojo.vo.Discount;
 import com.hefa.order.pojo.vo.ExportOrderInfo;
 import com.hefa.order.pojo.vo.OrderInfo;
 import com.hefa.order.pojo.vo.ShippingAddressInfo;
@@ -90,4 +91,13 @@ public interface ClientOrderMapper {
      * @author 黄智聪  2019年5月10日 下午3:56:28
      */
     List<ExportOrderInfo> getExportOrderInfos(SearchCommissionOrderInfoParam param);
+    
+    /**
+     * 
+     * <p>获取折扣信息</p>
+     * @param productCode
+     * @return
+     * @author 黄智聪  2019年5月24日 下午9:28:26
+     */
+    Discount getDiscountByProductCode(String productCode);
 }

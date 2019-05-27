@@ -31,5 +31,13 @@ public class ShoppingCartInfo {
 	
 	private String specificationInfo;
 	
+	private Integer quantity;
+
+    private BigDecimal productDiscount;
+    
+    private BigDecimal productTip;
+    
+    private BigDecimal totalDiscountProductPrice;
+	
 }
 

@@ -22,11 +22,13 @@ import com.hefa.order.api.client.SelectionService;
 import com.hefa.order.pojo.bo.AddSelectionRecordToShoppingCartParam;
 import com.hefa.order.pojo.bo.AddToShoppingCartParam;
 import com.hefa.order.pojo.bo.GenerateOrderParam;
+import com.hefa.order.pojo.bo.GetSelectionProductInfoParam;
 import com.hefa.order.pojo.bo.RemoveSelectionRecordParam;
 import com.hefa.order.pojo.bo.RemoveShoppingCartProductParam;
 import com.hefa.order.pojo.bo.SearchSelectionInfoParam;
 import com.hefa.order.pojo.vo.ModelInfo;
 import com.hefa.order.pojo.vo.PayOrderInfo;
+import com.hefa.order.pojo.vo.SelectionProduct;
 import com.hefa.order.pojo.vo.SelectionProductInfo;
 import com.hefa.order.pojo.vo.ShoppingCartInfo;
 
@@ -160,5 +162,28 @@ public class SelectionController {
 		return selectionService.getPayOrderInfo(orderCode);
 	}
 	
+	/**
+	 * 
+	 * <p>获取订单产品列表</p>
+	 * @param param
+	 * @return
+	 * @author 黄智聪  2019年5月5日 下午5:53:01
+	 */
+	@RequestMapping(value = "getSelectionOrderProductInfos")
+	public JsonResult<List<ShoppingCartInfo>> getSelectionOrderProductInfos(){
+		return selectionService.getSelectionOrderProductInfos(WebUtils.getLoginUser().getUserCode());
+	}
+	
+	/**
+	 * 
+	 * <p>根据产品购买数量，获取产品折扣信息</p>
+	 * @param param
+	 * @return
+	 * @author 黄智聪  2019年5月27日 下午2:42:19
+	 */
+	@RequestMapping("getSelectionProductInfoByQuantity")
+	public JsonResult<SelectionProduct> getSelectionProductInfoByQuantity(GetSelectionProductInfoParam param){
+		return selectionService.getSelectionProductInfoByQuantity(param);
+	}
 }
 

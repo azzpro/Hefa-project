@@ -1,6 +1,6 @@
 /*******************************************************************************
  * Project Key : CPPII
- * Create on 2019年4月22日 下午8:19:53
+ * Create on 2019年5月24日 下午9:22:42
  * Copyright (c) 2018. 爱智造.
  * 注意：本内容仅限于爱智造内部传阅，禁止外泄以及用于其他的商业目的
  ******************************************************************************/
@@ -14,28 +14,21 @@ import lombok.Data;
 /**
  * <P>TODO</P>
  * @version 1.0
- * @author 黄智聪  2019年4月22日 下午8:19:53
+ * @author 黄智聪  2019年5月24日 下午9:22:42
  */
 @Data
-public class OrderItemInfo {
+public class Discount {
 
-	private String productCode;
+	// 购买数量区间
+	private String productQuantitySection;
 	
-	private String productName;
-
-    private String specificationInfo;
-
-    private BigDecimal productPrice;
-
-    private Integer quantity;
-    
-    private BigDecimal productTip;
+	// 折扣系数区间
+	private String productDiscountSection;
 	
-	private BigDecimal productDiscount;
-    
-    private BigDecimal totalDiscountProductPrice;
-    
-    
-    
+	// 零头区间
+	private String productTipSection;
+	
+	private BigDecimal productPrice;
+
 }
 
