@@ -494,9 +494,9 @@ public class SelectionService {
 		String productDiscount = "1.00";// 折扣率   默认无折扣1.00
 		String productTip = "0";// 零头  默认无零头
 		// 折扣策略
-		if (discount != null && discount.getProductQuantitySection() != null 
-				&& discount.getProductDiscountSection() != null 
-				&& discount.getProductTipSection() != null ) {
+		if (discount != null && !StringUtils.isBlank(discount.getProductQuantitySection()) 
+				&& !StringUtils.isBlank(discount.getProductDiscountSection())
+				&& !StringUtils.isBlank(discount.getProductTipSection())) {
 			// 产品数量区间
 			String[] productQuantitySection = settleString(discount.getProductQuantitySection());
 			// 折扣区间
