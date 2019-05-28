@@ -510,12 +510,12 @@ public class SelectionService {
 				if (Integer.parseInt(productQuantitySection[i]) < productCount) {
 					if (i == lastQuantitySectionIndex) { // 是否为最后一位
 						productDiscount = getProductDiscount(productDiscountSection, i + 1);
-						productTip = getProductOdd(productTipSection, i + 1);
+						productTip = getProductTip(productTipSection, i + 1);
 					}
 					continue;
 				} else {
 					productDiscount = getProductDiscount(productDiscountSection, i);
-					productTip = getProductOdd(productTipSection, i);
+					productTip = getProductTip(productTipSection, i);
 					break;
 				}
 			}
@@ -531,7 +531,7 @@ public class SelectionService {
 		return str.replace("；", ";").split(";");
 	}
 
-	private static String getProductOdd(String[] productTipSection, int index) {
+	private static String getProductTip(String[] productTipSection, int index) {
 		String productTip = null;
 		try {
 			productTip = productTipSection[index];
@@ -583,12 +583,12 @@ public class SelectionService {
 				if (Integer.parseInt(productQuantitySection[i]) < productCount) {
 					if (i == lastQuantitySectionIndex) { // 是否为最后一位
 						productDiscount = getProductDiscount(productDiscountSection, i + 1);
-						productTip = getProductOdd(productTipSection, i + 1);
+						productTip = getProductTip(productTipSection, i + 1);
 					}
 					continue;
 				} else {
 					productDiscount = getProductDiscount(productDiscountSection, i);
-					productTip = getProductOdd(productTipSection, i);
+					productTip = getProductTip(productTipSection, i);
 					break;
 				}
 			}
