@@ -168,5 +168,26 @@ public class ClientOrderService {
 		return JsonResult.successJsonResult();
 	}
 	
+	/**
+	 * 
+	 * <p>客户订单是否支付成功</p>
+	 * @return
+	 * @author 黄智聪  2018年11月26日 下午5:15:27
+	 */
+	public JsonResult<String> checkClientOrderPaySuccess(String orderCode){
+		OrderInfo order = clientOrderMapper.getOrderInfoByOrderCode(orderCode);
+		if(order == null) {
+			throw new ReturnDataException("订单不存在");
+		}
+		int currentOrderStatus = order.getOrderStatus();
+		if(OrderStatus.CLOSED.getValue() == currentOrderStatus) {
+			throw new ReturnDataException("订单已关闭");
+		}
+		if(OrderStatus.NOT_PAID.getValue() == currentOrderStatus) {
+			throw new ReturnDataException("客户订单未支付");
+		}
+		return JsonResult.successJsonResult();
+	}
+	
 }
 
