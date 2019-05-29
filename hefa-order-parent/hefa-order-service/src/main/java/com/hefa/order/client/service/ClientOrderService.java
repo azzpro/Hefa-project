@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageHelper;
 import com.hefa.common.base.JsonResult;
+import com.hefa.common.constants.ClientConstants.PayStatus;
 import com.hefa.common.constants.PlatformConstants.OrderStatus;
 import com.hefa.common.exception.ReturnDataException;
 import com.hefa.common.exception.ValidationException;
@@ -28,6 +29,7 @@ import com.hefa.order.mapper.ClientOrderMapper;
 import com.hefa.order.mapper.ClientOrderStatusMapper;
 import com.hefa.order.pojo.ClientOrder;
 import com.hefa.order.pojo.ClientOrderStatus;
+import com.hefa.order.pojo.bo.CallBackParam;
 import com.hefa.order.pojo.bo.ConfirmOrderDeliveryParam;
 import com.hefa.order.pojo.bo.SearchOrderInfoParam;
 import com.hefa.order.pojo.vo.OrderDetail;
@@ -125,6 +127,46 @@ public class ClientOrderService {
 		return JsonResult.successJsonResult(new OrderDetail(orderInfo, orderItems));
 	}
 	
+	/**
+	 * 
+	 * <p>订单支付成功后的操作，供支付回调使用</p>
+	 * @param param
+	 * @return
+	 * @author 黄智聪  2019年5月29日 上午11:10:01
+	 */
+	public JsonResult<String> clientOrderPaySuccessOpt(@RequestBody CallBackParam param){
+		JSR303ValidateUtils.validateInputParam(param);
+		String orderCode = param.getOrderCode();
+		OrderInfo order = clientOrderMapper.getOrderInfoByOrderCode(orderCode);
+		if(order == null) {
+			throw new ReturnDataException("客户订单不存在");
+		}
+		if(OrderStatus.NOT_PAID.getValue() != order.getOrderStatus()) {
+			throw new ReturnDataException("客户订单状态异常");
+		}
+		Date nowDate = new Date();
+		// 修改订单
+		ClientOrder clientOrderRecord = ClientOrder.builder()
+				.orderCode(orderCode)
+				.orderStatus((byte)OrderStatus.NOT_DELIVERED.getValue())
+				.paymentMethod(param.getPayMethod().byteValue())
+				.paymentType(param.getOrderType().byteValue())
+				.paymentStatus((byte)PayStatus.PAY_SUCCESS.getValue())
+				.modifyTime(nowDate)
+				.build();
+		clientOrderMapper.updateByOrderCodeSelective(clientOrderRecord);
+		
+		// 新增客户订单状态变更记录
+		ClientOrderStatus clientOrderStatusRecord = ClientOrderStatus.builder()
+				.createTime(nowDate)
+				.orderCode(orderCode)
+				.orderStatus(OrderStatus.NOT_DELIVERED.getValue())
+				.remark("订单支付成功，生成待发货订单")
+				.build();
+		clientOrderStatusMapper.insertSelective(clientOrderStatusRecord);
+		
+		return JsonResult.successJsonResult();
+	}
 	
 }
 

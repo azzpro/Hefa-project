@@ -212,5 +212,34 @@ public abstract class ClientConstants {
 		}*/
 		
     }
+    
+    /**
+	 * 
+	 * <P>支付状态</P>
+	 * @version 1.0
+	 * @author 黄智聪  2018年11月23日 下午6:43:19
+	 */
+	public enum PayStatus {
+		
+		NOT_PAID(1, "待支付"),
+
+    	PAY_SUCCESS(2, "支付成功"),
+    	
+		PAY_CLOSED(3, "关闭支付"),
+		
+		PAY_FAILED(4, "支付失败");
+		
+    	@Getter
+    	private int value;
+
+    	@Getter
+    	private String desc;
+
+    	PayStatus(int value, String desc) {
+    	    this.value = value;
+    	    this.desc = desc;
+    	}
+        
+    }
 	
 }
