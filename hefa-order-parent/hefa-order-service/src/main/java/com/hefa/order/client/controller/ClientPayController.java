@@ -9,7 +9,6 @@ package com.hefa.order.client.controller;
 
 import java.util.Map;
 
-import org.apache.poi.ss.usermodel.PageOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,10 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
 import com.hefa.order.client.service.ClientPayService;
-import com.hefa.order.pojo.ClientPay;
-import com.hefa.order.pojo.RetBean;
-import com.hefa.order.pojo.bo.PayList;
-import com.hefa.order.pojo.vo.BankBranch;
+import com.hefa.order.pojo.yeepay.BankBranch;
+import com.hefa.order.pojo.yeepay.ClientPay;
+import com.hefa.order.pojo.yeepay.PageOrder;
+import com.hefa.order.pojo.yeepay.PayList;
+import com.hefa.order.pojo.yeepay.RetBean;
 
 /**
  * <P>TODO</P>
@@ -31,7 +31,7 @@ import com.hefa.order.pojo.vo.BankBranch;
  * @author 刘建麟  2018年11月26日 下午3:09:13
  */
 @RestController
-@RequestMapping("/azz/api/pay")
+@RequestMapping("/hefa/api/pay")
 public class ClientPayController {
 	
 	@Autowired

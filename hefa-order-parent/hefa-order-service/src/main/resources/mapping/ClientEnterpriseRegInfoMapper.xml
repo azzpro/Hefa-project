@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hefa.order.mapper.ClientEnterpriseRegInfoMapper">
+  <resultMap id="BaseResultMap" type="com.hefa.order.pojo.yeepay.Enterprisereginfoadd">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="mer_full_name" jdbcType="VARCHAR" property="merFullName" />
+    <result column="mer_short_name" jdbcType="VARCHAR" property="merShortName" />
+    <result column="mer_cert_no" jdbcType="VARCHAR" property="merCertNo" />
+    <result column="mer_cert_type" jdbcType="VARCHAR" property="merCertType" />
+    <result column="legal_name" jdbcType="VARCHAR" property="legalName" />
+    <result column="legal_id_card" jdbcType="VARCHAR" property="legalIdCard" />
+    <result column="mer_contact_name" jdbcType="VARCHAR" property="merContactName" />
+    <result column="mer_contact_phone" jdbcType="VARCHAR" property="merContactPhone" />
+    <result column="mer_contact_email" jdbcType="VARCHAR" property="merContactEmail" />
+    <result column="mer_levelf_no" jdbcType="VARCHAR" property="merLevelfNo" />
+    <result column="mer_levels_no" jdbcType="VARCHAR" property="merLevelsNo" />
+    <result column="mer_province" jdbcType="VARCHAR" property="merProvince" />
+    <result column="mer_city" jdbcType="VARCHAR" property="merCity" />
+    <result column="mer_district" jdbcType="VARCHAR" property="merDistrict" />
+    <result column="mer_address" jdbcType="VARCHAR" property="merAddress" />
+    <result column="tax_regist_cert" jdbcType="VARCHAR" property="taxRegistCert" />
+    <result column="account_license" jdbcType="VARCHAR" property="accountLicense" />
+    <result column="org_code" jdbcType="VARCHAR" property="orgCode" />
+    <result column="org_code_expiry" jdbcType="VARCHAR" property="orgCodeExpiry" />
+    <result column="is_org_code_long" jdbcType="VARCHAR" property="isOrgCodeLong" />
+    <result column="card_no" jdbcType="VARCHAR" property="cardNo" />
+    <result column="head_bank_code" jdbcType="VARCHAR" property="headBankCode" />
+    <result column="bank_code" jdbcType="VARCHAR" property="bankCode" />
+    <result column="bank_province" jdbcType="VARCHAR" property="bankProvince" />
+    <result column="bank_city" jdbcType="VARCHAR" property="bankCity" />
+    <result column="product_info" jdbcType="VARCHAR" property="productInfo" />
+    <result column="request_no" jdbcType="VARCHAR" property="requestNo" />
+    <result column="parent_merchant_no" jdbcType="VARCHAR" property="parentMerchantNo" />
+    <result column="mer_authorize_type" jdbcType="VARCHAR" property="merAuthorizeType" />
+    <result column="business_function" jdbcType="VARCHAR" property="businessFunction" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="merchant_no" jdbcType="VARCHAR" property="merchantNo" />
+    <result column="legal_front_pic" jdbcType="VARCHAR" property="legalFrontPic" />
+    <result column="legal_back_pic" jdbcType="VARCHAR" property="legalBackPic" />
+    <result column="open_account_pic" jdbcType="VARCHAR" property="openAccountPic" />
+    <result column="business_pic" jdbcType="VARCHAR" property="businessPic" />
+    <result column="icp_auth_pic" jdbcType="VARCHAR" property="icpAuthPic" />
+  </resultMap>
+  
+  <!-- 根据子商编查询 商户详情 -->
+  <select id="selectEnterpriseInfoByMerchantNo" resultMap="BaseResultMap">
+  	select * from merchant_yee_enterprise_account where merchant_no = #{merchantNo}
+  </select>
+  
+  <!-- 根据商户全称和开卡号 查询状态 -->
+  <select id="selectStatusByCardNoAndMerFullName" resultType="java.lang.String">
+  	select status from merchant_yee_enterprise_account
+  	where card_no = #{cn} and mer_full_name = #{mfn}
+  </select>
+ 
+ <update id="updateEnterpriseStatus">
+ 	update merchant_yee_enterprise_account set status = 1
+ </update> 
+  
+  <insert id="insertSelective" parameterType="com.hefa.order.pojo.yeepay.Enterprisereginfoadd" useGeneratedKeys="true" keyProperty="id">
+    insert into merchant_yee_enterprise_account
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="merFullName != null">
+        mer_full_name,
+      </if>
+      <if test="merShortName != null">
+        mer_short_name,
+      </if>
+      <if test="merCertNo != null">
+        mer_cert_no,
+      </if>
+      <if test="merCertType != null">
+        mer_cert_type,
+      </if>
+      <if test="legalName != null">
+        legal_name,
+      </if>
+      <if test="legalIdCard != null">
+        legal_id_card,
+      </if>
+      <if test="merContactName != null">
+        mer_contact_name,
+      </if>
+      <if test="merContactPhone != null">
+        mer_contact_phone,
+      </if>
+      <if test="merContactEmail != null">
+        mer_contact_email,
+      </if>
+      <if test="merLevelfNo != null">
+        mer_levelf_no,
+      </if>
+      <if test="merLevelsNo != null">
+        mer_levels_no,
+      </if>
+      <if test="merProvince != null">
+        mer_province,
+      </if>
+      <if test="merCity != null">
+        mer_city,
+      </if>
+      <if test="merDistrict != null">
+        mer_district,
+      </if>
+      <if test="merAddress != null">
+        mer_address,
+      </if>
+      <if test="taxRegistCert != null">
+        tax_regist_cert,
+      </if>
+      <if test="accountLicense != null">
+        account_license,
+      </if>
+      <if test="orgCode != null">
+        org_code,
+      </if>
+      <if test="orgCodeExpiry != null">
+        org_code_expiry,
+      </if>
+       <if test="isOrgCodeLong != null">
+        is_org_code_long,
+      </if>
+       <if test="cardNo != null">
+        card_no,
+      </if>
+       <if test="headBankCode != null">
+        head_bank_code,
+      </if>
+       <if test="bankCode != null">
+        bank_code,
+      </if>
+       <if test="bankProvince != null">
+        bank_province,
+      </if>
+       <if test="bankCity != null">
+        bank_city,
+      </if>
+       <if test="productInfo != null">
+        product_info,
+      </if>
+      <if test="requestNo != null">
+        request_no,
+      </if>
+      <if test="parentMerchantNo != null">
+        parent_merchant_no,
+      </if>
+      <if test="merAuthorizeType != null">
+        mer_authorize_type,
+      </if>
+      <if test="businessFunction != null">
+        business_function,
+      </if>
+       <if test="status != null">
+        status,
+      </if>
+      <if test="merchantNo != null">
+        merchant_no,
+      </if>
+      <if test="legalFrontPic != null">
+        legal_front_pic,
+      </if>
+      <if test="legalBackPic != null">
+        legal_back_pic,
+      </if>
+      <if test="openAccountPic != null">
+        open_account_pic,
+      </if>
+      <if test="businessPic != null">
+        business_pic,
+      </if>
+      <if test="icpAuthPic != null">
+        icp_auth_pic,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="merFullName != null">
+        #{merFullName,jdbcType=VARCHAR},
+      </if>
+      <if test="merShortName != null">
+        #{merShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="merCertNo != null">
+        #{merCertNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merCertType != null">
+        #{merCertType,jdbcType=VARCHAR},
+      </if>
+      <if test="legalName != null">
+        #{legalName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalIdCard != null">
+        #{legalIdCard,jdbcType=VARCHAR},
+      </if>
+      <if test="merContactName != null">
+        #{merContactName,jdbcType=VARCHAR},
+      </if>
+      <if test="merContactPhone != null">
+        #{merContactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="merContactEmail != null">
+        #{merContactEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="merLevelfNo != null">
+        #{merLevelfNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merLevelsNo != null">
+        #{merLevelsNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merProvince != null">
+        #{merProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="merCity != null">
+        #{merCity,jdbcType=VARCHAR},
+      </if>
+      <if test="merDistrict != null">
+        #{merDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="merAddress != null">
+        #{merAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="taxRegistCert != null">
+        #{taxRegistCert,jdbcType=VARCHAR},
+      </if>
+      <if test="accountLicense != null">
+        #{accountLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCodeExpiry != null">
+        #{orgCodeExpiry,jdbcType=VARCHAR},
+      </if>
+      <if test="isOrgCodeLong != null">
+        #{isOrgCodeLong,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null">
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="headBankCode != null">
+        #{headBankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null">
+        #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankProvince != null">
+        #{bankProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCity != null">
+        #{bankCity,jdbcType=VARCHAR},
+      </if>
+      <if test="productInfo != null">
+        #{productInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="requestNo != null">
+        #{requestNo,jdbcType=VARCHAR},
+      </if>
+      <if test="parentMerchantNo != null">
+        #{parentMerchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="merAuthorizeType != null">
+        #{merAuthorizeType,jdbcType=VARCHAR},
+      </if>
+      <if test="businessFunction != null">
+        #{businessFunction,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+       <if test="merchantNo != null">
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="legalFrontPic != null">
+        #{legalFrontPic,jdbcType=VARCHAR},
+      </if>
+      <if test="legalBackPic != null">
+        #{legalBackPic,jdbcType=VARCHAR},
+      </if>
+      <if test="openAccountPic != null">
+        #{openAccountPic,jdbcType=VARCHAR},
+      </if>
+      <if test="businessPic != null">
+        #{businessPic,jdbcType=VARCHAR},
+      </if>
+      <if test="icpAuthPic != null">
+        #{icpAuthPic,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

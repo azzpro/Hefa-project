@@ -167,64 +167,7 @@ public abstract class ClientConstants {
     	}
     }
 
-    public enum PayStatus {
-		
-		NOT_PAID(1, "待支付"),
-
-    	PAY_SUCCESS(2, "支付成功"),
-    	
-		PAY_CLOSED(3, "关闭支付"),
-		
-		PAY_FAILED(4, "支付失败");
-		
-    	@Getter
-    	private int value;
-
-    	@Getter
-    	private String desc;
-
-    	PayStatus(int value, String desc) {
-    	    this.value = value;
-    	    this.desc = desc;
-    	}
-        
-    }
-    public enum ClientOrderStatus {
-
-    NOT_PAID(7, "待支付"),
-
-    NOT_CONFIRMED(8, "待确认"),
-
-    NOT_ALLOCATED(9, "待配货"),
-
-    NOT_SIGNED(10, "待签收"),
-
-    COMPLETED(11, "已完成"),
     
-    CLOSED(12, "已关闭");
-
-    @Getter
-    private int value;
-
-    @Getter
-    private String desc;
-
-    ClientOrderStatus(int value, String desc) {
-        this.value = value;
-        this.desc = desc;
-    }
-    
-    public static boolean checkStatusExist(int value) {
-    	ClientOrderStatus[] values = ClientOrderStatus.values();
-        for (ClientOrderStatus status : values) {
-            if (status.getValue() == value) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-}
 
  /**
  * 
@@ -318,6 +261,34 @@ public enum ClientOrderOperationType {
 		}*/
 		
     }
+    
+    /**
+	 * 
+	 * <P>支付状态</P>
+	 * @version 1.0
+	 * @author 黄智聪  2018年11月23日 下午6:43:19
+	 */
+	public enum PayStatus {
+		
+		NOT_PAID(1, "待支付"),
 
+    	PAY_SUCCESS(2, "支付成功"),
+    	
+		PAY_CLOSED(3, "关闭支付"),
+		
+		PAY_FAILED(4, "支付失败");
+		
+    	@Getter
+    	private int value;
+
+    	@Getter
+    	private String desc;
+
+    	PayStatus(int value, String desc) {
+    	    this.value = value;
+    	    this.desc = desc;
+    	}
+        
+    }
 	
 }

@@ -5,46 +5,44 @@
  * 注意：本内容仅限于爱智造内部传阅，禁止外泄以及用于其他的商业目的
  ******************************************************************************/
  
-package com.azz.order.api.client;
+package com.hefa.order.api.client;
 
 import java.util.Map;
 
-import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.azz.core.common.JsonResult;
-import com.azz.core.common.page.Pagination;
-import com.azz.order.client.pojo.ClientPay;
-import com.azz.order.client.pojo.RetBean;
-import com.azz.order.client.pojo.bo.BankBranch;
-import com.azz.order.client.pojo.bo.EnterprisereginfoCopy;
-import com.azz.order.client.pojo.bo.PageOrder;
-import com.azz.order.client.pojo.bo.PayList;
-import com.azz.order.client.pojo.bo.Personreginfo;
+import com.hefa.common.base.JsonResult;
+import com.hefa.common.page.Pagination;
+import com.hefa.order.pojo.yeepay.BankBranch;
+import com.hefa.order.pojo.yeepay.ClientPay;
+import com.hefa.order.pojo.yeepay.PageOrder;
+import com.hefa.order.pojo.yeepay.PayList;
+import com.hefa.order.pojo.yeepay.RetBean;
 
 /**
  * <P>TODO</P>
  * @version 1.0
  * @author 刘建麟  2018年11月26日 下午3:19:35
  */
-@FeignClient("azz-order-service")
+@FeignClient("hefa-order-service")
 public interface ClientPayService {
 	
 	/**
 	 * <p>分账回调</p>
 	 * @author 刘建麟  2018年12月17日 下午6:27:10
 	 */
-	@RequestMapping(value="/azz/api/pay/divideNotify",method=RequestMethod.POST)
+	@RequestMapping(value="/hefa/api/pay/divideNotify",method=RequestMethod.POST)
 	public JsonResult<RetBean> divideNotify(@RequestParam("responseMsg") String responseMsg,@RequestParam("customerId") String customerId);
 	
 	/**
 	 * <p>支付回调</p>
 	 * @author 刘建麟  2018年12月17日 下午6:27:10
 	 */
-	@RequestMapping(value="/azz/api/pay/payNotify",method=RequestMethod.POST)
+	@RequestMapping(value="/hefa/api/pay/payNotify",method=RequestMethod.POST)
 	public JsonResult<RetBean> payNotify(@RequestParam("responseMsg") String responseMsg,@RequestParam("customerId") String customerId);
 	
 	/**
@@ -53,7 +51,7 @@ public interface ClientPayService {
 	 * @return
 	 * @author 刘建麟  2018年11月26日 下午3:20:20
 	 */
-	@RequestMapping(value="/azz/api/pay/submitOrderPay",method=RequestMethod.POST)
+	@RequestMapping(value="/hefa/api/pay/submitOrderPay",method=RequestMethod.POST)
 	public Map<String,Object> submitOrderPay(@RequestBody PageOrder po);
 	
 	/**
@@ -62,7 +60,7 @@ public interface ClientPayService {
 	 * @param po
 	 * @return
 	 */
-	@RequestMapping("/azz/api/pay/getBankBranchInfo")
+	@RequestMapping("/hefa/api/pay/getBankBranchInfo")
 	public Map<String,String> getBankBranchInfo(@RequestBody BankBranch bb);
 		
 	
@@ -72,7 +70,7 @@ public interface ClientPayService {
 	 * @return
 	 * @author 刘建麟  2018年12月3日 下午2:46:08
 	 */
-	@RequestMapping("/azz/api/pay/toPayList")
+	@RequestMapping("/hefa/api/pay/toPayList")
 	public JsonResult<Pagination<ClientPay>> toPayList(@RequestBody PayList pl);
 	
 	/**
@@ -84,7 +82,7 @@ public interface ClientPayService {
 	 * @return
 	 * @author 刘建麟 2018年10月31日 上午11:29:49
 	 */
-	@RequestMapping("/azz/api/pay/getOrderInfo")
+	@RequestMapping("/hefa/api/pay/getOrderInfo")
 	public JsonResult<ClientPay> getOrderInfo(@RequestParam("number") String number) ;
 }
 

@@ -34,27 +34,26 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageHelper;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.constants.ClientConstants;
-import com.hefa.common.constants.ClientConstants.ClientOrderStatus;
 import com.hefa.common.constants.ClientConstants.PayMethod;
 import com.hefa.common.constants.ClientConstants.PayStatus;
-import com.hefa.common.constants.FileConstants;
 import com.hefa.common.constants.FileConstantsYeepay;
 import com.hefa.common.constants.MerchantConstants;
 import com.hefa.common.constants.PayConstants;
 import com.hefa.common.constants.PayConstants.PayCode;
 import com.hefa.common.constants.PayConstants.RegCode;
 import com.hefa.common.constants.PayConstants.YeeCode;
+import com.hefa.common.constants.PlatformConstants.OrderStatus;
 import com.hefa.common.errorcode.SystemErrorCode;
 import com.hefa.common.exception.ValidationException;
 import com.hefa.common.page.Pagination;
 import com.hefa.order.mapper.ClientEnterpriseRegInfoMapper;
 import com.hefa.order.mapper.ClientPayMapper;
 import com.hefa.order.mapper.MerchantYeeBindMapper;
+import com.hefa.order.pojo.bo.CallBackParam;
 import com.hefa.order.pojo.vo.OrderDetail;
 import com.hefa.order.pojo.vo.OrderInfo;
 import com.hefa.order.pojo.yeepay.BankBranch;
@@ -162,7 +161,7 @@ public class ClientPayService {
 		if (detail == null || orderInfo == null) {
 			throw new ValidationException("客户订单不存在");
 		}
-		if (ClientOrderStatus.NOT_PAID.getValue() != orderInfo.getOrderStatus()) {
+		if (OrderStatus.NOT_PAID.getValue() != orderInfo.getOrderStatus()) {
 			throw new ValidationException("客户订单状态异常");
 		}
 		// 订单失效时间为订单创建时间 + 6小时
@@ -290,7 +289,7 @@ public class ClientPayService {
 		if (StringUtils.isNotBlank(url)) {
 			log.info("url---->" + url);
 			ClientPay clientPay = new ClientPay();
-			clientPay.setUserId(orderInfo.get);
+			clientPay.setUserId(orderInfo.getUserCode());
 			clientPay.setOrderMoney(orderInfo.getGrandTotal().toPlainString());
 			clientPay.setUserreqIp(po.getClientIp());
 			clientPay.setGoodsName(order.getGoodsName());
@@ -857,10 +856,10 @@ public class ClientPayService {
 				}
 				String orderCode = ppm.selectOrderCode(orderId);
 				CallBackParam cbp = new CallBackParam();
-				cbp.setClientOrderCode(orderCode);
+				cbp.setOrderCode(orderCode);
 				cbp.setPayMethod(PayMethod.ONLINE.getValue());
 				cbp.setOrderType(PayConstants.PayPlatForm.getNum(platformType));
-				selectService.clientOrderPaySuccessOpt(cbp);
+				cos.clientOrderPaySuccessOpt(cbp);
 				retBean.setRet_code(PayCode.SUCCESS.getCode());
 				retBean.setRet_msg(PayCode.SUCCESS.getDesc());
 				return new JsonResult<>(retBean);
@@ -1010,7 +1009,7 @@ public class ClientPayService {
 	 * @author 刘建麟 2018年12月17日 下午2:05:32
 	 */
 	private com.hefa.order.pojo.yeepay.OrderInfo createOrder(OrderInfo corderInfo) {
-		if (null == corderInfo || StringUtils.isBlank(corderInfo.get)) {
+		if (null == corderInfo || StringUtils.isBlank(corderInfo.getUserCode())) {
 			return null;
 		}
 		com.hefa.order.pojo.yeepay.OrderInfo orderInfo = new com.hefa.order.pojo.yeepay.OrderInfo();
@@ -1021,7 +1020,7 @@ public class ClientPayService {
 		orderInfo.setGoodsDesc("");
 		orderInfo.setRequestDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));// 下单时间
 		orderInfo.setUserType("USER_ID"); // 用户标示类型 默认USER_ID
-		//orderInfo.setUserNo(corderInfo.getClientUserCode());// 用户CODE
+		orderInfo.setUserNo(corderInfo.getUserCode());// 用户CODE
 		log.info("订单创建成功----->" + orderInfo);
 		return orderInfo;
 	}

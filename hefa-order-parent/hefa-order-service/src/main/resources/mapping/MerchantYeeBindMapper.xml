@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hefa.order.mapper.MerchantYeeBindMapper">
+  <resultMap id="BaseResultMap" type="com.hefa.order.pojo.yeepay.MerchantYeeBind">
+    <id column="id" property="id" jdbcType="BIGINT" />
+  <result column="merchant_id" property="merchantId"/>  
+  <result column="yee_merchant_no" property="yeeMerchantNo"/> 
+  <result column="bind_status" property="bindStatus"/> 
+</resultMap>
+  
+  <select id="selectBindByYeeNo" resultMap="BaseResultMap">
+  	select id,merchant_id,yee_merchant_no,bind_status from merchant_yee_bind
+  	where yee_merchant_no = #{no}
+  </select>
+  
+  <select id="selectBindByMerchantNo" resultMap="BaseResultMap">
+  	select id,merchant_id,yee_merchant_no,bind_status from merchant_yee_bind
+  	where merchant_id = #{no}
+  </select>
+  
+  <update id="updateBind">
+    update merchant_yee_bind
+      set bind_status = 1,
+    where yee_merchant_no = #{yee_merchant_no}
+  </update>
+  
+  <insert id="insertBind" parameterType="com.hefa.order.pojo.yeepay.MerchantYeeBind">
+    insert into merchant_yee_bind
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="merchantId != null">
+        merchant_id,
+      </if>
+      <if test="yeeMerchantNo != null">
+        yee_merchant_no,
+      </if>
+      <if test="bindStatus != null">
+        bind_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id},
+      </if>
+       <if test="merchantId != null">
+        #{merchantId},
+      </if>
+      <if test="yeeMerchantNo != null">
+        #{yeeMerchantNo},
+      </if>
+      <if test="bindStatus != null">
+        #{bindStatus},
+      </if>
+    </trim>
+  </insert>
+</mapper>
