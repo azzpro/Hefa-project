@@ -49,14 +49,21 @@ public class ClientWebConfig extends WebMvcConfigurationSupport {
     public void addInterceptors(InterceptorRegistry registry) {
     	InterceptorRegistration tokenInterceptor = registry.addInterceptor(getTokenInterceptor());
     	tokenInterceptor.addPathPatterns("/hefa/api/client/**");
-    	tokenInterceptor.excludePathPatterns("/hefa/api/client/member/login");
-    	tokenInterceptor.excludePathPatterns("/actuator/health");
-    	tokenInterceptor.excludePathPatterns("/actuator/health","/hefa/api/client/member/login");
+    	tokenInterceptor.excludePathPatterns("/actuator/health",
+    			"/hefa/api/client/member/login",
+    			"/hefa/api/pay/payNotify",
+    			"/hefa/api/pay/divideNotify",
+    			"/hefa/api/merchant/regEnterpriseNotify",
+    			"/hefa/api/cashWithdrawal/cashWithdrawalCallback");
     	
     	//tokenInterceptor.excludePathPatterns("/hefa/api/client/member/getUserInfo");
     	InterceptorRegistration signInterceptor = registry.addInterceptor(getSignInterceptor());
         signInterceptor.addPathPatterns("/hefa/api/client/selection/addProductToShoppingCart");
-        signInterceptor.excludePathPatterns("/actuator/health");
+        signInterceptor.excludePathPatterns("/actuator/health",
+    			"/hefa/api/pay/payNotify",
+    			"/hefa/api/pay/divideNotify",
+    			"/hefa/api/merchant/regEnterpriseNotify",
+    			"/hefa/api/cashWithdrawal/cashWithdrawalCallback");
     }
     
 }
