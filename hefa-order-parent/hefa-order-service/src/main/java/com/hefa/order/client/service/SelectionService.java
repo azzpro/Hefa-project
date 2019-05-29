@@ -399,6 +399,9 @@ public class SelectionService {
 		if(orderInfo == null) {
 			throw new ReturnDataException("订单信息不存在");
 		}
+		if(OrderStatus.NOT_PAID.getValue() != orderInfo.getOrderStatus()) {
+			throw new ReturnDataException("订单状态异常");
+		}
 		PayOrderInfo payOrderInfo = new PayOrderInfo();
 		payOrderInfo.setGrandTotal(orderInfo.getGrandTotal());
 		payOrderInfo.setOrderCode(orderCode);
