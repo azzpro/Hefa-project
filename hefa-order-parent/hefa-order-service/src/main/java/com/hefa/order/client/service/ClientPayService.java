@@ -290,7 +290,7 @@ public class ClientPayService {
 		if (StringUtils.isNotBlank(url)) {
 			log.info("url---->" + url);
 			ClientPay clientPay = new ClientPay();
-			clientPay.setUserId(orderInfo.getClientUserCode());
+			clientPay.setUserId(orderInfo.get);
 			clientPay.setOrderMoney(orderInfo.getGrandTotal().toPlainString());
 			clientPay.setUserreqIp(po.getClientIp());
 			clientPay.setGoodsName(order.getGoodsName());
@@ -1010,9 +1010,9 @@ public class ClientPayService {
 	 * @author 刘建麟 2018年12月17日 下午2:05:32
 	 */
 	private com.hefa.order.pojo.yeepay.OrderInfo createOrder(OrderInfo corderInfo) {
-		/*if (null == corderInfo || StringUtils.isBlank(corderInfo.get)) {
+		if (null == corderInfo || StringUtils.isBlank(corderInfo.get)) {
 			return null;
-		}*/
+		}
 		com.hefa.order.pojo.yeepay.OrderInfo orderInfo = new com.hefa.order.pojo.yeepay.OrderInfo();
 		orderInfo.setOrderId(LLPayUtil.getCurrentDateTimeStrE());// 订单编号
 		orderInfo.setTimestamp(LLPayUtil.getCurrentDateTimeStr());// 订单时间戳

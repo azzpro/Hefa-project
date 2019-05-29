@@ -11,7 +11,7 @@
 	</parent>
 	
 	<modules>
-		<module>azz-platform-web</module>
+		<module>hefa-platform-web</module>
 	</modules>
 	
 </project>

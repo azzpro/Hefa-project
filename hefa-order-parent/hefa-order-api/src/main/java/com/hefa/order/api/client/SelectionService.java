@@ -19,11 +19,13 @@ import com.hefa.common.page.Pagination;
 import com.hefa.order.pojo.bo.AddSelectionRecordToShoppingCartParam;
 import com.hefa.order.pojo.bo.AddToShoppingCartParam;
 import com.hefa.order.pojo.bo.GenerateOrderParam;
+import com.hefa.order.pojo.bo.GetSelectionProductInfoParam;
 import com.hefa.order.pojo.bo.RemoveSelectionRecordParam;
 import com.hefa.order.pojo.bo.RemoveShoppingCartProductParam;
 import com.hefa.order.pojo.bo.SearchSelectionInfoParam;
 import com.hefa.order.pojo.vo.ModelInfo;
 import com.hefa.order.pojo.vo.PayOrderInfo;
+import com.hefa.order.pojo.vo.SelectionProduct;
 import com.hefa.order.pojo.vo.SelectionProductInfo;
 import com.hefa.order.pojo.vo.ShoppingCartInfo;
 
@@ -129,5 +131,18 @@ public interface SelectionService {
 	 */
 	@RequestMapping("/hefa/api/client/selection/getPayOrderInfo")
 	public JsonResult<PayOrderInfo> getPayOrderInfo(@RequestParam("orderCode") String orderCode);
+	
+	@RequestMapping("/hefa/api/client/selection/getSelectionOrderProductInfos")
+	public JsonResult<List<ShoppingCartInfo>> getSelectionOrderProductInfos(@RequestParam("userCode")String userCode);
+
+	/**
+	 * 
+	 * <p>根据产品购买数量，获取产品折扣信息</p>
+	 * @param param
+	 * @return
+	 * @author 黄智聪  2019年5月27日 下午2:42:19
+	 */
+	@RequestMapping("/hefa/api/client/selection/getSelectionProductInfoByQuantity")
+	public JsonResult<SelectionProduct> getSelectionProductInfoByQuantity(@RequestBody GetSelectionProductInfoParam param);
 }
 

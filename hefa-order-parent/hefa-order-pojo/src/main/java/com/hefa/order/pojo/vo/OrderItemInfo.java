@@ -22,6 +22,8 @@ public class OrderItemInfo {
 	private String productCode;
 	
 	private String productName;
+	
+	private String productModelNo;
 
     private String specificationInfo;
 
@@ -29,7 +31,13 @@ public class OrderItemInfo {
 
     private Integer quantity;
     
-    private BigDecimal total;
+    private BigDecimal productTip;
+	
+	private BigDecimal productDiscount;
+    
+    private BigDecimal totalDiscountProductPrice;
+    
+    
     
 }
 

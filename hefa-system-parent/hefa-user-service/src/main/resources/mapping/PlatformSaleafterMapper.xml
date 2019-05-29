@@ -104,12 +104,16 @@
     SELECT
 		coi.product_code AS productCode,
 		coi.product_name AS productName,
+		ig.goods_no AS productModelNo,
 		coi.product_price AS productPrice,
 		coi.quantity AS quantity,
 		coi.specification_info AS specificationInfo,
-		coi.product_price * coi.quantity AS total
+		coi.total_discount_product_price AS totalDiscountProductPrice,
+		coi.product_tip as productTip,
+		coi.product_discount as productDiscount
 	FROM
 		client_order_item coi
+	join iwebshop_goods ig on coi.product_code = ig.id
 	WHERE coi.order_code = #{orderCode}
   </select>
   

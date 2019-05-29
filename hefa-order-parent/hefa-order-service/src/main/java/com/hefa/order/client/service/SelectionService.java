@@ -8,6 +8,7 @@
 package com.hefa.order.client.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,7 @@ import com.github.pagehelper.PageHelper;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.constants.ClientConstants;
 import com.hefa.common.constants.PlatformConstants.OrderStatus;
+import com.hefa.common.exception.BusinessException;
 import com.hefa.common.exception.ReturnDataException;
 import com.hefa.common.exception.ValidationException;
 import com.hefa.common.page.Pagination;
@@ -41,14 +43,17 @@ import com.hefa.order.pojo.ClientShoppingCart;
 import com.hefa.order.pojo.bo.AddSelectionRecordToShoppingCartParam;
 import com.hefa.order.pojo.bo.AddToShoppingCartParam;
 import com.hefa.order.pojo.bo.GenerateOrderParam;
+import com.hefa.order.pojo.bo.GetSelectionProductInfoParam;
 import com.hefa.order.pojo.bo.OrderItem;
 import com.hefa.order.pojo.bo.RemoveSelectionRecordParam;
 import com.hefa.order.pojo.bo.RemoveShoppingCartProductParam;
 import com.hefa.order.pojo.bo.SearchSelectionInfoParam;
+import com.hefa.order.pojo.vo.Discount;
 import com.hefa.order.pojo.vo.ModelInfo;
 import com.hefa.order.pojo.vo.OrderInfo;
 import com.hefa.order.pojo.vo.PayOrderInfo;
 import com.hefa.order.pojo.vo.ProductInfo;
+import com.hefa.order.pojo.vo.SelectionProduct;
 import com.hefa.order.pojo.vo.SelectionProductInfo;
 import com.hefa.order.pojo.vo.ShippingAddressInfo;
 import com.hefa.order.pojo.vo.ShoppingCartInfo;
@@ -313,13 +318,33 @@ public class SelectionService {
 		}
 		// 总金额
 		BigDecimal grandTotal = BigDecimal.ZERO; 
-		for (ShoppingCartInfo item : items) {
-			// 每个产品的小计 = 产品单价 * 数量（数量通过itemMap的key：productCode来获取）
-			grandTotal = grandTotal.add(item.getPrice().multiply(new BigDecimal(itemMap.get(item.getProductCode()))));
-		}
 		Date nowDate = new Date();
 		// 新增未支付的订单记录
 		String orderCode = dbSequenceService.getPOSequenceNo();
+		
+		// 插入下单产品细项
+		for (ShoppingCartInfo shoppingCartInfo : items) {
+			// 获取产品折扣总价
+			SelectionProduct selectionProduct = getSelectionProduct(shoppingCartInfo.getProductCode(),
+					itemMap.get(shoppingCartInfo.getProductCode()));
+			ClientOrderItem clientOrderItemRecord = ClientOrderItem.builder()
+					.createTime(nowDate)
+					.creator(userCode)
+					.orderCode(orderCode)
+					.productCode(shoppingCartInfo.getProductCode())
+					.productName(shoppingCartInfo.getProductName())
+					.productPrice(shoppingCartInfo.getPrice())
+					.quantity(itemMap.get(shoppingCartInfo.getProductCode()))
+					.specificationInfo(shoppingCartInfo.getSpecificationInfo())
+					.productDiscount(selectionProduct.getProductDiscount())
+					.productTip(selectionProduct.getProductTip())
+					.totalDiscountProductPrice(selectionProduct.getTotalDiscountProductPrice())
+					.build();
+			clientOrderItemMapper.insertSelective(clientOrderItemRecord);
+			// 总金额
+			grandTotal = grandTotal.add(selectionProduct.getTotalDiscountProductPrice());
+		}
+		
 		String salesmanCode = clientOrderMapper.getSalesmanCodeByUserCode(userCode);
 		ClientOrder clientOrderRecord = ClientOrder.builder()
 				.orderCode(orderCode)
@@ -347,20 +372,6 @@ public class SelectionService {
 				.build();
 		clientOrderStatusMapper.insertSelective(clientOrderStatusRecord);
 		
-		// 插入下单产品细项
-		for (ShoppingCartInfo shoppingCartInfo : items) {
-			ClientOrderItem clientOrderItemRecord = ClientOrderItem.builder()
-					.createTime(nowDate)
-					.creator(userCode)
-					.orderCode(orderCode)
-					.productCode(shoppingCartInfo.getProductCode())
-					.productName(shoppingCartInfo.getProductName())
-					.productPrice(shoppingCartInfo.getPrice())
-					.quantity(itemMap.get(shoppingCartInfo.getProductCode()))
-					.specificationInfo(shoppingCartInfo.getSpecificationInfo())
-					.build();
-			clientOrderItemMapper.insertSelective(clientOrderItemRecord);
-		}
 		
 		// 清空客户的购物车信息
 		clientShoppingCartMapper.deleteShoppingCartByUserCode(userCode);
@@ -436,6 +447,156 @@ public class SelectionService {
 		return JsonResult.successJsonResult();
 	}
 	
+	/**
+	 * 
+	 * <p>查询选型订单产品列表</p>
+	 * @param userCode
+	 * @return
+	 * @author 黄智聪  2019年5月5日 上午10:14:23
+	 */
+	public JsonResult<List<ShoppingCartInfo>> getSelectionOrderProductInfos(@RequestParam("userCode")String userCode){
+		List<ShoppingCartInfo> shoppingCartInfos = clientShoppingCartMapper.getShoppingCartInfos(userCode);
+		for (ShoppingCartInfo shoppingCartInfo : shoppingCartInfos) {
+			SelectionProduct selectionProduct = getSelectionProduct(shoppingCartInfo.getProductCode(), 1);
+			shoppingCartInfo.setQuantity(1);
+			shoppingCartInfo.setProductDiscount(selectionProduct.getProductDiscount());
+			shoppingCartInfo.setProductTip(selectionProduct.getProductTip());
+			shoppingCartInfo.setTotalDiscountProductPrice(selectionProduct.getTotalDiscountProductPrice());
+		}
+		return JsonResult.successJsonResult(shoppingCartInfos);
+	}
+	
+	/**
+	 * 
+	 * <p>根据产品购买数量，获取产品折扣信息</p>
+	 * @param param
+	 * @return
+	 * @author 黄智聪  2019年5月27日 下午2:42:19
+	 */
+	public JsonResult<SelectionProduct> getSelectionProductInfoByQuantity(@RequestBody GetSelectionProductInfoParam param){
+		JSR303ValidateUtils.validateInputParam(param);
+		SelectionProduct selectionProduct = getSelectionProduct(param.getProductCode(), param.getQuantity());
+		return JsonResult.successJsonResult(selectionProduct);
+	}
+	
+	/**
+	 * 
+	 * <p>获取产品折扣信息</p>
+	 * @param productCount 产品数量
+	 * @param productPrice 单价
+	 * @param productCode 产品编码
+	 * @return
+	 * @author 黄智聪  2019年5月27日 上午11:30:49
+	 */
+	public SelectionProduct getSelectionProduct(String productCode, int productCount) {
+		Discount discount = clientOrderMapper.getDiscountByProductCode(productCode);
+		BigDecimal totalDiscountProductPrice = null;
+		String productDiscount = "1.00";// 折扣率   默认无折扣1.00
+		String productTip = "0";// 零头  默认无零头
+		// 折扣策略
+		if (discount != null && !StringUtils.isBlank(discount.getProductQuantitySection()) 
+				&& !StringUtils.isBlank(discount.getProductDiscountSection())
+				&& !StringUtils.isBlank(discount.getProductTipSection())) {
+			// 产品数量区间
+			String[] productQuantitySection = settleString(discount.getProductQuantitySection());
+			// 折扣区间
+			String[] productDiscountSection = settleString(discount.getProductDiscountSection());
+			// 零头区间
+			String[] productTipSection = settleString(discount.getProductTipSection());
+			int productQuantitySectionLength = productQuantitySection.length;
+			int lastQuantitySectionIndex = productQuantitySectionLength - 1;
+			for (int i = 0; i < productQuantitySectionLength; i++) {
+				// 若区间数量 < 产品购买数量
+				if (Integer.parseInt(productQuantitySection[i]) < productCount) {
+					if (i == lastQuantitySectionIndex) { // 是否为最后一位
+						productDiscount = getProductDiscount(productDiscountSection, i + 1);
+						productTip = getProductTip(productTipSection, i + 1);
+					}
+					continue;
+				} else {
+					productDiscount = getProductDiscount(productDiscountSection, i);
+					productTip = getProductTip(productTipSection, i);
+					break;
+				}
+			}
+		}
+		// 产品折扣总价 = (单价 * 数量对应的折扣 - 数量对应的零头 ) * 数量 
+		totalDiscountProductPrice = (discount.getProductPrice().multiply(new BigDecimal(productDiscount))
+				.subtract(new BigDecimal(productTip))).multiply(new BigDecimal(productCount)).setScale(2,RoundingMode.HALF_UP);
+		return new SelectionProduct(new BigDecimal(productTip), new BigDecimal(productDiscount), totalDiscountProductPrice);
+	}
+	
+	
+	private static String[] settleString(String str) {
+		return str.replace("；", ";").split(";");
+	}
+
+	private static String getProductTip(String[] productTipSection, int index) {
+		String productTip = null;
+		try {
+			productTip = productTipSection[index];
+		} catch (ArrayIndexOutOfBoundsException e) {
+			productTip = "0";
+		} catch (Exception e) {
+			throw new BusinessException("获取折扣信息出错");
+		}
+		return productTip;
+	}
+
+	private static String getProductDiscount(String[] productDiscountSection, int index) {
+		String discount = null;
+		try {
+			discount = productDiscountSection[index];
+		} catch (ArrayIndexOutOfBoundsException e) {
+			discount = productDiscountSection[productDiscountSection.length - 1];
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new BusinessException("获取折扣信息出错");
+		}
+		return discount;
+	}
+	
+	public static void main(String[] args) {
+		int productCount = 46;// 购买数量
+		Discount discount = new Discount();
+		discount.setProductQuantitySection("6;12；45");
+		discount.setProductDiscountSection("0.95；0.85;0.80；0.75");
+		discount.setProductTipSection("0；0.4");
+		
+//		购买数量阶梯qty:       6;12;45
+//		折扣系数阶梯discount:  0.95;0.85;0.80;0.75
+//		零头阶梯tip:          0;0.4
+		
+		if (discount != null) {
+			// 产品数量区间
+			String[] productQuantitySection = settleString(discount.getProductQuantitySection());
+			// 折扣区间
+			String[] productDiscountSection = settleString(discount.getProductDiscountSection());
+			// 零头区间
+			String[] productTipSection = settleString(discount.getProductTipSection());
+			int productQuantitySectionLength = productQuantitySection.length;
+			int lastQuantitySectionIndex = productQuantitySectionLength - 1;
+			String productDiscount = null;// 折扣
+			String productTip = null;// 零头
+			for (int i = 0; i < productQuantitySectionLength; i++) {
+				// 若区间数量 < 产品购买数量
+				if (Integer.parseInt(productQuantitySection[i]) < productCount) {
+					if (i == lastQuantitySectionIndex) { // 是否为最后一位
+						productDiscount = getProductDiscount(productDiscountSection, i + 1);
+						productTip = getProductTip(productTipSection, i + 1);
+					}
+					continue;
+				} else {
+					productDiscount = getProductDiscount(productDiscountSection, i);
+					productTip = getProductTip(productTipSection, i);
+					break;
+				}
+			}
+			System.out.println("产品购买数量：" + productCount);
+			System.out.println("折扣：" + productDiscount);
+			System.out.println("零头：" + productTip);
+		}
+	}
 	
 }
 

@@ -166,6 +166,7 @@ public abstract class ClientConstants {
     	    this.desc = desc;
     	}
     }
+
     public enum PayStatus {
 		
 		NOT_PAID(1, "待支付"),
@@ -251,5 +252,72 @@ public enum ClientOrderOperationType {
     }
     
 }
+
+    
+    /**
+     * 商品折扣
+     * <P>TODO</P>
+     * @version 1.0
+     * @author 黄智聪  2019年5月24日 下午5:31:22
+     */
+    public enum ProductDiscount {
+    	
+    	/**
+    	 * 98折
+    	 */
+    	D_98(0.98, 1, 5, 0),
+
+    	/**
+    	 * 95折
+    	 */
+    	D_95(0.95, 6, 20, 0.5),
+
+    	/**
+    	 * 88折
+    	 */
+    	D_88(0.88, 21, 40, 1),
+
+    	/**
+    	 * 85折
+    	 */
+    	D_85(0.85, 41, null, 0);
+
+    	@Getter
+    	private double value;// 折扣率
+
+    	@Getter
+    	private Integer minProcutCount;// 产品数量左区间
+    	
+    	@Getter
+    	private Integer maxProductCount;// 产品数量左区间
+    	
+    	@Getter
+    	private double odd;// 零头
+
+		private ProductDiscount(double value, Integer minProcutCount, Integer maxProductCount, double odd) {
+			this.value = value;
+			this.minProcutCount = minProcutCount;
+			this.maxProductCount = maxProductCount;
+			this.odd = odd;
+		}
+		/*
+		*//**
+		 * 
+		 * <p>根据产品数量获取对应折扣</p>
+		 * @param productCount
+		 * @return
+		 * @author 黄智聪  2019年5月24日 下午5:48:29
+		 *//*
+		public ProductDiscount getProductDiscount(int productCount) {
+			ProductDiscount[] values = ProductDiscount.values();
+			for (ProductDiscount productDiscount : values) {
+				productDiscount.getMaxProductCount();
+				productDiscount.getMinProcutCount();
+			}
+			return null;
+		}*/
+		
+    }
+
 	
 }

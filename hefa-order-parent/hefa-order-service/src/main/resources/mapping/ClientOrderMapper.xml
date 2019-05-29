@@ -360,6 +360,7 @@
 			)
 		</if>
 	</where>
+	order by co.create_time desc
   </select>
   
   <select id="getOrderInfoByOrderCode" parameterType="string" resultType="com.hefa.order.pojo.vo.OrderInfo">
@@ -495,6 +496,19 @@
 	</where>
 	ORDER BY
 		co.create_time DESC
+  </select>
+  
+  <select id="getDiscountByProductCode" parameterType="string" resultType="com.hefa.order.pojo.vo.Discount">
+  	SELECT
+		id.segmentqty as productQuantitySection,
+		id.segmentdiscount as productDiscountSection,
+		id.segmenttip as productTipSection,
+		IFNULL(ig.market_price, 0) as productPrice
+	FROM
+		iwebshop_goods ig
+	LEFT JOIN iwebshop_discount id ON ig.discount = id.id
+	WHERE
+		ig.id = #{productCode}
   </select>
   
 </mapper>
