@@ -58,5 +58,14 @@ public interface ClientOrderService {
 	@RequestMapping("/hefa/api/client/order/getOrderDetail")
 	JsonResult<OrderDetail> getOrderDetail(@RequestParam("orderCode") String orderCode);
 	
+	/**
+	 * 
+	 * <p>客户订单是否支付成功</p>
+	 * @return
+	 * @author 黄智聪  2018年11月26日 下午5:15:27
+	 */
+	@RequestMapping("/hefa/api/client/order/checkClientOrderPaySuccess")
+	JsonResult<String> checkClientOrderPaySuccess(String orderCode);
+	
 }
 
