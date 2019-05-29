@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
-import com.hefa.order.pojo.bo.CallBackParam;
 import com.hefa.order.pojo.bo.ConfirmOrderDeliveryParam;
 import com.hefa.order.pojo.bo.SearchOrderInfoParam;
 import com.hefa.order.pojo.vo.OrderDetail;
