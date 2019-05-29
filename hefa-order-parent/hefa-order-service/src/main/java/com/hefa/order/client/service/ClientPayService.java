@@ -64,7 +64,6 @@ import com.hefa.order.pojo.yeepay.EnterprisereginfoCopy;
 import com.hefa.order.pojo.yeepay.Enterprisereginfoadd;
 import com.hefa.order.pojo.yeepay.MerchantYeeBind;
 import com.hefa.order.pojo.yeepay.PageOrder;
-import com.hefa.order.pojo.yeepay.PayList;
 import com.hefa.order.pojo.yeepay.RetBean;
 import com.hefa.order.pojo.yeepay.YeeModulePic;
 import com.hefa.system.api.SystemImageUploadService;
@@ -501,8 +500,7 @@ public class ClientPayService {
 		}else{
 			params.put("businessFunction", po.getBusinessFunction());
 	    }
-		org.json.JSONObject json = new org.json.JSONObject(params);
-		log.info("子商户入网注册参数----->"+json.toString());
+		log.info("子商户入网注册参数----->"+com.alibaba.fastjson.JSONObject.toJSONString(params));
 		String uri = YeepayService.getUrl(YeepayService.ENTERPRISE_URL);
 		
 		try{
