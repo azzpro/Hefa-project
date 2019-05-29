@@ -139,10 +139,10 @@ public class ClientOrderService {
 		String orderCode = param.getOrderCode();
 		OrderInfo order = clientOrderMapper.getOrderInfoByOrderCode(orderCode);
 		if(order == null) {
-			throw new ReturnDataException("客户订单不存在");
+			throw new ReturnDataException("订单不存在");
 		}
 		if(OrderStatus.NOT_PAID.getValue() != order.getOrderStatus()) {
-			throw new ReturnDataException("客户订单状态异常");
+			throw new ReturnDataException("订单状态异常");
 		}
 		Date nowDate = new Date();
 		// 修改订单
