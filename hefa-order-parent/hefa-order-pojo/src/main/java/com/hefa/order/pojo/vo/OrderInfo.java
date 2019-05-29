@@ -26,6 +26,8 @@ public class OrderInfo {
 
 	private Byte orderStatus;
 	
+	private String userCode;
+	
 	private Integer productCount;
 	
 	private BigDecimal grandTotal;

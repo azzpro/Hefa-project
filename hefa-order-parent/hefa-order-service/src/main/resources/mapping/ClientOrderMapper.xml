@@ -372,6 +372,7 @@
 		co.order_status AS orderStatus,
 		co.delivery_days AS deliveryDays,
 		co.remark AS remark,
+		co.user_code AS userCode,
 		ps.service_number AS afterSaleCode,
 		pu.user_name AS salesman,
 		cosa.province_name AS provinceName,
