@@ -48,6 +48,22 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
+			<groupId>com.hefa</groupId>
+			<artifactId>hefa-system-api</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+  			<groupId>com.yeepay.g3.sdk.yop</groupId>
+  			<artifactId>yop-java-sdk</artifactId>
+  			<version>3.1.9</version>
+  			<classifier>jdk18</classifier>
+		</dependency>
+		<dependency>
+			<groupId>com.yeepay.g3.yop.sdk</groupId>
+			<artifactId>yos-java-sdk</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 		</dependency>

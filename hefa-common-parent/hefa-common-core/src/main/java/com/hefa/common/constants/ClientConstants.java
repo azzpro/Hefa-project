@@ -55,6 +55,25 @@ public abstract class ClientConstants {
      * ASE加密的key
      */
     public final static String DEFAULT_ASE_KEY = "qlemc5GkRiPVXH88";
+   
+    public enum PayMethod {
+		
+		ONLINE(1, "线上"),
+
+    	UNDERLINE(2, "线下");
+
+    	@Getter
+    	private int value;
+
+    	@Getter
+    	private String desc;
+
+    	PayMethod(int value, String desc) {
+    	    this.value = value;
+    	    this.desc = desc;
+    	}
+        
+    }
     
     /**
 	 * 
@@ -147,5 +166,90 @@ public abstract class ClientConstants {
     	    this.desc = desc;
     	}
     }
+    public enum PayStatus {
+		
+		NOT_PAID(1, "待支付"),
+
+    	PAY_SUCCESS(2, "支付成功"),
+    	
+		PAY_CLOSED(3, "关闭支付"),
+		
+		PAY_FAILED(4, "支付失败");
+		
+    	@Getter
+    	private int value;
+
+    	@Getter
+    	private String desc;
+
+    	PayStatus(int value, String desc) {
+    	    this.value = value;
+    	    this.desc = desc;
+    	}
+        
+    }
+    public enum ClientOrderStatus {
+
+    NOT_PAID(7, "待支付"),
+
+    NOT_CONFIRMED(8, "待确认"),
+
+    NOT_ALLOCATED(9, "待配货"),
+
+    NOT_SIGNED(10, "待签收"),
+
+    COMPLETED(11, "已完成"),
+    
+    CLOSED(12, "已关闭");
+
+    @Getter
+    private int value;
+
+    @Getter
+    private String desc;
+
+    ClientOrderStatus(int value, String desc) {
+        this.value = value;
+        this.desc = desc;
+    }
+    
+    public static boolean checkStatusExist(int value) {
+    	ClientOrderStatus[] values = ClientOrderStatus.values();
+        for (ClientOrderStatus status : values) {
+            if (status.getValue() == value) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+}
+
+ /**
+ * 
+ * <P>客户订单操作类型 1订单拆单 2重新拆单 3取消派单</P>
+ * @version 1.0
+ * @author 黄智聪  2018年11月14日 下午2:09:47
+ */
+public enum ClientOrderOperationType {
+
+    ALLOCATE_ORDER(1, "订单拆单"),
+
+    REALLOCATE_ORDER(2, "重新拆单"),
+
+    CANCEL_ALLOCATE_ORDER(3, "取消派单");
+
+    @Getter
+    private int value;
+
+    @Getter
+    private String desc;
+
+    ClientOrderOperationType(int value, String desc) {
+        this.value = value;
+        this.desc = desc;
+    }
+    
+}
 	
 }
