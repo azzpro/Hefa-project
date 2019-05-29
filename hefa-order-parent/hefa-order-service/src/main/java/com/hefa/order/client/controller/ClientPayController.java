@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.hefa.common.base.JsonResult;
 import com.hefa.common.page.Pagination;
 import com.hefa.order.client.service.ClientPayService;
+import com.hefa.order.platform.bo.PayOrderListParam;
+import com.hefa.order.platform.pojo.ClientPay;
+import com.hefa.order.platform.vo.PayListInfo;
 import com.hefa.order.pojo.yeepay.BankBranch;
-import com.hefa.order.pojo.yeepay.ClientPay;
 import com.hefa.order.pojo.yeepay.PageOrder;
 import com.hefa.order.pojo.yeepay.PayList;
 import com.hefa.order.pojo.yeepay.RetBean;
@@ -54,7 +56,7 @@ public class ClientPayController {
 	 * @author 刘建麟  2018年12月3日 下午2:46:08
 	 */
 	@RequestMapping("toPayList")
-	public JsonResult<Pagination<ClientPay>> toPayList(@RequestBody PayList pl){
+	public JsonResult<Pagination<PayListInfo>> toPayList(@RequestBody PayOrderListParam pl){
 		return pps.searchParamsList(pl);
 	}
 	

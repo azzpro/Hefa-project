@@ -71,7 +71,7 @@ public class ClientOrderController {
 	 * @author 黄智聪  2018年11月26日 下午5:15:27
 	 */
 	@RequestMapping("/checkClientOrderPaySuccess")
-	public JsonResult<String> checkClientOrderPaySuccess(String orderCode){
+	public JsonResult<String> checkClientOrderPaySuccess(@RequestParam("orderCode")String orderCode){
 		return orderService.checkClientOrderPaySuccess(orderCode);
 	}
 	

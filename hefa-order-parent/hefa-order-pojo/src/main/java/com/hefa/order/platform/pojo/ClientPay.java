@@ -14,6 +14,8 @@ package com.hefa.order.platform.pojo;
 
 import java.io.Serializable;
 
+import com.hefa.order.pojo.vo.OrderInfo;
+
 
 public class ClientPay implements Serializable{
 	/**
@@ -36,6 +38,14 @@ public class ClientPay implements Serializable{
 	private String goodsName;//商品名称
 	private String payInstruation;
 	private String paySuccessDate;
+	private OrderInfo coi;
+	
+	public OrderInfo getCoi() {
+		return coi;
+	}
+	public void setCoi(OrderInfo coi) {
+		this.coi = coi;
+	}
 	public Long getId() {
 		return id;
 	}

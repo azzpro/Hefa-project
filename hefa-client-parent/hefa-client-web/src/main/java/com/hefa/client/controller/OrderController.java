@@ -9,6 +9,7 @@ package com.hefa.client.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hefa.client.util.WebUtils;
@@ -78,7 +79,7 @@ public class OrderController {
 	 * @author 黄智聪  2018年11月26日 下午5:15:27
 	 */
 	@RequestMapping("/checkClientOrderPaySuccess")
-	public JsonResult<String> checkClientOrderPaySuccess(String orderCode){
+	public JsonResult<String> checkClientOrderPaySuccess(@RequestParam("orderCode")String orderCode){
 		return orderService.checkClientOrderPaySuccess(orderCode);
 	}
 

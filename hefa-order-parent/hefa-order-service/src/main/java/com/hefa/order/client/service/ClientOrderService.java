@@ -174,7 +174,8 @@ public class ClientOrderService {
 	 * @return
 	 * @author 黄智聪  2018年11月26日 下午5:15:27
 	 */
-	public JsonResult<String> checkClientOrderPaySuccess(String orderCode){
+	public JsonResult<String> checkClientOrderPaySuccess(@RequestParam("orderCode")String orderCode){
+		JSR303ValidateUtils.validateNullOrBlank(orderCode, "订单编码不能为空");
 		OrderInfo order = clientOrderMapper.getOrderInfoByOrderCode(orderCode);
 		if(order == null) {
 			throw new ReturnDataException("订单不存在");

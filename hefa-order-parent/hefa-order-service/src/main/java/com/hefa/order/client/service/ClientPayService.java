@@ -51,13 +51,15 @@ import com.hefa.common.errorcode.SystemErrorCode;
 import com.hefa.common.exception.ValidationException;
 import com.hefa.common.page.Pagination;
 import com.hefa.order.mapper.ClientEnterpriseRegInfoMapper;
-import com.hefa.order.mapper.ClientPayMapper;
 import com.hefa.order.mapper.MerchantYeeBindMapper;
+import com.hefa.order.platform.bo.PayOrderListParam;
+import com.hefa.order.platform.mapper.ClientPayMapper;
+import com.hefa.order.platform.pojo.ClientPay;
+import com.hefa.order.platform.vo.PayListInfo;
 import com.hefa.order.pojo.bo.CallBackParam;
 import com.hefa.order.pojo.vo.OrderDetail;
 import com.hefa.order.pojo.vo.OrderInfo;
 import com.hefa.order.pojo.yeepay.BankBranch;
-import com.hefa.order.pojo.yeepay.ClientPay;
 import com.hefa.order.pojo.yeepay.EnterprisereginfoCopy;
 import com.hefa.order.pojo.yeepay.Enterprisereginfoadd;
 import com.hefa.order.pojo.yeepay.MerchantYeeBind;
@@ -289,14 +291,13 @@ public class ClientPayService {
 		if (StringUtils.isNotBlank(url)) {
 			log.info("url---->" + url);
 			ClientPay clientPay = new ClientPay();
-			clientPay.setUserId(orderInfo.getUserCode());
+			clientPay.setUserCode(orderInfo.getUserCode());
 			clientPay.setOrderMoney(orderInfo.getGrandTotal().toPlainString());
 			clientPay.setUserreqIp(po.getClientIp());
 			clientPay.setGoodsName(order.getGoodsName());
 			clientPay.setOrderCustomerPhone(1L);
 			// clientPay.setOrderChannelMoney();//渠道费
 			clientPay.setOrderNumber(orderInfo.getOrderCode());
-			clientPay.setOrderMethod((byte) PayMethod.ONLINE.getValue());// 默认线上
 			clientPay.setOrderTime(Long.parseLong(LLPayUtil.getCurrentDateTimeStr()));
 			clientPay.setOrderStatus((byte) PayStatus.NOT_PAID.getValue());// 支付状态 默认待支付
 			clientPay.setPayNumber(order.getOrderId()); // 订单流水号
@@ -978,10 +979,10 @@ public class ClientPayService {
 	 * @return
 	 * @author 刘建麟 2018年10月31日 上午11:29:49
 	 */
-	public JsonResult<Pagination<ClientPay>> searchParamsList(@RequestBody PayList pl) {
+	public JsonResult<Pagination<PayListInfo>> searchParamsList(@RequestBody PayOrderListParam pl) {
 		PageHelper.startPage(pl.getPageNum(), pl.getPageSize());
-		List<ClientPay> selectPayList = ppm.selectPayList(pl);
-		return JsonResult.successJsonResult(new Pagination<>(selectPayList));
+		List<PayListInfo> ss = ppm.selectPayList(pl);
+		return JsonResult.successJsonResult(new Pagination<>(ss));
 	}
 
 	

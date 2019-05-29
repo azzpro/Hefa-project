@@ -48,3 +48,8 @@ feign:
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mapping/**/*.xml
+yeepay: 
+  notify-url: http://120.78.162.226:8083/hefa/api/pay/payNotify
+  divide_notify_url: http://120.78.162.226:8083/hefa/api/pay/divideNotify
+  regEn-notify-url: http://120.78.162.226:8080/hefa/api/merchant/regEnterpriseNotify
+  cashWithdralwal-notify-url: http://120.78.162.226:8080/hefa/api/cashWithdrawal/cashWithdrawalCallback
