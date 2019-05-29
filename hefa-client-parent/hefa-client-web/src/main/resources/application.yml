@@ -5,11 +5,10 @@ server:
 spring: 
   redis:
     database: 0
-    #host: 192.168.1.222
-    #host: 120.78.162.226
-    host: localhost
+    host: 192.168.1.222
+    #host: localhost
     port: 6379
-    #password: AgPaYRedis6
+    password: AgPaYRedis6
   aop:
     proxy-target-class: true
   servlet:
@@ -24,4 +23,10 @@ hefa-user-service:
     OkToRetryOnAllOperations: false
     MaxAutoRetriesNextServer: 0
     MaxAutoRetries: 0 
-
+hefa-order-service:
+  ribbon:
+    ConnectTimeout: 6000
+    ReadTimeout: 6000
+    OkToRetryOnAllOperations: false
+    MaxAutoRetriesNextServer: 0
+    MaxAutoRetries: 0 

@@ -15,3 +15,18 @@ spring:
 shiro:
   session:
     timeout: 3600000
+    
+hefa-user-service: 
+  ribbon:
+    ConnectTimeout: 6000
+    ReadTimeout: 6000
+    OkToRetryOnAllOperations: false
+    MaxAutoRetriesNextServer: 0
+    MaxAutoRetries: 0 
+hefa-order-service:
+  ribbon:
+    ConnectTimeout: 6000
+    ReadTimeout: 6000
+    OkToRetryOnAllOperations: false
+    MaxAutoRetriesNextServer: 0
+    MaxAutoRetries: 0 
